@@ -13,6 +13,7 @@ JavaScript (ES6+)
 
 Git & GitHub (for version control)
 
+Render (For Deployment)
 
 📌 Features
 

@@ -107,8 +107,8 @@ const experiences = [
     iconBg: "#383E56",
     date: "Aug 2024 - Present",
     points: [
-      "Assisted in developing SSO scripts using ReactJS, Express.js and MongoDB to help automate login processes for Synergy Learning Management System improving accessibility for over 5.5 million students across 22 states.",
-      "Implemented a comprehensive student attendance tracking feature in Synergy using C# (.NET) and SQL databases.",
+      "Optimized authentication workflows by creating secure SSO solution using OAuth2.0, Angular and Express.js while integrating MongoDB and Redis for scalable session management, optimizing login efficiency for 5.5 million students.",
+      "Developed a scalable student attendance tracking system using Django, C++, and PostgreSQL, integrating Firebase and Google Cloud Platform (GCP) for real-time data syncing, analytics, and enhanced reporting accuracy.",
     ],
   },
   {
@@ -130,7 +130,7 @@ const experiences = [
     date: "Mar 2023 - May 2024",
     points: [
       "Developed automation scripts in Python and conducted regular software updates to ensure smooth functioning of hardware and software systems, resulting in a 20% increase in system efficiency and reduced manual intervention.",
-      "Diagnosed and resolved over 200 complex technical issues on classroom computers running Windows and macOS systems, which enhanced faculty productivity and increased user satisfaction ratings by 20% in just one semester.",
+      "Developed a system diagnostics tool using Spring Boot and REST APIs, integrating JNA/JNI for system interactions and Prometheus for real-time monitoring, reducing downtime by 25%.",
     ],
   },
   {
@@ -140,7 +140,7 @@ const experiences = [
     iconBg: "#E6DEDD",
     date: "May 2021 - May 2022",
     points: [
-      "Designed and implemented SQL and C++ based data management systems to accurately track sales, returns, and inventory, enhancing stock management practices and reducing record discrepancies by 8%.",
+      "Designed and implemented Java, NoSQL and C++ based data management systems to accurately track sales, returns, and inventory, enhancing stock management practices and reducing record discrepancies by 18%.",
       "Performed detailed code reviews and systematic debugging to optimize software algorithms, enhancing project efficiency and reliability, which contributed to annual operational cost savings of about $110,000.",
     ],
   },
@@ -157,7 +157,7 @@ const projects = [
         color: "blue-text-gradient",
       },
       {
-        name: "TensoFlow",
+        name: "TensorFlow",
         color: "green-text-gradient",
       },
       {
@@ -186,11 +186,11 @@ const projects = [
         color: "green-text-gradient",
       },
       {
-        name: "CSS",
+        name: "React",
         color: "pink-text-gradient",
       },
       {
-        name: "HTML",
+        name: "Node.js",
         color: "orange-text-gradient",
       },
     ],
@@ -203,7 +203,7 @@ const projects = [
       "Developed a disaster management app for efficient collaboration among rescue agencies, utilizing Python and Node.js for backend, Flutter for frontend, and Google Maps API for real-time location tracking.",
     tags: [
       {
-        name: "Python",
+        name: "Java",
         color: "blue-text-gradient",
       },
       {
