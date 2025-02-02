@@ -1,4 +1,4 @@
-#🌟 My Portfolio
+🌟 My Portfolio
 Welcome to my portfolio website, built with Vite, React, and Tailwind CSS! This project showcases my work, projects, and skills in a modern and responsive design.
 
 🚀 Tech Stack
