@@ -1,8 +1,21 @@
-# React + Vite
+🌟 My Portfolio
+Welcome to my portfolio website, built with Vite, React, and Tailwind CSS! This project showcases my work, projects, and skills in a modern and responsive design.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+🚀 Tech Stack
+React (with Vite for fast development)
+Tailwind CSS (for styling)
+JavaScript (ES6+)
+Git & GitHub (for version control)
 
-Currently, two official plugins are available:
+📌 Features
+Responsive design for all devices 📱💻
+Fast loading with Vite ⚡
+Dynamic components & animations ✨
+Tailwind CSS for easy styling 🎨
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+📩 Contact
+Feel free to connect with me on:
+
+GitHub: ekagra1602
+LinkedIn: https://www.linkedin.com/in/ekagra16/
+Portfolio Live Demo: https://ekagragupta.com/
