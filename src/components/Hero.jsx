@@ -12,7 +12,7 @@ const Hero = () => {
           provide high-quality and elegant digital experiences.
         </p>
         <a
-          href="mailto:myemail@email.com"
+          href="mailto:egupta3@asu.edu"
           className="bg-[#576cbc] text-white no-underline rounded-[100px] font-semibold px-4 py-6 "
         >
           Contact Me
@@ -20,7 +20,7 @@ const Hero = () => {
       </div>
           <img
           src={myimg}
-          alt="Hero image of me"
+          alt="Ekagra's image"
           className="md:min-w-1/2 h-[150px] md:min-h-[350px] rounded-full animate-bounce2 z-10 mb-4 ml-2"
         />
     </section>
