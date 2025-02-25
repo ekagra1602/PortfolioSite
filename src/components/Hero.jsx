@@ -1,5 +1,5 @@
 
-import myimg from "../assets/myimg.png";
+import myimg from "../assets/myimg.jpeg";
 const Hero = () => {
   return (
     <section className="relative md:h-dvh min-h-[600px] flex-col-reverse flex md:flex-row items-center justify-between pt-[60px] z-10 mx-[10%]">
