@@ -8,7 +8,7 @@ const Hero = () => {
           {"Hi, I'm Ekagra Gupta"}
         </h1>
         <p className="text-2xl md:text-3xl font-roboto mb-[52px]">
-          {"I'm"} a full-stack developer.I specialize in building web applications and software that
+          {"I'm"} a full-stack developer. I specialize in building web applications and software that
           provide high-quality and elegant digital experiences.
         </p>
         <a
