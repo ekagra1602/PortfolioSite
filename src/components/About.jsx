@@ -11,7 +11,7 @@ import { fadeIn, textVariant } from "../utils/motion";
 
 const ServiceCard = ({ index, title, icon }) => {
   return(
-  <Tilt className="xs:w-[250px] w-full">
+  <Tilt className="xs:w-[350px] w-full">
     <motion.div
       variants={fadeIn("right", "spring", index * 0.5, 0.75)}
       className="w-full green-pink-gradient p-[1px] rounded-[20px] shadow-card"
@@ -22,7 +22,7 @@ const ServiceCard = ({ index, title, icon }) => {
           scale: 1,
           speed: 450,
         }}
-        className="bg-tertiary rounded-[20px] py-5 px-12 min-h-[280px] flex justify-evenly items-center flex-col"
+        className="bg-tertiary rounded-[20px] py-5 px-1s2 min-h-[280px] flex justify-evenly items-center flex-col"
       >
         <img
           src={icon}
@@ -49,13 +49,13 @@ const About = () => {
 
       <motion.p
         variants={fadeIn("", "", 0.1, 1)}
-        className="mt-4 text-secondary text-[17px] max-w-3xl leading-[30px]"
+        className="mt-4 text-secondary text-[17px] max-w-5.5xl leading-[30px]"
       >
-        {"I'm"} a skilled software developer with experience in TypeScript and
-        JavaScript, and expertise in frameworks like React, Node.js.
-        {" I'm"} a quick learner and collaborate closely with clients to
-        create efficient, scalable, and user-friendly solutions that solve
-        real-world problems. {"Let's"} work together to bring your ideas to life!
+      I'm a backend-focused software developer with expertise in ML, backend, and frontend technologies. 
+      I specialize in building scalable APIs and optimizing databases (PostgreSQL, MongoDB, Redis) using frameworks like Node.js, Django, and Flask. 
+      With experience in ML model deployment (TensorFlow, PyTorch) and cloud platforms (AWS, GCP), I ensure efficient, production-ready solutions. 
+      I also develop full-stack applications with React, Angular and Next.js, integrating ML-driven insights into user-friendly interfaces. 
+      Let’s build intelligent and scalable systems together!
       </motion.p>
 
       <div className="mt-20 flex flex-wrap gap-10">

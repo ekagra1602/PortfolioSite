@@ -39,19 +39,15 @@ export const navLinks = [
 
 const services = [
   {
-    title: "Web Developer",
+    title: "Full-Stack Developer",
     icon: web,
   },
   {
-    title: "React Native Developer",
-    icon: mobile,
-  },
-  {
-    title: "Backend Developer",
+    title: "Backend & API Developer",
     icon: backend,
   },
   {
-    title: "Machine Learning",
+    title: "Machine Learning Developer",
     icon: creator,
   },
 ];
@@ -140,7 +136,7 @@ const experiences = [
     iconBg: "#E6DEDD",
     date: "May 2021 - May 2022",
     points: [
-      "Designed and implemented Java, NoSQL and C++ based data management systems to accurately track sales, returns, and inventory, enhancing stock management practices and reducing record discrepancies by 18%.",
+      "Designed and implemented Go, NoSQL and C++ based data management systems to accurately track sales, returns, and inventory, enhancing stock management practices and reducing record discrepancies by 18%.",
       "Performed detailed code reviews and systematic debugging to optimize software algorithms, enhancing project efficiency and reliability, which contributed to annual operational cost savings of about $110,000.",
     ],
   },
