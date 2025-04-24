@@ -20,6 +20,7 @@ import {
   Fulton,
   EduPoint,
   carnegie,
+  Airbnb,
 } from "../assets";
 
 export const navLinks = [
@@ -97,18 +98,28 @@ const technologies = [
 
 const experiences = [
   {
-    title: "Software Developer Intern",
+    title: "Software Engineering Intern",
+    company_name: "Airbnb",
+    icon: Airbnb,
+    iconBg: "#383E56",
+    date: "Incoming - May 2025",
+    points: [
+      "Incoming Software Engineering Intern on the Observability team in the Infrastructure unit",
+    ],
+  },
+  {
+    title: "Software Engineering Intern",
     company_name: "Edupoint Educational Systems LLC",
     icon: EduPoint,
     iconBg: "#383E56",
-    date: "Aug 2024 - Present",
+    date: "Aug 2024 - April 2025",
     points: [
       "Optimized authentication workflows by creating secure SSO solution using OAuth2.0, Angular and Express.js while integrating MongoDB and Redis for scalable session management, optimizing login efficiency for 5.5 million students.",
       "Developed a scalable student attendance tracking system using Django, C++, and PostgreSQL, integrating Firebase and Google Cloud Platform (GCP) for real-time data syncing, analytics, and enhanced reporting accuracy.",
     ],
   },
   {
-    title: "Summer Research Assistant",
+    title: "Machine Learning Research Assistant",
     company_name: "Carnegie Mellon University",
     icon: carnegie,
     iconBg: "#E6DEDD",
@@ -119,7 +130,7 @@ const experiences = [
     ],
   },
   {
-    title: "Software Engineer",
+    title: "Software Engineer Intern",
     company_name: "Enterprise Technology,ASU",
     icon: Fulton,
     iconBg: "#383E56",

@@ -22,6 +22,7 @@ import carrier from "./company/carrier.png";
 import EduPoint from "./company/EduPoint.png";
 import Fulton from "./company/Fulton.png";
 import carnegie from "./company/carnegie.png";
+import Airbnb from "./company/Airbnb.jpg";
 
 import FocusAi from "./FocusAi.png";
 import resq from "./resq.jpeg";
@@ -53,4 +54,5 @@ export {
   FocusAi,
   resq,
   chessArena,
+  Airbnb,
 };
