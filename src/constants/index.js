@@ -112,9 +112,9 @@ const experiences = [
     company_name: "Edupoint Educational Systems LLC",
     icon: EduPoint,
     iconBg: "#383E56",
-    date: "Aug 2024 - April 2025",
+    date: "Jan 2025 - April 2025",
     points: [
-      "Attendance tracking and ",
+      "Attendance Tracking and Authorization Team",
     ],
   },
   {
@@ -124,30 +124,26 @@ const experiences = [
     iconBg: "#E6DEDD",
     date: "Jun 2024 - Aug 2024",
     points: [
-      "Analyzed collaboration in Machine Learning pipelines by reviewing GitHub repositories and studying model deployment in open-source projects like Ubuntu's face recognition, using Python, Git, and Docker to identify integration challenges between data scientists and software engineer.",
-      "Developed tools using Flask, TensorFlow, and REST APIs to automate ML model testing and document expectations,improving cross-team communication and reducing production deployment errors by 25%.",
+      "Research related to open source repositories containing Deep Learning Tensorflow / Pytorch models.",
     ],
   },
   {
     title: "Software Engineer Intern",
-    company_name: "Enterprise Technology,ASU",
+    company_name: "Arizona State University",
     icon: Fulton,
     iconBg: "#383E56",
     date: "Mar 2023 - May 2024",
     points: [
-      "Developed automation scripts in Python and conducted regular software updates to ensure smooth functioning of hardware and software systems, resulting in a 20% increase in system efficiency and reduced manual intervention.",
-      "Developed a system diagnostics tool using Spring Boot and REST APIs, integrating JNA/JNI for system interactions and Prometheus for real-time monitoring, reducing downtime by 25%.",
-    ],
+      "CI / CD and monitoring using Spring Boot, JNA/ JNI, and Rest APIs.",]
   },
   {
     title: "Software Engineering Intern",
     company_name: "Carrier Air Conditioning India",
     icon: carrier,
     iconBg: "#E6DEDD",
-    date: "May 2021 - May 2022",
+    date: "May 2022 - August 2022",
     points: [
-      "Designed and implemented Go, NoSQL and C++ based data management systems to accurately track sales, returns, and inventory, enhancing stock management practices and reducing record discrepancies by 18%.",
-      "Performed detailed code reviews and systematic debugging to optimize software algorithms, enhancing project efficiency and reliability, which contributed to annual operational cost savings of about $110,000.",
+      "Guided and instructed students in MATLAB, SolidWorks, and JavaScript projects.",
     ],
   },
 ];

@@ -17,10 +17,10 @@ const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          className="text-2xl md:text-3xl font-roboto mb-[52px]"
+          className="text-2xl md:text-3xl font-roboto mb-[48px]"
         >
-          I'm a junior at ASU and a full-stack developer specializing in backend infrastructure, distributed systems, and ML infrastructure. 
-          This summer, I'm interning at Airbnb, working on the Observability team in the Infrastructure unit.
+          I'm a junior at ASU and a software developer specializing in backend infrastructure, distributed systems, and ML infrastructure. 
+          I'm interning at Airbnb this summer, working on the Observability team in the Infrastructure unit.
         </motion.p>
         <motion.a
           initial={{ opacity: 0, y: 20 }}
@@ -38,7 +38,7 @@ const Hero = () => {
         transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
         src={myimg}
         alt="Ekagra's image"
-        className="md:min-w-1/2 h-[150px] md:min-h-[350px] rounded-full animate-bounce2 z-10 mb-4 ml-2"
+        className="md:min-w-1/2 h-[150px] md:min-h-[350px] rounded-full z-10 mb-4 ml-2"
       />
     </section>
   );
