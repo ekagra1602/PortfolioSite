@@ -51,11 +51,11 @@ const About = () => {
         variants={fadeIn("", "", 0.1, 1)}
         className="mt-4 text-secondary text-[17px] max-w-5.5xl leading-[30px]"
       >
-      I'm a backend-focused software developer with expertise in ML, backend, and frontend technologies. 
+      I'm a backend-focused software developer with expertise in ML, backend, and full stack work.
       I specialize in building scalable APIs and optimizing databases (PostgreSQL, MongoDB, Redis) using frameworks like Node.js, Django, and Flask. 
       With experience in ML model deployment (TensorFlow, PyTorch) and cloud platforms (AWS, GCP), I ensure efficient, production-ready solutions. 
       I also develop full-stack applications with React, Angular and Next.js, integrating ML-driven insights into user-friendly interfaces. 
-      Let’s build intelligent and scalable systems together!
+      Let's build intelligent and scalable systems together!
       </motion.p>
 
       <div className="mt-20 flex flex-wrap gap-10">

@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 
 
@@ -20,12 +19,12 @@ const Contact = () => {
     >
       <motion.div
         variants={slideIn("left", "tween", 0.2, 1)}
-        className="flex-[0.75] bg-black-100 py-10 pl-12 rounded-2xl"
+        className="flex-[0.75] bg-black-100 py-10 pl-12 rounded-2xl shadow-lg shadow-black-200"
       >
         <p className={styles.sectionSubText}>Get in touch</p>
         <h3 className={styles.sectionHeadText}>Contact.</h3>
 
-        <div className="mt-8 flex flex-col gap-6 ">
+        <div className="mt-8 flex flex-col gap-6">
           <div>
             <p className="text-secondary">Name:</p>
             <p className="text-white font-medium">Ekagra Gupta</p>
@@ -38,35 +37,23 @@ const Contact = () => {
           <div>
             <p className="text-secondary">Get in touch on LinkedIn</p>
             <Link to="https://www.linkedin.com/in/ekagra16">
-            <div className="flex justify-start items-center mt-1 py-1">
+            <div className="flex justify-start items-center mt-1 py-1 hover:bg-black-200 rounded-lg px-2 transition-colors duration-200">
               <FaLinkedin className="text-2xl text-blue-600" />
               <p className="ml-3 text-white font-medium">Ekagra Gupta</p>
             </div></Link>
-            </div>
-          
+          </div>
           
           <div>
             <p className="text-secondary">Send me an email</p>
-            <div className="flex justify-start items-center mt-1 py-1 ">
+            <div className="flex justify-start items-center mt-1 py-1">
               <Link to="mailto:egupta3@asu.edu">
-                <div className="flex">
-              <MdOutlineMail className="text-2xl" />
-                <p className="ml-3 text-white font-medium">egupta3@asu.edu</p>
+                <div className="flex hover:bg-black-200 rounded-lg px-2 transition-colors duration-200">
+                  <MdOutlineMail className="text-2xl text-white" />
+                  <p className="ml-3 text-white font-medium">egupta3@asu.edu</p>
                 </div>
               </Link>
             </div> 
-            </div>
-         
-            {/* bg-tertiary */}
-          {/* <div>
-            <p className="text-secondary">Or send me a message directly</p>
-            <div
-              onClick={() => location.href=("mailto:egupta3@asu.edu")}
-            className=' bg-[#576cbc] py-2 px-6 rounded-xl outline-none w-fit text-white font-bold shadow-md shadow-primary mt-2 cursor-pointer'
-          >
-            Send
           </div>
-          </div> */}
         </div>
       </motion.div>
 

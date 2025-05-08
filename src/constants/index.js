@@ -114,8 +114,7 @@ const experiences = [
     iconBg: "#383E56",
     date: "Aug 2024 - April 2025",
     points: [
-      "Optimized authentication workflows by creating secure SSO solution using OAuth2.0, Angular and Express.js while integrating MongoDB and Redis for scalable session management, optimizing login efficiency for 5.5 million students.",
-      "Developed a scalable student attendance tracking system using Django, C++, and PostgreSQL, integrating Firebase and Google Cloud Platform (GCP) for real-time data syncing, analytics, and enhanced reporting accuracy.",
+      "Attendance tracking and ",
     ],
   },
   {

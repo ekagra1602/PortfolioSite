@@ -51,11 +51,11 @@ export default {
         'launch-return': 'launchAndReturn 2s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards',
       },
       colors: {
-        primary: "#050816",
-        secondary: "#aaa6c3",
-        tertiary: "#151030",
-        "black-100": "#100d25",
-        "black-200": "#090325",
+        primary: "#000000",
+        secondary: "#888888",
+        tertiary: "#1a1a1a",
+        "black-100": "#0a0a0a",
+        "black-200": "#050505",
         "white-100": "#f3f3f3",
       },
       boxShadow: {

@@ -13,6 +13,9 @@
   color-scheme: dark;
 }
 
+body {
+  background-color: #000000;
+}
 
 .hash-span {
   margin-top: -100px;
@@ -21,33 +24,33 @@
 }
 
 .black-gradient {
-  background: #000000; /* fallback for old browsers */
+  background: #000000;
   background: -webkit-linear-gradient(
     to right,
-    #434343,
+    #1a1a1a,
     #000000
-  ); /* Chrome 10-25, Safari 5.1-6 */
+  );
   background: linear-gradient(
     to right,
-    #434343,
+    #1a1a1a,
     #000000
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  );
 }
 
 .violet-gradient {
-  background: #804dee;
-  background: linear-gradient(-90deg, #804dee 0%, rgba(60, 51, 80, 0) 100%);
+  background: #1a1a1a;
+  background: linear-gradient(-90deg, #1a1a1a 0%, rgba(0, 0, 0, 0) 100%);
   background: -webkit-linear-gradient(
     -90deg,
-    #804dee 0%,
-    rgba(60, 51, 80, 0) 100%
+    #1a1a1a 0%,
+    rgba(0, 0, 0, 0) 100%
   );
 }
 
 .green-pink-gradient {
-  background: "#00cea8";
-  background: linear-gradient(90.13deg, #00cea8 1.9%, #bf61ff 97.5%);
-  background: -webkit-linear-gradient(-90.13deg, #00cea8 1.9%, #bf61ff 97.5%);
+  background: "#1a1a1a";
+  background: linear-gradient(90.13deg, #1a1a1a 1.9%, #000000 97.5%);
+  background: -webkit-linear-gradient(-90.13deg, #1a1a1a 1.9%, #000000 97.5%);
 }
 
 .orange-text-gradient {
@@ -202,4 +205,10 @@
       -1.8em 1.8em 0 0em rgba(255, 255, 255, 0.5),
       -2.6em 0em 0 0em rgba(255, 255, 255, 0.7), -1.8em -1.8em 0 0em #ffffff;
   }
+}
+
+/* Remove white line at the bottom of experience tiles */
+.vertical-timeline-element-content {
+  box-shadow: none !important;
+  border-bottom: none !important;
 }
