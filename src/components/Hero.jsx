@@ -3,8 +3,8 @@ import { motion } from "framer-motion";
 
 const Hero = () => {
   return (
-    <section className="relative md:h-dvh min-h-[600px] flex-col-reverse flex md:flex-row items-center justify-between pt-[60px] z-10 mx-[10%]">
-      <div className="content flex-col items-center md:items-start z-10 text-white">
+    <section className="relative md:h-dvh min-h-[600px] flex flex-col md:flex-row items-center justify-between pt-[60px] z-10 mx-[10%]">
+      <div className="content flex flex-col items-center md:items-start z-10 text-white md:w-[65%]">
         <motion.h1 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -17,10 +17,10 @@ const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          className="text-2xl md:text-3xl font-roboto mb-[48px]"
+          className="text-2xl md:text-2xl font-roboto mb-[36px]"
         >
-          I'm a junior at ASU and a software developer specializing in backend infrastructure, distributed systems, and ML infrastructure. 
-          I'm interning at Airbnb this summer, working on the Observability team in the Infrastructure unit.
+        I’m a junior at ASU and a Software Engineering intern at Airbnb.<br />
+        I love working on backend systems and machine learning.
         </motion.p>
         <motion.a
           initial={{ opacity: 0, y: 20 }}
