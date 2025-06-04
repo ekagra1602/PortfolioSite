@@ -102,9 +102,9 @@ const experiences = [
     company_name: "Airbnb",
     icon: Airbnb,
     iconBg: "#383E56",
-    date: "Incoming - May 2025",
+    date: "May 2025 - Present",
     points: [
-      "Incoming Software Engineering Intern on the Observability team in the Infrastructure unit",
+      "Software Engineering Intern on the Observability team in the Infrastructure unit",
     ],
   },
   {
