@@ -27,6 +27,7 @@ import Airbnb from "./company/Airbnb.jpg";
 import FocusAi from "./FocusAi.png";
 import resq from "./resq.jpeg";
 import chessArena from "./chessArena.jpeg";
+import liveit from "./liveit.png";
 
 export {
   carnegie,
@@ -55,4 +56,5 @@ export {
   resq,
   chessArena,
   Airbnb,
+  liveit,
 };

@@ -21,6 +21,7 @@ import {
   EduPoint,
   carnegie,
   Airbnb,
+  liveit,
 } from "../assets";
 
 export const navLinks = [
@@ -167,7 +168,7 @@ const projects = [
         color: "pink-text-gradient",
       },
       {
-        name: "React",
+        name: "Python",
         color: "orange-text-gradient",
       },
     ],
@@ -175,29 +176,29 @@ const projects = [
     source_code_link: "https://github.com/ekagra1602/FocusTime-AI",
   },
   {
-    name: "Chess Arena",
+    name: "Live-it",
     description:
-      "Developed a full-stack web-based chess application leveraging JavaScript for frontend interactivity and C++ for backend game logic and deployed it via Vercel.",
+    "Integrated Google Veo 3 API to generate cinematic videos from prompts, then trained it on VGGT neural network and Gaussian Splatting for AI-based camera inference and 3D scene construction, enabling real-time prompt-to-3D walkthroughs.",
     tags: [
       {
-        name: "C++",
+        name: "Python",
         color: "blue-text-gradient",
       },
       {
-        name: "JavaScript",
+        name: "VGGT",
         color: "green-text-gradient",
       },
       {
-        name: "React",
+        name: "Gemini API",
         color: "pink-text-gradient",
       },
       {
-        name: "Node.js",
+        name: "Gaussian Splatting",
         color: "orange-text-gradient",
       },
     ],
-    image: chessArena,
-    source_code_link: "https://github.com/ekagra1602/ChessArena",
+    image: liveit,
+    source_code_link: "https://github.com/ekagra1602/live-it",
   },
   {
     name: "ResQ(Smart India Hackathon)",
@@ -205,7 +206,7 @@ const projects = [
       "Developed a disaster management app for efficient collaboration among rescue agencies, utilizing Python and Node.js for backend, Flutter for frontend, and Google Maps API for real-time location tracking.",
     tags: [
       {
-        name: "Java",
+        name: "Golang",
         color: "blue-text-gradient",
       },
       {
