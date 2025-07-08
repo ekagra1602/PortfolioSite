@@ -129,11 +129,11 @@ const experiences = [
     ],
   },
   {
-    title: "Software Engineer Intern",
+    title: "Software Engineer Co-op",
     company_name: "Arizona State University",
     icon: Fulton,
     iconBg: "#383E56",
-    date: "Mar 2023 - May 2024",
+    date: "Mar 2023 - June 2024",
     points: [
       "CI / CD and monitoring using Spring Boot, JNA/ JNI, and Rest APIs.",]
   },

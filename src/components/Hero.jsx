@@ -19,8 +19,8 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
           className="text-2xl md:text-2xl font-roboto mb-[36px]"
         >
-        I’m a junior at ASU and a Software Engineering intern at Airbnb.<br />
-        I love working on backend systems and machine learning.
+        I'm a rising senior at ASU and a Software Engineering intern at Airbnb.<br />
+        I love working on backend systems and machine learning projects.
         </motion.p>
         <motion.a
           initial={{ opacity: 0, y: 20 }}
