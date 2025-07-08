@@ -201,7 +201,7 @@ const projects = [
     source_code_link: "https://github.com/ekagra1602/live-it",
   },
   {
-    name: "ResQ(Smart India Hackathon)",
+    name: "ResQ",
     description:
       "Developed a disaster management app for efficient collaboration among rescue agencies, utilizing Python and Node.js for backend, Flutter for frontend, and Google Maps API for real-time location tracking.",
     tags: [
