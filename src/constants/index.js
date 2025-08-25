@@ -34,6 +34,10 @@ export const navLinks = [
     title: "Work",
   },
   {
+    id: "blog",
+    title: "Blog",
+  },
+  {
     id: "contact",
     title: "Contact",
   },
@@ -227,4 +231,47 @@ const projects = [
   },
 ];
 
-export { services, technologies, experiences, projects };
+const blogPosts = [
+  {
+    id: 1,
+    title: "Building AI-Powered Applications with React",
+    excerpt: "Exploring the integration of machine learning models in modern web applications and how to create seamless user experiences.",
+    date: "March 15, 2025",
+    readTime: "5 min read",
+    category: "AI & Development",
+    tags: ["React", "AI", "Machine Learning", "Web Development"],
+    featured: true,
+  },
+  {
+    id: 2,
+    title: "The Future of 3D Web Experiences",
+    excerpt: "How technologies like Three.js and WebGL are revolutionizing the way we interact with digital content on the web.",
+    date: "March 10, 2025",
+    readTime: "7 min read",
+    category: "3D Graphics",
+    tags: ["Three.js", "WebGL", "3D Graphics", "Web Development"],
+    featured: false,
+  },
+  {
+    id: 3,
+    title: "Optimizing Performance in React Applications",
+    excerpt: "Best practices and techniques for building lightning-fast React applications that provide exceptional user experiences.",
+    date: "March 5, 2025",
+    readTime: "6 min read",
+    category: "Performance",
+    tags: ["React", "Performance", "Optimization", "Web Development"],
+    featured: false,
+  },
+  {
+    id: 4,
+    title: "Machine Learning in Production: Lessons Learned",
+    excerpt: "Real-world insights from deploying ML models in production environments and the challenges we faced.",
+    date: "February 28, 2025",
+    readTime: "8 min read",
+    category: "Machine Learning",
+    tags: ["ML", "Production", "Deployment", "Best Practices"],
+    featured: true,
+  },
+];
+
+export { services, technologies, experiences, projects, blogPosts };
