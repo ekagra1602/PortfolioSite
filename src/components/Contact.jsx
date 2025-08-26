@@ -15,7 +15,7 @@ const Contact = () => {
       initial="hidden"
       whileInView={"show"}
       viewport={{ once: true, amount: 0.1 }}
-      className="max-w-screen-xl mx-auto py-16 px-6 sm:px-16 relative z-0"
+      className="max-w-screen-xl mx-auto py-16 px-6 sm:px-16 relative z-0 contact-section"
       id="contact"
     >
       <span className="hash-span" id="contact">
@@ -26,10 +26,10 @@ const Contact = () => {
       >
         <motion.div
           variants={slideIn("left", "tween", 0.2, 1)}
-          className="flex-[0.75] bg-black-100 py-12 px-16 rounded-2xl shadow-lg shadow-black-200"
+          className="flex-[0.75] bg-black-100 py-12 px-16 rounded-2xl shadow-lg shadow-black-200 mt-8"
         >
           <p className={styles.sectionSubText}>Get in touch</p>
-          <h3 className={styles.sectionHeadText}>Contact.</h3>
+          <h3 className="text-4xl font-bold text-white">Contact</h3>
 
           <div className="mt-12 flex flex-col gap-8">
             <div>

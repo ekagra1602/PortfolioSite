@@ -1,12 +1,48 @@
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
 import { styles } from "../styles";
 import { blogPosts } from "../constants";
+import BlogStarsCanvas from "./canvas/BlogStars";
 
 const Blog = () => {
   const [selectedPost, setSelectedPost] = useState(null);
 
   const featuredPosts = blogPosts.filter(post => post.featured);
+
+  // Add CSS to ensure modal is on top of everything
+  useEffect(() => {
+    if (selectedPost) {
+      const style = document.createElement('style');
+      style.id = 'blog-modal-styles';
+      style.textContent = `
+        body {
+          overflow: hidden !important;
+        }
+        .contact-section {
+          z-index: 1 !important;
+        }
+        #root {
+          z-index: 1 !important;
+        }
+      `;
+      document.head.appendChild(style);
+    } else {
+      const existingStyle = document.getElementById('blog-modal-styles');
+      if (existingStyle) {
+        existingStyle.remove();
+      }
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      const existingStyle = document.getElementById('blog-modal-styles');
+      if (existingStyle) {
+        existingStyle.remove();
+      }
+      document.body.style.overflow = 'unset';
+    };
+  }, [selectedPost]);
 
   const openBlogPost = (post) => {
     setSelectedPost(post);
@@ -210,27 +246,64 @@ const Blog = () => {
       </motion.div>
 
       {/* Blog Post Modal */}
-      {selectedPost && (
+      {selectedPost && createPortal(
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black/95 backdrop-blur-md z-[9999] overflow-hidden"
-          onClick={closeBlogPost}
+          className="fixed inset-0 bg-black overflow-hidden"
+          style={{ zIndex: 999999 }}
         >
-          {/* Close button - top right */}
-          <button
-            onClick={closeBlogPost}
-            className="absolute top-6 right-6 z-10 p-3 bg-black/50 hover:bg-black/70 rounded-full backdrop-blur-sm transition-all duration-300 group"
-          >
-            <svg className="w-6 h-6 text-white group-hover:text-gray-300 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
+          {/* Navigation Bar */}
+          <div className="fixed top-0 left-0 right-0 bg-black/50 backdrop-blur-md border-b border-gray-700/50" style={{ zIndex: 9999999 }}>
+            <div className="grid grid-cols-3 items-center px-6 py-3">
+              <div className="flex items-center gap-4">
+                <button
+                  onClick={closeBlogPost}
+                  className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors duration-200"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                  </svg>
+                  <span className="text-sm font-medium">Back to Portfolio</span>
+                </button>
+              </div>
+              <div className="hidden sm:flex items-center justify-center gap-3">
+                <span className="px-3 py-1 bg-blue-600/20 text-blue-400 text-xs font-medium rounded-full border border-blue-500/30">
+                  {selectedPost.category}
+                </span>
+                <span className="text-gray-400 text-sm flex items-center gap-1">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  {selectedPost.readTime}
+                </span>
+                <span className="text-gray-400 text-sm hidden md:inline-flex items-center gap-1">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  {selectedPost.date}
+                </span>
+              </div>
+              <div className="flex items-center justify-end">
+                <button
+                  onClick={closeBlogPost}
+                  className="p-2 rounded-full hover:bg-white/10 text-gray-300 hover:text-white transition-colors mt-[-2px]"
+                  aria-label="Close"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Close button handled in navbar */}
 
           {/* Main content container */}
           <div className="h-full w-full overflow-y-auto">
-            <div className="min-h-full bg-gradient-to-br from-gray-900 via-gray-800 to-black">
+            <div className="min-h-full bg-black">
               {/* Hero section */}
               <div className="relative pt-20 pb-16 px-6 lg:px-12">
                 {/* Background decoration */}
@@ -273,10 +346,10 @@ const Blog = () => {
               </div>
 
               {/* Article content */}
-              <div className="px-6 lg:px-12 pb-20">
+              <div className="px-6 lg:px-12 pb-4">
                 <div className="max-w-4xl mx-auto">
                   {/* Key Points Section */}
-                  <div className="bg-gradient-to-r from-gray-800/50 to-gray-700/50 rounded-2xl p-8 mb-12 border border-gray-600/30 backdrop-blur-sm">
+                  <div className="rounded-2xl p-8 mb-12 border border-white/10 bg-white/5 backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
                     <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
                       <span className="w-1 h-8 bg-gradient-to-b from-blue-500 to-purple-600 rounded-full"></span>
                       Key Points
@@ -285,15 +358,20 @@ const Blog = () => {
                       {selectedPost.tags.map((tag, index) => (
                         <motion.div
                           key={index}
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: index * 0.1 }}
-                          className="flex items-center gap-3 p-4 bg-gray-700/30 rounded-xl border border-gray-600/30 hover:border-blue-500/50 transition-all duration-300 group"
+                          initial={{ opacity: 0, y: 6 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: index * 0.06 }}
+                          className="group relative overflow-hidden flex items-center gap-3 rounded-xl border border-white/10 bg-black/30 backdrop-blur-sm px-4 py-3 hover:bg-black/50 hover:border-white/20 transition-all"
                         >
-                          <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full group-hover:scale-125 transition-transform duration-300"></div>
-                          <span className="text-gray-200 font-medium group-hover:text-white transition-colors duration-300">
-                            {tag}
-                          </span>
+                          <span className="w-2 h-2 rounded-full bg-white/60 shadow-[0_0_6px_rgba(255,255,255,0.5)]"></span>
+                          <span className="text-white/90 tracking-wide">{tag}</span>
+                          {/* sheen sweep */}
+                          <motion.span
+                            className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent"
+                            initial={{ x: '-100%' }}
+                            whileHover={{ x: '100%' }}
+                            transition={{ duration: 0.9, ease: 'easeInOut' }}
+                          />
                         </motion.div>
                       ))}
                     </div>
@@ -303,7 +381,173 @@ const Blog = () => {
                   <div className="prose prose-invert max-w-none">
                     <div className="space-y-6 text-gray-300 leading-relaxed">
                       <p className="text-lg">
-                        This is a detailed exploration of <span className="text-blue-400 font-semibold">{selectedPost.title.toLowerCase()}</span>. The content would include comprehensive information, code examples, and insights based on real-world experience.
+                      August 25, 2025   |   Read Online
+
+
+
+ 
+ 	
+Welcome to Half Baked, the newsletter serving up startup ideas as surprising as xAI suing Apple and OpenAI for collusion 😱 
+
+If you want to read any previous editions of Half Baked, you can check them out on our website.
+
+Let’s goooo 🚀 
+
+ 
+In today’s edition:
+
+💡 Bringing some innovation to the scheduling space
+
+📈 Why the Mafia is trending right now
+
+🛠️ How to clone mobile apps using AI
+
+🤑 Turning a $2 idea into a billion-dollar empire
+
+🍻 Combining two passions into one product
+
+ 
+ 
+
+ 
+ 	
+
+⛈️ Weather-based Calendar
+Taking a rain check
+
+
+Available domain: Cloudcal.ai
+
+The Problem: Weather. It’s the ultimate conversation starter and depending on where you live, something to celebrate or to lament. Here’s the thing though…weather messes with us way more than we like to admit. Studies show we’re way more focused on gloomy, rainy days and we basically turn into golden retrievers the moment the sun comes out. So for people out there with more flexible weather schedules, why not allow them to plan their weeks based on the weather? Here’s what we’re thinking.
+
+The Solution:
+
+In a line: An AI scheduling app that plans your week around the weather, so you can play when it’s sunny and grind when it’s gray.
+
+Product:
+
+📲 Connect Google or Outlook calendars, allow weather access, and set location and work preferences.
+
+☀️ The app suggests optimal work and leisure blocks based on the 7-day forecast and personal productivity style.
+
+🧠 The app uses AI to move flexible tasks to worse weather days, while locking in non-negotiables.
+
+🔔 Your calendar adjusts dynamically if the forecast changes or you need to manually intervene.
+
+Business Model: Freemium SaaS with a paid “Pro” tier offering smart integrations (Slack, Notion, multi-location weather), team use, and advanced customization.
+
+End Goal: Exit to a calendar/productivity platform like Notion or Atlassian at a 5–7x multiple for its unique IP and behavioral data play
+
+Rate this idea:
+👍 Cool idea  |  👎 This is whack
+ 
+ 
+ 
+ 	
+
+🤳 The App Mafia
+
+The Trend: People are really unhappy with the Mafia right now. Not that Mafia though, it’s the newly formed “App Mafia” that’s trending. It’s a group of 5 young founders (Zach, Blake, Hunter, Connor, Alex) who all built viral consumer apps (like NGL, Quittr, Cal AI and Umax) that have teamed up to sell a course on how to build viral apps. Why is everyone so mad though? Well the $997 price is a little steep, plus their launch strategy appears to have ruffled a few feathers. Hopefully we don’t end up with a horses head in our bed for talking about it though…
+
+Opportunities:
+
+Receipts-First Course Platform: An edtech platform where the only teachers allowed are people with verifiable revenue/download receipts.
+
+App Virality Testing Lab: A tool that lets you simulate how an app mechanic would spread on TikTok or Instagram before building it.
+
+ 
+ 
+ 
+ 	
+
+📲 How to Clone Mobile Apps Using AI
+
+The Tool: Spotify. Airbnb. Netflix. These are some of the most popular, well designed apps in the world. But what if I said you could clone them with a single prompt in a few minutes? Here’s how you can.
+
+Step-by-step:
+
+Go to Emergent and create your account
+
+Select their Mobile Apps agent and prompt what app you want it to create e.g Create a clone of Instagram
+
+Answer the prompts from the agent and watch your app get built
+
+Try it out
+
+ 
+ 
+ 
+ 	
+
+💵 Your AI-Powered, Slack-Connected Finance Team
+
+You raised the money. You’re building the thing. But now the spending’s piling up, and your “finance dept” is basically a spreadsheet and a prayer.
+
+Afino is your AI-powered, Slack-connected finance team—offering bookkeeping, tax prep, R&D credits, and fractional CFO support, all tailored for startup speed.
+
+If you’re a founder trying to actually get your finances in order, this one’s for you.
+
+Half Baked has partnered with Afino to give one year of corporate taxes for FREE to the first 5 companies that claim this offer.  
+
+Book a call today
+
+ 
+ 
+ 
+ 	
+
+🔋 Turning a $2 idea into a Billion-dollar Empire
+
+The Idea: Manoj Bhargava isn’t your typical Silicon Valley founder. A Princeton dropout who’d spent years living as a monk in India, he returned to the U.S. with an eye for practical ideas that solved real problems. Then in 2003, at a natural products trade show in California, he noticed a 16-ounce energy drink that gave a huge kick, but had way too much liquid and sugar. He wondered…people want the energy, but not the big can. So he went back to Michigan, worked with chemists, and came up with a 2-ounce “energy shot” that provided five hours of alertness in a pocket-sized bottle. That was the birth of 5-hour Energy.
+
+The Execution:
+
+2004: Manoj launched 5-hour Energy through his company, Living Essentials. Distribution started in gas stations and convenience stores.
+
+2006: Early growth came from giving away free samples at trade shows and direct-to-store selling. The tiny bottles next to Red Bull and Coke looked odd, driving word-of-mouth sales.
+
+2008: Revenue hit $1 billion in retail sales, fueled by aggressive TV ads with the now-famous pitch: “Need an extra boost? Take a 5-hour Energy.”
+
+2012: By 2012 5 Hour Energy controlled 90%+ of the energy shot market, essentially monopolizing a category that Manoj had created. Competitors tried to copy the format but couldn’t match the distribution or brand recognition.
+
+2014–2017: Legal battles mounted, false advertising suits emerged and state investigations into health claims began to pop up. The brand was hit with heavy fines…but kept growing.
+
+Today: The brand is still privately owned by Manoj’s company, generating billions in sales each year. Manoj has pledged to give away 90% of his wealth, funding projects in clean water, renewable energy, and healthcare.
+
+Because sometimes the best way to compete is to create an entirely new market. Manoj didn’t create energy drinks, but he created a new format…the tiny shot. And in doing so, he turned a $2 idea into a billion-dollar empire.
+
+ 
+ 
+
+ 
+ 	
+🔍️ Founder Finds
+🛠️ AI Tool: Google is secretly testing something called “Nano Banana” across platforms. Great name…
+
+📚 Must-Read: The AI market took a pretty big hit last week. This is the MIT report that caused the commotion.
+
+📹 Must-Watch: Brian Chesky on why you shouldn’t always listen to VCs.
+
+✖️ Trending Tweet: This is a major cheat code for life.
+
+💬 Founder Quote: “Don’t be a know-it-all; be a learn-it-all.” Satya Nadella (Microsoft)
+
+ 
+ 
+ 
+ 	
+🔦 Reader Spotlight
+🏢 Malleable.ai: Brian Coombs is building help businesses create enterprise value through AI.
+
+🔤 X-doc: Lu Zhang is building the most accurate online AI translator for technical, medical, academic, and regulatory translations.
+
+💧DAMP: Zach Goodbody is building a device to never leave your bottle behind again.
+
+🏨 OKstays: Oriol Fitó is working on uses AI to cut through the noise, providing a clear and honest way to find hotels based on what truly matters for a comfortable stay.
+
+🎨 Mensoi: Filip Grebowski is working on this creative marketing agency specializes in driving go-to-market strategies and branding for tech startups and companies post-series A.
+
+P.S: If you want your startup or project featured, click here!
                       </p>
                       
                       <div className="bg-gray-800/30 rounded-xl p-6 border border-gray-600/30">
@@ -323,65 +567,75 @@ const Blog = () => {
                       </p>
                     </div>
                   </div>
+                </div>
+              </div>
+            </div>
 
-                  {/* Action buttons */}
-                  <div className="mt-16 pt-8 border-t border-gray-700/50">
+            {/* Sticky Footer with Stars and Action Buttons */}
+            <div className="sticky bottom-0 left-0 right-0 h-[10%] overflow-hidden bg-black" style={{ zIndex: 10 }}>
+              {/* Stars Background */}
+              <BlogStarsCanvas />
+              
+              {/* Action buttons positioned over the stars */}
+              <div className="absolute inset-0 flex items-center justify-center px-6 lg:px-12" style={{ zIndex: 20 }}>
+                <div className="max-w-4xl mx-auto w-full">
+                  <div className="bg-transparent p-6">
                     <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
-                                             {/* Social sharing */}
-                       <div className="flex items-center gap-4">
-                         <span className="text-gray-400 text-sm font-medium">Share this article:</span>
-                         <div className="flex gap-3">
-                           {[
-                             { 
-                               icon: "twitter", 
-                               color: "text-blue-400 hover:text-blue-300", 
-                               bg: "hover:bg-blue-500/20",
-                               url: `https://twitter.com/intent/tweet?text=${encodeURIComponent(selectedPost.title)}&url=${encodeURIComponent(window.location.href)}`
-                             },
-                             { 
-                               icon: "linkedin", 
-                               color: "text-blue-600 hover:text-blue-500", 
-                               bg: "hover:bg-blue-600/20",
-                               url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`
-                             },
-                             { 
-                               icon: "copy", 
-                               color: "text-gray-400 hover:text-gray-300", 
-                               bg: "hover:bg-gray-500/20",
-                               action: () => {
-                                 navigator.clipboard.writeText(window.location.href);
-                                 // You could add a toast notification here
-                               }
-                             }
-                           ].map((social, index) => (
-                             <motion.button
-                               key={social.icon}
-                               whileHover={{ scale: 1.1 }}
-                               whileTap={{ scale: 0.95 }}
-                               className={`p-3 rounded-xl border border-gray-600/30 ${social.bg} ${social.color} transition-all duration-300`}
-                               onClick={() => {
-                                 if (social.action) {
-                                   social.action();
-                                 } else if (social.url) {
-                                   window.open(social.url, '_blank', 'noopener,noreferrer');
-                                 }
-                               }}
-                             >
-                               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                 {social.icon === "twitter" && (
-                                   <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
-                                 )}
-                                 {social.icon === "linkedin" && (
-                                   <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.542C23.227 24 24 23.227 24 22.271V1.729C24 .774 23.227 0 22.225 0h.003z"/>
-                                 )}
-                                 {social.icon === "copy" && (
-                                   <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
-                                 )}
-                               </svg>
-                             </motion.button>
-                           ))}
-                         </div>
-                       </div>
+                      {/* Social sharing */}
+                      <div className="flex items-center gap-4">
+                        <span className="text-white/90 text-sm font-medium">Share this article:</span>
+                        <div className="flex gap-3">
+                          {[
+                            { 
+                              icon: "twitter", 
+                              color: "text-blue-400 hover:text-blue-300", 
+                              bg: "",
+                              url: `https://twitter.com/intent/tweet?text=${encodeURIComponent(selectedPost.title)}&url=${encodeURIComponent(window.location.href)}`
+                            },
+                            { 
+                              icon: "linkedin", 
+                              color: "text-blue-600 hover:text-blue-500", 
+                              bg: "",
+                              url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`
+                            },
+                            { 
+                              icon: "copy", 
+                              color: "text-gray-400 hover:text-gray-300", 
+                              bg: "",
+                              action: () => {
+                                navigator.clipboard.writeText(window.location.href);
+                                // You could add a toast notification here
+                              }
+                            }
+                          ].map((social, index) => (
+                            <motion.button
+                              key={social.icon}
+                              whileHover={{ scale: 1.1 }}
+                              whileTap={{ scale: 0.95 }}
+                              className={`p-3 rounded-xl bg-transparent ${social.color} transition-all duration-300`}
+                              onClick={() => {
+                                if (social.action) {
+                                  social.action();
+                                } else if (social.url) {
+                                  window.open(social.url, '_blank', 'noopener,noreferrer');
+                                }
+                              }}
+                            >
+                              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                {social.icon === "twitter" && (
+                                  <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                                )}
+                                {social.icon === "linkedin" && (
+                                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.542C23.227 24 24 23.227 24 22.271V1.729C24 .774 23.227 0 22.225 0h.003z"/>
+                                )}
+                                {social.icon === "copy" && (
+                                  <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                                )}
+                              </svg>
+                            </motion.button>
+                          ))}
+                        </div>
+                      </div>
 
                       {/* View Project button */}
                       <motion.a
@@ -390,7 +644,7 @@ const Blog = () => {
                         rel="noopener noreferrer"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        className="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-lg shadow-blue-600/25 flex items-center gap-2"
+                        className="px-8 py-3 border border-white/40 text-white font-semibold rounded-xl hover:border-white hover:bg-white/10 transition-all duration-300 flex items-center gap-2"
                       >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -403,7 +657,8 @@ const Blog = () => {
               </div>
             </div>
           </div>
-        </motion.div>
+        </motion.div>,
+        document.body
       )}
 
     </section>
