@@ -256,8 +256,8 @@ const Blog = () => {
         >
           {/* Navigation Bar */}
           <div className="fixed top-0 left-0 right-0 bg-black/50 backdrop-blur-md border-b border-gray-700/50" style={{ zIndex: 9999999 }}>
-            <div className="grid grid-cols-3 items-center px-6 py-3">
-              <div className="flex items-center gap-4">
+            <div className="grid grid-cols-12 items-center px-6 py-3">
+              <div className="flex items-center gap-4 col-span-4 md:col-span-3">
                 <button
                   onClick={closeBlogPost}
                   className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors duration-200"
@@ -268,24 +268,24 @@ const Blog = () => {
                   <span className="text-sm font-medium">Back to Portfolio</span>
                 </button>
               </div>
-              <div className="hidden sm:flex items-center justify-center gap-3">
-                <span className="px-3 py-1 bg-blue-600/20 text-blue-400 text-xs font-medium rounded-full border border-blue-500/30">
+              <div className="hidden sm:flex items-center justify-center gap-4 col-span-8 md:col-span-6 whitespace-nowrap">
+                <span className="px-5 py-1 bg-blue-600/20 text-blue-400 text-xs font-medium rounded-full border border-blue-500/30">
                   {selectedPost.category}
                 </span>
                 <span className="text-gray-400 text-sm flex items-center gap-1">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   {selectedPost.readTime}
                 </span>
                 <span className="text-gray-400 text-sm hidden md:inline-flex items-center gap-1">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
                   {selectedPost.date}
                 </span>
               </div>
-              <div className="flex items-center justify-end">
+              <div className="flex items-center justify-end col-span-4 md:col-span-3">
                 <button
                   onClick={closeBlogPost}
                   className="p-2 rounded-full hover:bg-white/10 text-gray-300 hover:text-white transition-colors mt-[-2px]"
@@ -314,24 +314,6 @@ const Blog = () => {
                 
                 {/* Content */}
                 <div className="relative z-10 max-w-4xl mx-auto">
-                  {/* Meta info */}
-                  <div className="flex items-center gap-4 mb-6">
-                    <span className="px-4 py-2 bg-blue-600/20 text-blue-400 text-sm font-medium rounded-full border border-blue-500/30 backdrop-blur-sm">
-                      {selectedPost.category}
-                    </span>
-                    <span className="text-gray-400 text-sm flex items-center gap-2">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                      {selectedPost.readTime}
-                    </span>
-                    <span className="text-gray-400 text-sm flex items-center gap-2">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                      </svg>
-                      {selectedPost.date}
-                    </span>
-                  </div>
 
                   {/* Title */}
                   <h1 className="text-4xl lg:text-5xl font-bold text-white mb-8 leading-tight">
@@ -379,192 +361,78 @@ const Blog = () => {
 
                   {/* Article body */}
                   <div className="prose prose-invert max-w-none">
-                    <div className="space-y-6 text-gray-300 leading-relaxed">
-                      <p className="text-lg">
-                      August 25, 2025   |   Read Online
-
-
-
- 
- 	
-Welcome to Half Baked, the newsletter serving up startup ideas as surprising as xAI suing Apple and OpenAI for collusion 😱 
-
-If you want to read any previous editions of Half Baked, you can check them out on our website.
-
-Let’s goooo 🚀 
-
- 
-In today’s edition:
-
-💡 Bringing some innovation to the scheduling space
-
-📈 Why the Mafia is trending right now
-
-🛠️ How to clone mobile apps using AI
-
-🤑 Turning a $2 idea into a billion-dollar empire
-
-🍻 Combining two passions into one product
-
- 
- 
-
- 
- 	
-
-⛈️ Weather-based Calendar
-Taking a rain check
-
-
-Available domain: Cloudcal.ai
-
-The Problem: Weather. It’s the ultimate conversation starter and depending on where you live, something to celebrate or to lament. Here’s the thing though…weather messes with us way more than we like to admit. Studies show we’re way more focused on gloomy, rainy days and we basically turn into golden retrievers the moment the sun comes out. So for people out there with more flexible weather schedules, why not allow them to plan their weeks based on the weather? Here’s what we’re thinking.
-
-The Solution:
-
-In a line: An AI scheduling app that plans your week around the weather, so you can play when it’s sunny and grind when it’s gray.
-
-Product:
-
-📲 Connect Google or Outlook calendars, allow weather access, and set location and work preferences.
-
-☀️ The app suggests optimal work and leisure blocks based on the 7-day forecast and personal productivity style.
-
-🧠 The app uses AI to move flexible tasks to worse weather days, while locking in non-negotiables.
-
-🔔 Your calendar adjusts dynamically if the forecast changes or you need to manually intervene.
-
-Business Model: Freemium SaaS with a paid “Pro” tier offering smart integrations (Slack, Notion, multi-location weather), team use, and advanced customization.
-
-End Goal: Exit to a calendar/productivity platform like Notion or Atlassian at a 5–7x multiple for its unique IP and behavioral data play
-
-Rate this idea:
-👍 Cool idea  |  👎 This is whack
- 
- 
- 
- 	
-
-🤳 The App Mafia
-
-The Trend: People are really unhappy with the Mafia right now. Not that Mafia though, it’s the newly formed “App Mafia” that’s trending. It’s a group of 5 young founders (Zach, Blake, Hunter, Connor, Alex) who all built viral consumer apps (like NGL, Quittr, Cal AI and Umax) that have teamed up to sell a course on how to build viral apps. Why is everyone so mad though? Well the $997 price is a little steep, plus their launch strategy appears to have ruffled a few feathers. Hopefully we don’t end up with a horses head in our bed for talking about it though…
-
-Opportunities:
-
-Receipts-First Course Platform: An edtech platform where the only teachers allowed are people with verifiable revenue/download receipts.
-
-App Virality Testing Lab: A tool that lets you simulate how an app mechanic would spread on TikTok or Instagram before building it.
-
- 
- 
- 
- 	
-
-📲 How to Clone Mobile Apps Using AI
-
-The Tool: Spotify. Airbnb. Netflix. These are some of the most popular, well designed apps in the world. But what if I said you could clone them with a single prompt in a few minutes? Here’s how you can.
-
-Step-by-step:
-
-Go to Emergent and create your account
-
-Select their Mobile Apps agent and prompt what app you want it to create e.g Create a clone of Instagram
-
-Answer the prompts from the agent and watch your app get built
-
-Try it out
-
- 
- 
- 
- 	
-
-💵 Your AI-Powered, Slack-Connected Finance Team
-
-You raised the money. You’re building the thing. But now the spending’s piling up, and your “finance dept” is basically a spreadsheet and a prayer.
-
-Afino is your AI-powered, Slack-connected finance team—offering bookkeeping, tax prep, R&D credits, and fractional CFO support, all tailored for startup speed.
-
-If you’re a founder trying to actually get your finances in order, this one’s for you.
-
-Half Baked has partnered with Afino to give one year of corporate taxes for FREE to the first 5 companies that claim this offer.  
-
-Book a call today
-
- 
- 
- 
- 	
-
-🔋 Turning a $2 idea into a Billion-dollar Empire
-
-The Idea: Manoj Bhargava isn’t your typical Silicon Valley founder. A Princeton dropout who’d spent years living as a monk in India, he returned to the U.S. with an eye for practical ideas that solved real problems. Then in 2003, at a natural products trade show in California, he noticed a 16-ounce energy drink that gave a huge kick, but had way too much liquid and sugar. He wondered…people want the energy, but not the big can. So he went back to Michigan, worked with chemists, and came up with a 2-ounce “energy shot” that provided five hours of alertness in a pocket-sized bottle. That was the birth of 5-hour Energy.
-
-The Execution:
-
-2004: Manoj launched 5-hour Energy through his company, Living Essentials. Distribution started in gas stations and convenience stores.
-
-2006: Early growth came from giving away free samples at trade shows and direct-to-store selling. The tiny bottles next to Red Bull and Coke looked odd, driving word-of-mouth sales.
-
-2008: Revenue hit $1 billion in retail sales, fueled by aggressive TV ads with the now-famous pitch: “Need an extra boost? Take a 5-hour Energy.”
-
-2012: By 2012 5 Hour Energy controlled 90%+ of the energy shot market, essentially monopolizing a category that Manoj had created. Competitors tried to copy the format but couldn’t match the distribution or brand recognition.
-
-2014–2017: Legal battles mounted, false advertising suits emerged and state investigations into health claims began to pop up. The brand was hit with heavy fines…but kept growing.
-
-Today: The brand is still privately owned by Manoj’s company, generating billions in sales each year. Manoj has pledged to give away 90% of his wealth, funding projects in clean water, renewable energy, and healthcare.
-
-Because sometimes the best way to compete is to create an entirely new market. Manoj didn’t create energy drinks, but he created a new format…the tiny shot. And in doing so, he turned a $2 idea into a billion-dollar empire.
-
- 
- 
-
- 
- 	
-🔍️ Founder Finds
-🛠️ AI Tool: Google is secretly testing something called “Nano Banana” across platforms. Great name…
-
-📚 Must-Read: The AI market took a pretty big hit last week. This is the MIT report that caused the commotion.
-
-📹 Must-Watch: Brian Chesky on why you shouldn’t always listen to VCs.
-
-✖️ Trending Tweet: This is a major cheat code for life.
-
-💬 Founder Quote: “Don’t be a know-it-all; be a learn-it-all.” Satya Nadella (Microsoft)
-
- 
- 
- 
- 	
-🔦 Reader Spotlight
-🏢 Malleable.ai: Brian Coombs is building help businesses create enterprise value through AI.
-
-🔤 X-doc: Lu Zhang is building the most accurate online AI translator for technical, medical, academic, and regulatory translations.
-
-💧DAMP: Zach Goodbody is building a device to never leave your bottle behind again.
-
-🏨 OKstays: Oriol Fitó is working on uses AI to cut through the noise, providing a clear and honest way to find hotels based on what truly matters for a comfortable stay.
-
-🎨 Mensoi: Filip Grebowski is working on this creative marketing agency specializes in driving go-to-market strategies and branding for tech startups and companies post-series A.
-
-P.S: If you want your startup or project featured, click here!
-                      </p>
-                      
-                      <div className="bg-gray-800/30 rounded-xl p-6 border border-gray-600/30">
-                        <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                          <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                          </svg>
-                          Technical Deep Dive
-                        </h3>
-                        <p className="text-gray-300">
-                          Throughout this article, we'll dive deep into the technical aspects, practical applications, and best practices that make this topic relevant for developers and technology enthusiasts.
-                        </p>
-                      </div>
-
-                      <p className="text-lg">
-                        Stay tuned for more detailed content and practical examples that you can implement in your own projects. We'll cover everything from basic concepts to advanced implementations.
-                      </p>
+                    <div className="space-y-6">
+                      {(() => {
+                        const blocks = (selectedPost.content || '').split(/\n\s*\n/);
+                        return blocks.map((raw, idx) => {
+                          const text = raw.trim();
+                          const isH1 = /^#\s+/.test(text);
+                          const isH2 = /^##\s+/.test(text);
+                          const isH3 = /^###\s+/.test(text);
+                          const isRule = /^(⸻|---|—)$/.test(text);
+                          const setNameMatch = text.match(/^\(\s*(?:Photos?|Photo\s*set)\s*:\s*([A-Za-z0-9_-]+)\s*\)/i);
+                          const isPhotoMarker = Boolean(setNameMatch) || /^\(Photo set\s*\d*:/i.test(text);
+                          const contentText = text.replace(/^#{1,3}\s+/, '');
+                          const isAutoH2 = !isH1 && !isH2 && !isH3 && !isRule &&
+                            /^[A-Z][A-Za-z0-9 ,&()\-’'/:]+$/.test(text) && text.length <= 80;
+
+                          return (
+                            <div key={idx} className="space-y-4">
+                              {isRule ? (
+                                <div className="my-6 border-t border-white/10" />
+                              ) : isPhotoMarker ? (
+                                null
+                              ) : isH1 ? (
+                                <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight">{contentText}</h2>
+                              ) : isH2 ? (
+                                <h3 className="font-display text-3xl md:text-4xl font-semibold text-white tracking-tight">{contentText}</h3>
+                              ) : isH3 ? (
+                                <h4 className="font-display text-2xl md:text-3xl font-semibold text-white tracking-tight">{contentText}</h4>
+                              ) : isAutoH2 ? (
+                                <h3 className="font-display text-3xl md:text-4xl font-semibold text-white tracking-tight">{text}</h3>
+                              ) : (
+                                <p className="font-inter text-base md:text-lg text-gray-200 leading-8 tracking-[0.01em] whitespace-pre-line">{text}</p>
+                              )}
+
+                              {isPhotoMarker && (() => {
+                                const setName = setNameMatch ? setNameMatch[1] : null;
+                                const imagesFromSet = setName && selectedPost.imageSets && Array.isArray(selectedPost.imageSets[setName])
+                                  ? selectedPost.imageSets[setName]
+                                  : (Array.isArray(selectedPost.images) ? selectedPost.images : []);
+                                return imagesFromSet.length > 0 ? (
+                                  <div className="my-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                                  {imagesFromSet.map((img, i) => (
+                                    <motion.figure
+                                      key={i}
+                                      initial={{ opacity: 0, y: 12 }}
+                                      whileInView={{ opacity: 1, y: 0 }}
+                                      viewport={{ once: true, amount: 0.3 }}
+                                      whileHover={{ scale: 1.015 }}
+                                      transition={{ duration: 0.35, ease: 'easeOut' }}
+                                      className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-xl hover:shadow-2xl hover:border-white/20 transition-all duration-300"
+                                    >
+                                      <motion.img
+                                        src={img.src}
+                                        alt={img.alt || ''}
+                                        loading="lazy"
+                                        className="w-full h-[28rem] md:h-[32rem] object-cover"
+                                        whileHover={{ scale: 1.05 }}
+                                        transition={{ duration: 0.4, ease: 'easeOut' }}
+                                      />
+                                      {img.caption && (
+                                        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent">
+                                          <figcaption className="px-4 py-3 text-sm md:text-base text-white/95">{img.caption}</figcaption>
+                                        </div>
+                                      )}
+                                    </motion.figure>
+                                  ))}
+                                  </div>
+                                ) : null;
+                              })()}
+                            </div>
+                          );
+                        });
+                      })()}
                     </div>
                   </div>
                 </div>
@@ -637,20 +505,22 @@ P.S: If you want your startup or project featured, click here!
                         </div>
                       </div>
 
-                      {/* View Project button */}
-                      <motion.a
-                        href={selectedPost.source_code_link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="px-8 py-3 border border-white/40 text-white font-semibold rounded-xl hover:border-white hover:bg-white/10 transition-all duration-300 flex items-center gap-2"
-                      >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                        </svg>
-                        View Project
-                      </motion.a>
+                      {/* View Project button (optional) */}
+                      {selectedPost.source_code_link && (
+                        <motion.a
+                          href={selectedPost.source_code_link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          className="px-8 py-3 border border-white/40 text-white font-semibold rounded-xl hover:border-white hover:bg-white/10 transition-all duration-300 flex items-center gap-2"
+                        >
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                          </svg>
+                          View Project
+                        </motion.a>
+                      )}
                     </div>
                   </div>
                 </div>

@@ -28,6 +28,12 @@ import FocusAi from "./FocusAi.png";
 import resq from "./resq.jpeg";
 import chessArena from "./chessArena.jpeg";
 import liveit from "./liveit.png";
+import bridge from "./bridge.jpeg";
+import office from "./office.jpg";
+import hack from "./hack.jpeg";
+import ramen from "./ramen.jpeg";
+import airbnbLogoPhoto from "./officelogo.jpeg";
+import olympic from "./olympic.jpeg";
 
 export {
   carnegie,
@@ -57,4 +63,10 @@ export {
   chessArena,
   Airbnb,
   liveit,
+  bridge,
+  office,
+  hack,
+  ramen,
+  airbnbLogoPhoto,
+  olympic,
 };
