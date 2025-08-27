@@ -70,6 +70,8 @@ export default {
       },
       fontFamily: {
         roboto: ['Roboto','sans-serif'],
+        inter: ['Inter','ui-sans-serif','system-ui','-apple-system','Segoe UI','Roboto','Helvetica','Arial','sans-serif'],
+        display: ['Space Grotesk','Inter','ui-sans-serif','system-ui'],
       },
       boxShadowColor: {
         custom: '0 0 4px 0 rgba(0, 0, 0, 0.25)'
