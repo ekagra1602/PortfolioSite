@@ -440,7 +440,7 @@ const Blog = () => {
             </div>
 
             {/* Sticky Footer with Stars and Action Buttons */}
-            <div className="sticky bottom-0 left-0 right-0 h-[10%] overflow-hidden bg-black" style={{ zIndex: 10 }}>
+            <div className="sticky bottom-0 left-0 right-0 h-[10%] overflow-visible bg-black" style={{ zIndex: 10 }}>
               {/* Stars Background */}
               <BlogStarsCanvas />
               
@@ -458,20 +458,24 @@ const Blog = () => {
                               icon: "twitter", 
                               color: "text-blue-400 hover:text-blue-300", 
                               bg: "",
-                              url: `https://twitter.com/intent/tweet?text=${encodeURIComponent(selectedPost.title)}&url=${encodeURIComponent(window.location.href)}`
+                              title: "Share on Twitter",
+                              url: `https://twitter.com/intent/tweet?text=${encodeURIComponent(selectedPost.title)}&url=${encodeURIComponent(`${window.location.origin}${window.location.pathname}#blog${selectedPost.id}`)}`
                             },
                             { 
                               icon: "linkedin", 
                               color: "text-blue-600 hover:text-blue-500", 
                               bg: "",
-                              url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`
+                              title: "Share on LinkedIn",
+                              url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`${window.location.origin}${window.location.pathname}#blog${selectedPost.id}`)}`
                             },
                             { 
                               icon: "copy", 
                               color: "text-gray-400 hover:text-gray-300", 
                               bg: "",
+                              title: "Copy link",
                               action: () => {
-                                navigator.clipboard.writeText(window.location.href);
+                                const shareUrl = `${window.location.origin}${window.location.pathname}#blog${selectedPost.id}`;
+                                navigator.clipboard.writeText(shareUrl);
                                 // You could add a toast notification here
                               }
                             }
@@ -480,7 +484,9 @@ const Blog = () => {
                               key={social.icon}
                               whileHover={{ scale: 1.1 }}
                               whileTap={{ scale: 0.95 }}
-                              className={`p-3 rounded-xl bg-transparent ${social.color} transition-all duration-300`}
+                              className={`relative group p-3 rounded-xl bg-transparent ${social.color} transition-all duration-300`}
+                              title={social.title}
+                              aria-label={social.title}
                               onClick={() => {
                                 if (social.action) {
                                   social.action();
@@ -500,6 +506,9 @@ const Blog = () => {
                                   <path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
                                 )}
                               </svg>
+                              {social.icon === "copy" && (
+                                <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap bg-black/80 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-50">Copy link</span>
+                              )}
                             </motion.button>
                           ))}
                         </div>
