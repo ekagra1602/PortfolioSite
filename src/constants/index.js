@@ -113,9 +113,9 @@ const experiences = [
     company_name: "Airbnb",
     icon: Airbnb,
     iconBg: "#383E56",
-    date: "May 2025 - Present",
+    date: "May 2025 - August 2025",
     points: [
-      "Software Engineering Intern on the Observability team in the Infrastructure unit",
+      "Observability team within Infrastructure, focusing on large-scale systems",
     ],
   },
   {
@@ -123,9 +123,9 @@ const experiences = [
     company_name: "Edupoint Educational Systems LLC",
     icon: EduPoint,
     iconBg: "#383E56",
-    date: "Jan 2025 - April 2025",
+    date: "January 2025 - April 2025",
     points: [
-      "Attendance Tracking and Authorization Team",
+      "Attendance Tracking and Authorization group, supporting product development",
     ],
   },
   {
@@ -133,9 +133,9 @@ const experiences = [
     company_name: "Carnegie Mellon University",
     icon: carnegie,
     iconBg: "#E6DEDD",
-    date: "Jun 2024 - Aug 2024",
+    date: "June 2024 - August 2024",
     points: [
-      "Research related to open source repositories containing Deep Learning Tensorflow / Pytorch models.",
+      "Research on deep learning models and open-source repositories",
     ],
   },
   {
@@ -143,9 +143,9 @@ const experiences = [
     company_name: "Arizona State University",
     icon: Fulton,
     iconBg: "#383E56",
-    date: "Mar 2023 - June 2024",
+    date: "March 2023 - June 2024",
     points: [
-      "CI / CD and monitoring using Spring Boot, JNA/ JNI, and Rest APIs.",]
+      "CI/CD, monitoring, and systems automation in infrastructure",]
   },
   {
     title: "Software Engineering Intern",
@@ -154,7 +154,7 @@ const experiences = [
     iconBg: "#E6DEDD",
     date: "May 2022 - August 2022",
     points: [
-      "Guided and instructed students in MATLAB, SolidWorks, and JavaScript projects.",
+      "Backend and database-focused work in product development.",
     ],
   },
 ];

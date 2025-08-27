@@ -51,11 +51,18 @@ const About = () => {
         variants={fadeIn("", "", 0.1, 1)}
         className="mt-4 text-secondary text-[17px] max-w-5.5xl leading-[30px]"
       >
-      I'm a backend-focused software developer with expertise in ML, backend, and full stack work.
-      I specialize in building scalable APIs and optimizing databases (PostgreSQL, MongoDB, Redis) using frameworks like Node.js, Django, and Flask. 
-      With experience in ML model deployment (TensorFlow, PyTorch) and cloud platforms (AWS, GCP), I ensure efficient, production-ready solutions. 
-      I also develop full-stack applications with React, Angular and Next.js, integrating ML-driven insights into user-friendly interfaces. 
-      Let's build intelligent and scalable systems together!
+I’m a backend-focused software developer with expertise in distributed systems, machine learning, and
+full-stack development. My work centers on building scalable APIs and optimizing databases (PostgreSQL, MongoDB, Redis)
+while designing fault-tolerant services using frameworks like Node.js, Django, and Flask. I have hands-on experience
+with distributed data pipelines and streaming systems such as Kafka and Spark, ensuring reliability and high throughput
+in large-scale environments. <br />
+
+Beyond backend infrastructure, I deploy ML models with TensorFlow and PyTorch, integrating them into production-ready
+systems on AWS and GCP. I also build full-stack applications using React, Angular, and Next.js, tying together robust
+backend services with clean, user-friendly interfaces. <br />
+
+My goal is to bring these pieces together: backend infrastructure, distributed systems, and machine learning, to
+deliver intelligent, reliable, and scalable solutions.
       </motion.p>
 
       <div className="mt-20 flex flex-wrap gap-10">

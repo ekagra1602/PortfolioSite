@@ -19,15 +19,25 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
           className="text-2xl md:text-2xl font-roboto mb-[36px]"
         >
-        I'm a rising senior at ASU and a Software Engineering intern at Airbnb.<br />
-        I love working on backend systems and machine learning projects.
+        CS @ ASU · Backend Systems & ML  <br />
+        Ex-Airbnb Intern · Ex-CMU ML Researcher 
         </motion.p>
         <motion.a
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-          href="mailto:egupta3@asu.edu"
+          href="#contact"
+          onClick={(e) => {
+            e.preventDefault();
+            const el = document.getElementById("contact");
+            if (el) {
+              el.scrollIntoView({ behavior: "smooth", block: "start" });
+            } else {
+              window.location.hash = "#contact";
+            }
+          }}
           className="bg-[#576cbc] text-white no-underline rounded-[100px] font-semibold px-4 py-6"
+          aria-label="Scroll to contact section"
         >
           Contact Me
         </motion.a>   
