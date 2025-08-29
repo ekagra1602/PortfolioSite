@@ -153,6 +153,21 @@ const ChatPopup = ({ isOpen, onClose, initialMessage = '' }) => {
 
   // Track if initial message has been processed
   const [initialMessageProcessed, setInitialMessageProcessed] = useState(false);
+  
+  // Track screen size for responsive behavior
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Handle responsive behavior
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile(); // Check initially
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     if (isOpen) {
@@ -319,10 +334,15 @@ const ChatPopup = ({ isOpen, onClose, initialMessage = '' }) => {
               stiffness: 300,
               duration: 0.3 
             }}
-            className="fixed bottom-6 left-6 z-50 flex flex-col"
+            className={`fixed z-50 flex flex-col ${
+              isMobile 
+                ? 'bottom-4 left-4 right-4' 
+                : 'bottom-6 left-6'
+            }`}
             style={{ 
-              width: `${size.width}px`, 
-              height: `${size.height}px` 
+              width: isMobile ? 'auto' : `${size.width}px`, 
+              height: isMobile ? '70vh' : `${size.height}px`,
+              maxHeight: isMobile ? '70vh' : 'none'
             }}
           >
             {/* Glass morphism container */}
@@ -527,30 +547,32 @@ const ChatPopup = ({ isOpen, onClose, initialMessage = '' }) => {
                 </div>
               </motion.div>
               
-              {/* Resize Handle */}
-              <motion.div
-                className="absolute top-0 right-0 w-4 h-4 cursor-ne-resize opacity-60 hover:opacity-100 transition-opacity"
-                onMouseDown={(e) => {
-                  e.preventDefault();
-                  setIsResizing(true);
-                }}
-                whileHover={{ scale: 1.1 }}
-              >
-                <svg 
-                  width="16" 
-                  height="16" 
-                  viewBox="0 0 24 24" 
-                  fill="none" 
-                  className="text-white/60"
+              {/* Resize Handle - Desktop Only */}
+              {!isMobile && (
+                <motion.div
+                  className="absolute top-0 right-0 w-4 h-4 cursor-ne-resize opacity-60 hover:opacity-100 transition-opacity"
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    setIsResizing(true);
+                  }}
+                  whileHover={{ scale: 1.1 }}
                 >
-                  <path 
-                    d="M8 8H16V16M8 16L16 8" 
-                    stroke="currentColor" 
-                    strokeWidth="2" 
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </motion.div>
+                  <svg 
+                    width="16" 
+                    height="16" 
+                    viewBox="0 0 24 24" 
+                    fill="none" 
+                    className="text-white/60"
+                  >
+                    <path 
+                      d="M8 8H16V16M8 16L16 8" 
+                      stroke="currentColor" 
+                      strokeWidth="2" 
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </motion.div>
+              )}
             </div>
           </motion.div>
         </>
