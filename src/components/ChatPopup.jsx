@@ -13,7 +13,7 @@ const knowledgeBase = [
   // Work Experience - Airbnb (Current)
   {
     content: "Currently working as a Software Engineer Intern at Airbnb in San Francisco (May 2025 - Present). He works on the open-source project Astra, optimizing data pipeline efficiency by removing Apache Kafka for data retention and directly ingesting the Write-Ahead Log into AWS S3, resulting in ~$1.1 million in infrastructure savings over the next 5 years. He also built and deployed a Kubernetes cluster for Astra to test and manage ingestion of logs and traces from multiple ML models, ensuring scalability and reliability across petabytes of data and millions of users.",
-    keywords: ["airbnb", "current", "software engineer intern", "san francisco", "astra", "open-source", "kafka", "aws s3", "write-ahead log", "wal", "kubernetes", "ml models", "petabytes", "infrastructure savings", "1.1 million", "data pipeline", "internship", "infrastructure", "observability"]
+    keywords: ["airbnb", "current", "latest", "recent", "last", "most recent", "where", "work", "working", "software engineer intern", "san francisco", "astra", "open-source", "kafka", "aws s3", "write-ahead log", "wal", "kubernetes", "ml models", "petabytes", "infrastructure savings", "1.1 million", "data pipeline", "internship", "infrastructure", "observability"]
   },
   
   // Work Experience - Edupoint
@@ -105,34 +105,21 @@ const generateResponse = async (query) => {
   const queryLower = query.toLowerCase();
   const queryWords = queryLower.split(' ').filter(word => word.length > 2);
   
-  // Enhanced context matching with scoring
-  const relevantContext = knowledgeBase.map(item => {
-    let score = 0;
-    
-    // Exact phrase matching
-    if (item.content.toLowerCase().includes(queryLower)) score += 15;
-    
-    // Keyword matching with weighted scoring
-    item.keywords.forEach(keyword => {
-      if (queryLower.includes(keyword)) score += 10;
-      queryWords.forEach(word => {
-        if (keyword.includes(word) || word.includes(keyword)) score += 5;
-      });
-    });
-    
-    return { ...item, score };
-  }).filter(item => item.score > 0).sort((a, b) => b.score - a.score);
-
   // Try AI API for enhanced responses
   try {
-    const contextText = relevantContext.length > 0 
-      ? relevantContext.slice(0, 2).map(c => c.content).join('\n\n')
-      : 'General information about Ekagra Gupta, a Computer Science student at ASU with experience at various tech companies.';
+    // Provide ALL context every time - let the AI figure out what's relevant
+    const contextText = knowledgeBase.map(c => c.content).join('\n\n');
     
     const API_KEY = import.meta.env.VITE_GROQ_API_KEY;
     
     if (API_KEY && API_KEY.startsWith('gsk_')) {
       try {
+        const systemPrompt = `You are Ekagra Gupta's helpful AI assistant. Answer questions about him using the following information: ${contextText}. 
+
+IMPORTANT: For work, education, or resume-related questions, ONLY use the information provided. DO NOT invent or assume any companies, job titles, dates, or experiences not mentioned. Never mention "context" or "provided information" - speak as if you naturally know about Ekagra.
+
+Be conversational, friendly, and concise (1-2 sentences max).`;
+
         const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
           method: 'POST',
           headers: {
@@ -143,7 +130,7 @@ const generateResponse = async (query) => {
             messages: [
               {
                 role: 'system', 
-                content: `You are Ekagra Gupta's helpful AI assistant. Answer questions about him based on this context: ${contextText}. Be conversational, friendly, and concise (1-2 sentences max).`
+                content: systemPrompt
               },
               {
                 role: 'user', 
@@ -151,8 +138,8 @@ const generateResponse = async (query) => {
               }
             ],
             model: 'llama3-8b-8192', // Fast and free Llama 3 model
-            max_tokens: 100,
-            temperature: 0.7,
+            max_tokens: 120,
+            temperature: 0, // Deterministic for factual accuracy
             stream: false
           })
         });
@@ -184,77 +171,19 @@ const generateResponse = async (query) => {
 
   console.log('🔄 Using smart fallback responses');
   
-  // Smart pattern matching for different question types
+  // Simple fallback for basic cases
   const getSmartResponse = () => {
-    // Greeting responses
+    // Basic greetings
     if (/^(hi|hey|hello|sup|yo)!?$/i.test(queryLower.trim())) {
       return "Hey there! I'm Ekagra's AI assistant. I can tell you about his work at Airbnb, his award-winning projects, technical skills, or personal interests. What would you like to know?";
     }
     
-    // Question word analysis
-    const isWhatQuestion = /what|which/.test(queryLower);
-    const isHowQuestion = /how/.test(queryLower);
-    const isWhyQuestion = /why/.test(queryLower);
-    const isWhereQuestion = /where/.test(queryLower);
-    const isWhenQuestion = /when/.test(queryLower);
-    
-    if (relevantContext.length > 0) {
-      const topContext = relevantContext[0];
-      
-      // Experience questions
-      if (queryLower.includes('experience') || queryLower.includes('work') || queryLower.includes('job')) {
-        if (isWhatQuestion) return `${topContext.content} His experience spans from infrastructure at scale (Airbnb) to cutting-edge ML research (Carnegie Mellon).`;
-        if (isWhereQuestion) return `${topContext.content} He's worked at some amazing places!`;
-        return `${topContext.content} He's built a really diverse background across industry and research.`;
-      }
-      
-      // Project questions
-      if (queryLower.includes('project') || queryLower.includes('built') || queryLower.includes('app')) {
-        if (isHowQuestion) return `${topContext.content} Each project demonstrates his ability to tackle complex problems with innovative solutions.`;
-        if (isWhatQuestion) return `${topContext.content} These showcase his range from AI/ML to full-stack development.`;
-        return `${topContext.content} Pretty impressive stuff!`;
-      }
-      
-      // Skills questions
-      if (queryLower.includes('skill') || queryLower.includes('technology') || queryLower.includes('language')) {
-        if (isWhatQuestion) return `${topContext.content} He's particularly strong in systems programming and ML engineering.`;
-        return `${topContext.content} His tech stack is pretty comprehensive!`;
-      }
-      
-      // Interests/hobbies questions
-      if (queryLower.includes('interest') || queryLower.includes('hobby') || queryLower.includes('fun') || 
-          queryLower.includes('outside') || queryLower.includes('personal') || queryLower.includes('sport')) {
-        return `${topContext.content} He's got a great balance between his tech career and staying active outdoors!`;
-      }
-      
-      // Achievement questions
-      if (queryLower.includes('achievement') || queryLower.includes('award') || queryLower.includes('win')) {
-        if (isHowQuestion) return `${topContext.content} These achievements show his ability to perform under pressure and solve complex challenges.`;
-        return `${topContext.content} Some serious competitive programming and hackathon skills!`;
-      }
-      
-      // Company-specific questions
-      if (queryLower.includes('airbnb')) {
-        return `${topContext.content} Working on observability at Airbnb's scale is no joke - pretty amazing experience for an intern!`;
-      }
-      
-      return topContext.content;
-    }
-    
-    // Handle questions with no direct context match
-    if (queryLower.includes('tell me about')) {
-      return "I'd love to! Ekagra is a CS student at ASU with internships at Airbnb and research at Carnegie Mellon. He's won hackathons, built AI projects, and enjoys soccer, guitar, and rock climbing. What specific area interests you?";
-    }
-    
+    // Contact questions
     if (queryLower.includes('contact') || queryLower.includes('reach')) {
-      return "You can reach out to Ekagra through the contact section below! He's always excited to discuss tech, opportunities, or even outdoor adventures. What would you like to know about him first?";
+      return "You can reach out to Ekagra through the contact section below! He's always excited to discuss tech, opportunities, or even outdoor adventures.";
     }
     
-    if (queryLower.includes('recommend') || queryLower.includes('advice')) {
-      return "Ekagra would probably say: focus on building things that matter, get your hands dirty with real systems, and don't forget to have fun along the way! Want to know more about his specific experiences?";
-    }
-    
-    // Default with personality
+    // Default fallback
     return "That's a great question! I can tell you about Ekagra's work at companies like Airbnb, his award-winning projects like Live-it, his technical skills, or even his hobbies like soccer and rock climbing. What sounds interesting to you?";
   };
   
@@ -271,6 +200,9 @@ const ChatPopup = ({ isOpen, onClose, initialMessage = '' }) => {
   const popupRef = useRef(null);
   const inputRef = useRef(null);
 
+  // Track if initial message has been processed
+  const [initialMessageProcessed, setInitialMessageProcessed] = useState(false);
+
   useEffect(() => {
     if (isOpen) {
       // Blur any active input on the main page
@@ -284,16 +216,17 @@ const ChatPopup = ({ isOpen, onClose, initialMessage = '' }) => {
       const forceFocus = () => {
         if (inputRef.current) {
           inputRef.current.focus();
-          inputRef.current.click();
           // Set cursor to end of input
           const length = inputRef.current.value.length;
           inputRef.current.setSelectionRange(length, length);
         }
       };
       
-      if (initialMessage) {
+      // Only process initial message once when popup first opens
+      if (initialMessage && !initialMessageProcessed) {
         setMessages([]);
         setInputMessage(initialMessage);
+        setInitialMessageProcessed(true);
         // Auto-send the initial message after a short delay
         setTimeout(() => {
           handleSendMessage(initialMessage);
@@ -302,7 +235,7 @@ const ChatPopup = ({ isOpen, onClose, initialMessage = '' }) => {
           setTimeout(forceFocus, 300);
           setTimeout(forceFocus, 600);
         }, 500);
-      } else {
+      } else if (!initialMessage) {
         setMessages([]);
         // Focus the popup input after animation completes with multiple attempts
         setTimeout(forceFocus, 450);
@@ -310,10 +243,11 @@ const ChatPopup = ({ isOpen, onClose, initialMessage = '' }) => {
         setTimeout(forceFocus, 800);
       }
     } else {
-      // Reset initial message when closing
+      // Reset when closing
       setInputMessage('');
+      setInitialMessageProcessed(false);
     }
-  }, [isOpen, initialMessage]);
+  }, [isOpen, initialMessage, initialMessageProcessed]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -447,10 +381,9 @@ const ChatPopup = ({ isOpen, onClose, initialMessage = '' }) => {
                 // Don't focus if clicking on close button or resize handle
                 if (e.target.closest('button') || e.target.closest('.resize-handle')) return;
                 
-                // Aggressive focus input when clicking anywhere in the popup
+                // Focus input when clicking anywhere in the popup
                 if (inputRef.current) {
                   inputRef.current.focus();
-                  inputRef.current.click();
                   const length = inputRef.current.value.length;
                   inputRef.current.setSelectionRange(length, length);
                 }
