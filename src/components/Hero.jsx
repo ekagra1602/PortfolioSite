@@ -27,7 +27,7 @@ const Hero = () => {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="title text-5xl md:text-7xl font-extrabold mb-[33px] font-roboto bg-text-gradient bg-clip-text"
         >
-          {"Hi, I'm Ekagra Gupta"}
+          {"Hi, I'm Ekagra (Gray)"}
         </motion.h1>
         <motion.p 
           initial={{ opacity: 0, y: 20 }}

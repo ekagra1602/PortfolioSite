@@ -2,31 +2,59 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { close } from '../assets';
 
-// Simplified knowledge base for quick responses
+// Comprehensive knowledge base based on resume
 const knowledgeBase = [
   {
-    content: "Ekagra Gupta is a Computer Science student at ASU with experience at Airbnb, Carnegie Mellon University, and multiple internships in software engineering and machine learning.",
-    keywords: ["who", "about", "name", "background", "student"]
+    content: "Ekagra (Gray) Gupta is a Computer Science student at Arizona State University with a perfect 4.0 GPA, expected to graduate in December 2026. He has a minor in Data Science and has taken courses in Data Structures & Algorithms, Operating Systems, Software Engineering, Distributed Systems, and Machine Learning. He's based in San Francisco, CA.",
+    keywords: ["ekagra", "gray", "gupta", "who", "about", "name", "background", "cs", "computer science", "asu", "arizona state university", "student", "education", "degree", "university", "gpa", "4.0", "data science", "minor", "san francisco"]
   },
   {
-    content: "At Airbnb (May 2025 - Aug 2025), I worked on the Infrastructure Observability team, specifically on Astra - an open-source log search engine. I improved the Write-Ahead Log by moving from Kafka to S3 storage.",
-    keywords: ["airbnb", "internship", "infrastructure", "observability", "astra", "kafka", "s3"]
+    content: "Currently working as a Software Engineer Intern at Airbnb in San Francisco (May 2025 - Present). Working on open-source project Astra, optimizing data pipeline efficiency by removing Apache Kafka for data retention and directly ingesting the Write-Ahead Log into AWS S3, resulting in ~$1.1 million in infrastructure savings over the next 5 years. Built and deployed a Kubernetes cluster for Astra to test and manage ingestion of logs and traces from multiple ML models.",
+    keywords: ["airbnb", "san francisco", "current", "internship", "infrastructure", "astra", "open source", "kafka", "s3", "kubernetes", "ml models", "petabytes", "millions of users", "cost savings", "1.1 million", "write-ahead log", "wal"]
   },
   {
-    content: "My notable projects include: FocusTime AI (ML app for study focus using MediaPipe & TensorFlow), Live-it (UC Berkeley Hackathon winner using Google Veo 3 API), and ResQ (disaster management app).",
-    keywords: ["projects", "focustime", "live-it", "resq", "hackathon", "mediapipe", "tensorflow"]
+    content: "Worked as a Software Engineer Intern at Edupoint Educational Systems in Phoenix, AZ (January 2025 – April 2025). Built a Python-based, multi-Large Language Model (LLM) powered assistant for a Learning Management System with vector-based retrieval of academic records and user queries, reducing support resolution time by 42% for 5M+ students.",
+    keywords: ["edupoint", "phoenix", "software engineer intern", "python", "llm", "large language model", "learning management system", "vector retrieval", "academic records", "5 million students", "support resolution"]
   },
   {
-    content: "I have experience with: JavaScript, TypeScript, React, Node.js, Python, TensorFlow, Flask, MongoDB, Docker, AWS, and many other technologies in full-stack and ML development.",
-    keywords: ["skills", "technologies", "javascript", "python", "react", "nodejs", "tensorflow", "aws"]
+    content: "Was a Machine Learning Research Assistant at Carnegie Mellon University in Pittsburgh, PA (June 2024 – August 2024). Optimized and fine-tuned open-source large language models using Ollama, Hugging Face Transformers, and PyTorch, achieving a 37% improvement in structured data extraction from enterprise documents and technical reports.",
+    keywords: ["carnegie mellon university", "cmu", "pittsburgh", "machine learning", "research assistant", "ollama", "hugging face", "transformers", "pytorch", "llm", "data extraction", "enterprise documents", "fine-tuned"]
   },
   {
-    content: "I won the UC Berkeley AI Hackathon 2025 with Live-it and finished top 10 in Airbnb's cross-company CTF competition among engineers from companies like Anthropic, DoorDash, and Adobe.",
-    keywords: ["achievements", "hackathon", "berkeley", "winner", "ctf", "competition"]
+    content: "Worked as a Software Engineer Co-op at Arizona State University in Tempe, AZ (March 2023 – June 2024). Developed automation scripts in Python optimizing CI/CD pipelines and reducing deployment time, resulting in a 15% increase in system efficiency and reduced manual intervention.",
+    keywords: ["arizona state university", "asu", "tempe", "software engineer co-op", "python", "ci/cd", "automation", "deployment", "system efficiency", "pipelines", "scripts"]
   },
   {
-    content: "Outside of technology, Ekagra enjoys soccer, playing guitar, hiking, rock climbing, and scuba diving. He's passionate about both outdoor adventures and creative pursuits, balancing his technical career with diverse hobbies.",
-    keywords: ["interests", "hobbies", "soccer", "guitar", "hiking", "climbing", "scuba", "diving", "personal", "outside", "fun", "activities", "sports", "music"]
+    content: "Was a Software Developer Intern at Carrier (Remote, May 2022 – August 2022). Designed and implemented Go, C++ and SQL based in-memory Database Engine to accurately track sales, returns, and inventory, enhancing stock management practices and reducing record discrepancies by 18%.",
+    keywords: ["carrier", "remote", "software developer intern", "go", "cpp", "c++", "sql", "database engine", "in-memory", "sales", "inventory", "stock management", "returns"]
+  },
+  {
+    content: "Programming Languages: Python, C++, C, Java, Go, C#, JavaScript, TypeScript. Frameworks & Libraries: PyTorch, NumPy, TensorFlow, LangChain, Node.js, React, Angular, .Net. Tools & Platforms: Docker, Kafka, Kubernetes, MongoDB, SQL, Linux, Git, AWS, GCP.",
+    keywords: ["skills", "programming languages", "python", "cpp", "c++", "java", "go", "csharp", "javascript", "typescript", "pytorch", "numpy", "tensorflow", "langchain", "nodejs", "react", "angular", "dotnet", "docker", "kubernetes", "mongodb", "aws", "gcp", "linux", "git"]
+  },
+  {
+    content: "Live-it won the UC Berkeley AI Hackathon. Built with Python, VGGT, Gemini API, Gaussian Splatting, React, Node.js. Integrated Google Veo 3 API to generate cinematic videos from prompts, then trained it on VGGT neural network and Gaussian Splatting for AI-based camera inference and 3D scene construction, enabling real-time prompt-to-3D walkthroughs.",
+    keywords: ["live-it", "uc berkeley ai hackathon", "winner", "python", "vggt", "gemini api", "gaussian splatting", "react", "nodejs", "google veo 3", "3d", "video generation", "cinematic", "neural network", "real-time"]
+  },
+  {
+    content: "Memory Transfer MCP is built with Python, FastAPI, LangChain. Implemented a FastAPI-based Model Context Protocol (MCP) memory layer that unifies memory ingestion and retrieval across OpenAI and Anthropic Claude models enabling seamless multi-model integration for LLM-powered agents.",
+    keywords: ["memory transfer mcp", "python", "fastapi", "langchain", "model context protocol", "mcp", "openai", "anthropic", "claude", "llm agents", "multi-model", "memory ingestion"]
+  },
+  {
+    content: "FocusTime AI is built with MediaPipe ML, TensorFlow, Flask, React, Python. An AI-powered web app built with React, Flask, and PostgreSQL. Integrated MediaPipe Holistic to extract 543 key points and used TensorFlow for real-time gesture analysis, detecting and addressing procrastination during study sessions.",
+    keywords: ["focustime ai", "mediapipe", "tensorflow", "flask", "react", "python", "postgresql", "543 key points", "gesture analysis", "procrastination", "study sessions", "ai-powered", "web app"]
+  },
+  {
+    content: "Operating System Kernel project built with C++, C, Linux, Ubuntu, Python, ASM (x86_64). Built an OS kernel with virtual memory management, ELF execution, and multicore support on x86_64, implementing paging, Round-Robin scheduler, and syscalls for user-space programs.",
+    keywords: ["operating system", "kernel", "cpp", "c", "linux", "ubuntu", "python", "assembly", "asm", "x86_64", "virtual memory", "elf", "multicore", "paging", "scheduler", "syscalls", "user-space"]
+  },
+  {
+    content: "Certifications and leadership include: Machine Learning Specialization from Stanford Online, Section Leader (Teaching Assistant) at Code in Place Stanford, Technical Lead at Google Developer Student Club ASU, USACO Gold from United States Computing Olympiad, and Claude Club Lead at Anthropic ASU.",
+    keywords: ["certificates", "achievements", "leadership", "stanford", "machine learning specialization", "code in place", "teaching assistant", "google developer student club", "technical lead", "usaco gold", "computing olympiad", "anthropic", "claude club lead", "competitive programming"]
+  },
+  {
+    content: "Outside of technology, Ekagra enjoys soccer, playing guitar, hiking, rock climbing, and scuba diving. He's passionate about both outdoor adventures and creative pursuits, balancing his technical career with diverse hobbies. Contact: ekagragupta1609@gmail.com, LinkedIn, GitHub, Leetcode profiles available.",
+    keywords: ["interests", "hobbies", "soccer", "guitar", "hiking", "rock climbing", "scuba diving", "personal", "outside", "fun", "activities", "sports", "music", "contact", "email", "linkedin", "github", "leetcode", "outdoor", "adventures"]
   }
 ];
 
