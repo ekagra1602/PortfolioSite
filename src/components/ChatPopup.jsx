@@ -46,7 +46,7 @@ const knowledgeBase = [
   "Ekagra has completed the Machine Learning Specialization from Stanford Online, served as a Section Leader (Teaching Assistant) for Code in Place at Stanford, is the Technical Lead for Google Developer Student Club at ASU, achieved USACO Gold in the United States Computing Olympiad, and leads the Claude Club for Anthropic at ASU.",
   
   // Contact & Location
-  "Ekagra is based in San Francisco, CA. You can reach him through his website EkagraGupta.com, email ekagragupta1609@gmail.com, or connect on LinkedIn, LeetCode, and GitHub.",
+  "Ekagra is based in San Francisco, CA. You can reach him through his website EkagraGupta.com, email egupta3@asu.edu, message on +1 (602)-515-5268, or connect on LinkedIn, LeetCode, and GitHub.",
   
   // Personal Interests
   "Outside of technology, Ekagra enjoys soccer, playing guitar, hiking, rock climbing, and scuba diving. He's passionate about both outdoor adventures and creative pursuits, balancing his technical career with diverse hobbies."
