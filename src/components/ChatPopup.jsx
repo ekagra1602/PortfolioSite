@@ -23,85 +23,171 @@ const knowledgeBase = [
   {
     content: "I won the UC Berkeley AI Hackathon 2025 with Live-it and finished top 10 in Airbnb's cross-company CTF competition among engineers from companies like Anthropic, DoorDash, and Adobe.",
     keywords: ["achievements", "hackathon", "berkeley", "winner", "ctf", "competition"]
+  },
+  {
+    content: "Outside of technology, Ekagra enjoys soccer, playing guitar, hiking, rock climbing, and scuba diving. He's passionate about both outdoor adventures and creative pursuits, balancing his technical career with diverse hobbies.",
+    keywords: ["interests", "hobbies", "soccer", "guitar", "hiking", "climbing", "scuba", "diving", "personal", "outside", "fun", "activities", "sports", "music"]
   }
 ];
 
 const generateResponse = async (query) => {
   const queryLower = query.toLowerCase();
+  const queryWords = queryLower.split(' ').filter(word => word.length > 2);
   
-  // Get relevant context
-  const relevantContext = knowledgeBase.filter(item => 
-    item.keywords.some(keyword => queryLower.includes(keyword))
-  );
-  
-  // Try Hugging Face API (free) first
-  try {
-    const contextText = relevantContext.map(c => c.content).join('\n\n');
-    const prompt = `You are Ekagra Gupta's AI assistant. Answer the question based on this information about him:
-
-${contextText}
-
-Question: ${query}
-
-Answer (keep it conversational and under 100 words):`;
-
-    const response = await fetch('https://api-inference.huggingface.co/models/microsoft/DialoGPT-medium', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        inputs: prompt,
-        parameters: {
-          max_new_tokens: 100,
-          temperature: 0.7,
-          do_sample: true
-        }
-      })
+  // Enhanced context matching with scoring
+  const relevantContext = knowledgeBase.map(item => {
+    let score = 0;
+    
+    // Exact phrase matching
+    if (item.content.toLowerCase().includes(queryLower)) score += 15;
+    
+    // Keyword matching with weighted scoring
+    item.keywords.forEach(keyword => {
+      if (queryLower.includes(keyword)) score += 10;
+      queryWords.forEach(word => {
+        if (keyword.includes(word) || word.includes(keyword)) score += 5;
+      });
     });
     
-    const result = await response.json();
-    if (result && result[0] && result[0].generated_text) {
-      const generated = result[0].generated_text.replace(prompt, '').trim();
-      if (generated.length > 10) {
-        return generated;
+    return { ...item, score };
+  }).filter(item => item.score > 0).sort((a, b) => b.score - a.score);
+
+  // Try AI API for enhanced responses
+  try {
+    const contextText = relevantContext.length > 0 
+      ? relevantContext.slice(0, 2).map(c => c.content).join('\n\n')
+      : 'General information about Ekagra Gupta, a Computer Science student at ASU with experience at various tech companies.';
+    
+    const API_KEY = import.meta.env.VITE_GROQ_API_KEY;
+    
+    if (API_KEY && API_KEY.startsWith('gsk_')) {
+      try {
+        const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${API_KEY}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            messages: [
+              {
+                role: 'system', 
+                content: `You are Ekagra Gupta's helpful AI assistant. Answer questions about him based on this context: ${contextText}. Be conversational, friendly, and concise (1-2 sentences max).`
+              },
+              {
+                role: 'user', 
+                content: query
+              }
+            ],
+            model: 'llama3-8b-8192', // Fast and free Llama 3 model
+            max_tokens: 100,
+            temperature: 0.7,
+            stream: false
+          })
+        });
+        
+        console.log('📡 Groq Status:', response.status);
+        
+        if (response.ok) {
+          const result = await response.json();
+          console.log('📋 Groq Result:', result);
+          
+          if (result.choices?.[0]?.message?.content) {
+            const aiResponse = result.choices[0].message.content.trim();
+            console.log('✅ Using Groq AI response:', aiResponse);
+            return aiResponse;
+          }
+        } else {
+          const errorData = await response.json();
+          console.log('❌ Groq API Error:', errorData);
+        }
+      } catch (error) {
+        console.log('❌ Groq API Error:', error.message);
       }
+    } else {
+      console.log('⚠️ Groq API key not configured');
     }
-  } catch (error) {
-    console.log('Hugging Face API unavailable, using enhanced fallback');
+  } catch (setupError) {
+    console.log('❌ Error in API setup:', setupError);
   }
+
+  console.log('🔄 Using smart fallback responses');
   
-  // Enhanced fallback responses
-  if (relevantContext.length > 0) {
-    const contextContent = relevantContext[0].content;
-    
-    // Add some intelligence to the basic responses
-    if (queryLower.includes('experience') || queryLower.includes('work') || queryLower.includes('job')) {
-      return `${contextContent} He has a strong background in both infrastructure and machine learning, having worked at top-tier companies and research institutions.`;
-    }
-    
-    if (queryLower.includes('project') || queryLower.includes('built') || queryLower.includes('app')) {
-      return `${contextContent} These projects showcase his expertise in full-stack development, AI/ML, and solving real-world problems.`;
+  // Smart pattern matching for different question types
+  const getSmartResponse = () => {
+    // Greeting responses
+    if (/^(hi|hey|hello|sup|yo)!?$/i.test(queryLower.trim())) {
+      return "Hey there! I'm Ekagra's AI assistant. I can tell you about his work at Airbnb, his award-winning projects, technical skills, or personal interests. What would you like to know?";
     }
     
-    if (queryLower.includes('skill') || queryLower.includes('technology') || queryLower.includes('tech')) {
-      return `${contextContent} He's particularly strong in backend systems, machine learning, and has experience with both cloud infrastructure and modern web technologies.`;
+    // Question word analysis
+    const isWhatQuestion = /what|which/.test(queryLower);
+    const isHowQuestion = /how/.test(queryLower);
+    const isWhyQuestion = /why/.test(queryLower);
+    const isWhereQuestion = /where/.test(queryLower);
+    const isWhenQuestion = /when/.test(queryLower);
+    
+    if (relevantContext.length > 0) {
+      const topContext = relevantContext[0];
+      
+      // Experience questions
+      if (queryLower.includes('experience') || queryLower.includes('work') || queryLower.includes('job')) {
+        if (isWhatQuestion) return `${topContext.content} His experience spans from infrastructure at scale (Airbnb) to cutting-edge ML research (Carnegie Mellon).`;
+        if (isWhereQuestion) return `${topContext.content} He's worked at some amazing places!`;
+        return `${topContext.content} He's built a really diverse background across industry and research.`;
+      }
+      
+      // Project questions
+      if (queryLower.includes('project') || queryLower.includes('built') || queryLower.includes('app')) {
+        if (isHowQuestion) return `${topContext.content} Each project demonstrates his ability to tackle complex problems with innovative solutions.`;
+        if (isWhatQuestion) return `${topContext.content} These showcase his range from AI/ML to full-stack development.`;
+        return `${topContext.content} Pretty impressive stuff!`;
+      }
+      
+      // Skills questions
+      if (queryLower.includes('skill') || queryLower.includes('technology') || queryLower.includes('language')) {
+        if (isWhatQuestion) return `${topContext.content} He's particularly strong in systems programming and ML engineering.`;
+        return `${topContext.content} His tech stack is pretty comprehensive!`;
+      }
+      
+      // Interests/hobbies questions
+      if (queryLower.includes('interest') || queryLower.includes('hobby') || queryLower.includes('fun') || 
+          queryLower.includes('outside') || queryLower.includes('personal') || queryLower.includes('sport')) {
+        return `${topContext.content} He's got a great balance between his tech career and staying active outdoors!`;
+      }
+      
+      // Achievement questions
+      if (queryLower.includes('achievement') || queryLower.includes('award') || queryLower.includes('win')) {
+        if (isHowQuestion) return `${topContext.content} These achievements show his ability to perform under pressure and solve complex challenges.`;
+        return `${topContext.content} Some serious competitive programming and hackathon skills!`;
+      }
+      
+      // Company-specific questions
+      if (queryLower.includes('airbnb')) {
+        return `${topContext.content} Working on observability at Airbnb's scale is no joke - pretty amazing experience for an intern!`;
+      }
+      
+      return topContext.content;
     }
     
-    return contextContent;
-  }
+    // Handle questions with no direct context match
+    if (queryLower.includes('tell me about')) {
+      return "I'd love to! Ekagra is a CS student at ASU with internships at Airbnb and research at Carnegie Mellon. He's won hackathons, built AI projects, and enjoys soccer, guitar, and rock climbing. What specific area interests you?";
+    }
+    
+    if (queryLower.includes('contact') || queryLower.includes('reach')) {
+      return "You can reach out to Ekagra through the contact section below! He's always excited to discuss tech, opportunities, or even outdoor adventures. What would you like to know about him first?";
+    }
+    
+    if (queryLower.includes('recommend') || queryLower.includes('advice')) {
+      return "Ekagra would probably say: focus on building things that matter, get your hands dirty with real systems, and don't forget to have fun along the way! Want to know more about his specific experiences?";
+    }
+    
+    // Default with personality
+    return "That's a great question! I can tell you about Ekagra's work at companies like Airbnb, his award-winning projects like Live-it, his technical skills, or even his hobbies like soccer and rock climbing. What sounds interesting to you?";
+  };
   
-  // Smart greeting responses
-  if (queryLower.includes('hello') || queryLower.includes('hi')) {
-    return "Hi! I'm Ekagra's AI assistant. I can tell you about his impressive experience at companies like Airbnb, his award-winning projects, technical skills, and achievements. What interests you most?";
-  }
-  
-  if (queryLower.includes('contact') || queryLower.includes('reach')) {
-    return "You can reach Ekagra through the contact section below. He's always open to discussing opportunities in software engineering, machine learning, or infrastructure. What would you like to know about his background first?";
-  }
-  
-  // More intelligent default response
-  return "I'd be happy to tell you about Ekagra! You could ask about his internship at Airbnb where he worked on infrastructure observability, his award-winning AI projects like Live-it (UC Berkeley Hackathon winner), his technical expertise, or his research experience at Carnegie Mellon. What interests you?";
+  return getSmartResponse();
 };
 
 const ChatPopup = ({ isOpen, onClose, initialMessage = '' }) => {
@@ -112,26 +198,37 @@ const ChatPopup = ({ isOpen, onClose, initialMessage = '' }) => {
   const [isResizing, setIsResizing] = useState(false);
   const messagesEndRef = useRef(null);
   const popupRef = useRef(null);
+  const inputRef = useRef(null);
 
   useEffect(() => {
     if (isOpen) {
-      const welcomeMessage = {
-        id: 1,
-        type: 'assistant',
-        content: "Hi! I'm Ekagra's AI assistant. I can answer questions about his experience, projects, and skills. What would you like to know?",
-        timestamp: new Date()
-      };
+      // Blur any active input on the main page
+      const mainPageInput = document.querySelector('input[placeholder*="Ask anything about me"]');
+      if (mainPageInput) {
+        mainPageInput.blur();
+        mainPageInput.value = '';
+      }
+      
+      // Focus the popup input after a short delay to ensure it's rendered
+      setTimeout(() => {
+        if (inputRef.current) {
+          inputRef.current.focus();
+        }
+      }, 300);
       
       if (initialMessage) {
-        setMessages([welcomeMessage]);
+        setMessages([]);
         setInputMessage(initialMessage);
         // Auto-send the initial message after a short delay
         setTimeout(() => {
           handleSendMessage(initialMessage);
         }, 500);
       } else {
-        setMessages([welcomeMessage]);
+        setMessages([]);
       }
+    } else {
+      // Reset initial message when closing
+      setInputMessage('');
     }
   }, [isOpen, initialMessage]);
 
@@ -348,6 +445,7 @@ const ChatPopup = ({ isOpen, onClose, initialMessage = '' }) => {
               >
                 <div className="relative">
                   <input
+                    ref={inputRef}
                     value={inputMessage}
                     onChange={(e) => setInputMessage(e.target.value)}
                     onKeyPress={handleKeyPress}

@@ -10,6 +10,12 @@ const Hero = () => {
   const handleAskAI = (message) => {
     setInitialMessage(message);
     setChatOpen(true);
+    
+    // Blur the input field to remove cursor
+    const input = document.querySelector('input[placeholder*="Ask anything"]');
+    if (input) {
+      input.blur();
+    }
   };
 
   return (
