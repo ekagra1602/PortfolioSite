@@ -2,59 +2,102 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { close } from '../assets';
 
-// Comprehensive knowledge base based on resume
+// Comprehensive knowledge base from resume
 const knowledgeBase = [
+  // Education
   {
-    content: "Ekagra (Gray) Gupta is a Computer Science student at Arizona State University with a perfect 4.0 GPA, expected to graduate in December 2026. He has a minor in Data Science and has taken courses in Data Structures & Algorithms, Operating Systems, Software Engineering, Distributed Systems, and Machine Learning. He's based in San Francisco, CA.",
-    keywords: ["ekagra", "gray", "gupta", "who", "about", "name", "background", "cs", "computer science", "asu", "arizona state university", "student", "education", "degree", "university", "gpa", "4.0", "data science", "minor", "san francisco"]
+    content: "Ekagra (Gray) Gupta is pursuing a Bachelor of Science in Computer Science with a Minor in Data Science at Arizona State University, expected to graduate in December 2026. He maintains a perfect 4.0/4.0 GPA and has taken courses in Data Structures & Algorithms, Operating Systems, Software Engineering, Distributed Systems, and Machine Learning.",
+    keywords: ["ekagra", "gray", "gupta", "education", "cs", "computer science", "data science", "asu", "arizona state university", "gpa", "4.0", "graduation", "december 2026", "courses", "algorithms", "operating systems", "distributed systems", "who", "about", "name", "background", "student"]
   },
+  
+  // Work Experience - Airbnb (Current)
   {
-    content: "Currently working as a Software Engineer Intern at Airbnb in San Francisco (May 2025 - Present). Working on open-source project Astra, optimizing data pipeline efficiency by removing Apache Kafka for data retention and directly ingesting the Write-Ahead Log into AWS S3, resulting in ~$1.1 million in infrastructure savings over the next 5 years. Built and deployed a Kubernetes cluster for Astra to test and manage ingestion of logs and traces from multiple ML models.",
-    keywords: ["airbnb", "san francisco", "current", "internship", "infrastructure", "astra", "open source", "kafka", "s3", "kubernetes", "ml models", "petabytes", "millions of users", "cost savings", "1.1 million", "write-ahead log", "wal"]
+    content: "Currently working as a Software Engineer Intern at Airbnb in San Francisco (May 2025 - Present). He works on the open-source project Astra, optimizing data pipeline efficiency by removing Apache Kafka for data retention and directly ingesting the Write-Ahead Log into AWS S3, resulting in ~$1.1 million in infrastructure savings over the next 5 years. He also built and deployed a Kubernetes cluster for Astra to test and manage ingestion of logs and traces from multiple ML models, ensuring scalability and reliability across petabytes of data and millions of users.",
+    keywords: ["airbnb", "current", "software engineer intern", "san francisco", "astra", "open-source", "kafka", "aws s3", "write-ahead log", "wal", "kubernetes", "ml models", "petabytes", "infrastructure savings", "1.1 million", "data pipeline", "internship", "infrastructure", "observability"]
   },
+  
+  // Work Experience - Edupoint
   {
-    content: "Worked as a Software Engineer Intern at Edupoint Educational Systems in Phoenix, AZ (January 2025 – April 2025). Built a Python-based, multi-Large Language Model (LLM) powered assistant for a Learning Management System with vector-based retrieval of academic records and user queries, reducing support resolution time by 42% for 5M+ students.",
-    keywords: ["edupoint", "phoenix", "software engineer intern", "python", "llm", "large language model", "learning management system", "vector retrieval", "academic records", "5 million students", "support resolution"]
+    content: "Worked as a Software Engineer Intern at Edupoint Educational Systems in Phoenix, AZ (January 2025 – April 2025). He built a Python-based, multi-Large Language Model (LLM) powered assistant for a Learning Management System with vector-based retrieval of academic records and user queries, reducing support resolution time by 42% for 5M+ students.",
+    keywords: ["edupoint", "phoenix", "software engineer intern", "python", "llm", "large language model", "learning management system", "vector retrieval", "academic records", "42% improvement", "5 million students", "educational systems"]
   },
+  
+  // Work Experience - Carnegie Mellon
   {
-    content: "Was a Machine Learning Research Assistant at Carnegie Mellon University in Pittsburgh, PA (June 2024 – August 2024). Optimized and fine-tuned open-source large language models using Ollama, Hugging Face Transformers, and PyTorch, achieving a 37% improvement in structured data extraction from enterprise documents and technical reports.",
-    keywords: ["carnegie mellon university", "cmu", "pittsburgh", "machine learning", "research assistant", "ollama", "hugging face", "transformers", "pytorch", "llm", "data extraction", "enterprise documents", "fine-tuned"]
+    content: "Served as a Machine Learning Research Assistant at Carnegie Mellon University in Pittsburgh, PA (June 2024 – August 2024). He optimized and fine-tuned open-source large language models using Ollama, Hugging Face Transformers, and PyTorch, achieving a 37% improvement in structured data extraction from enterprise documents and technical reports.",
+    keywords: ["carnegie mellon university", "cmu", "pittsburgh", "machine learning", "research assistant", "ollama", "hugging face", "transformers", "pytorch", "37% improvement", "structured data extraction", "enterprise documents", "research"]
   },
+  
+  // Work Experience - ASU Co-op
   {
-    content: "Worked as a Software Engineer Co-op at Arizona State University in Tempe, AZ (March 2023 – June 2024). Developed automation scripts in Python optimizing CI/CD pipelines and reducing deployment time, resulting in a 15% increase in system efficiency and reduced manual intervention.",
-    keywords: ["arizona state university", "asu", "tempe", "software engineer co-op", "python", "ci/cd", "automation", "deployment", "system efficiency", "pipelines", "scripts"]
+    content: "Worked as a Software Engineer Co-op at Arizona State University in Tempe, AZ (March 2023 – June 2024). He developed automation scripts in Python optimizing CI/CD pipelines and reducing deployment time, resulting in a 15% increase in system efficiency and reduced manual intervention.",
+    keywords: ["arizona state university", "asu", "tempe", "software engineer co-op", "automation scripts", "python", "ci/cd", "pipelines", "deployment", "15% increase", "system efficiency", "automation"]
   },
+  
+  // Work Experience - Carrier
   {
-    content: "Was a Software Developer Intern at Carrier (Remote, May 2022 – August 2022). Designed and implemented Go, C++ and SQL based in-memory Database Engine to accurately track sales, returns, and inventory, enhancing stock management practices and reducing record discrepancies by 18%.",
-    keywords: ["carrier", "remote", "software developer intern", "go", "cpp", "c++", "sql", "database engine", "in-memory", "sales", "inventory", "stock management", "returns"]
+    content: "Worked as a Software Developer Intern at Carrier remotely (May 2022 – August 2022). He designed and implemented Go, C++ and SQL based in-memory Database Engine to accurately track sales, returns, and inventory, enhancing stock management practices and reducing record discrepancies by 18%.",
+    keywords: ["carrier", "remote", "software developer intern", "go", "c++", "sql", "in-memory database", "database engine", "sales", "returns", "inventory", "stock management", "18% reduction", "discrepancies"]
   },
+  
+  // Technical Skills - Programming Languages
   {
-    content: "Programming Languages: Python, C++, C, Java, Go, C#, JavaScript, TypeScript. Frameworks & Libraries: PyTorch, NumPy, TensorFlow, LangChain, Node.js, React, Angular, .Net. Tools & Platforms: Docker, Kafka, Kubernetes, MongoDB, SQL, Linux, Git, AWS, GCP.",
-    keywords: ["skills", "programming languages", "python", "cpp", "c++", "java", "go", "csharp", "javascript", "typescript", "pytorch", "numpy", "tensorflow", "langchain", "nodejs", "react", "angular", "dotnet", "docker", "kubernetes", "mongodb", "aws", "gcp", "linux", "git"]
+    content: "Ekagra's programming languages include Python, C++, C, Java, Go, C#, JavaScript, and TypeScript. He's proficient across multiple paradigms from systems programming to web development.",
+    keywords: ["programming languages", "python", "c++", "c", "java", "go", "c#", "javascript", "typescript", "skills", "technologies", "languages"]
   },
+  
+  // Technical Skills - Frameworks & Libraries
   {
-    content: "Live-it won the UC Berkeley AI Hackathon. Built with Python, VGGT, Gemini API, Gaussian Splatting, React, Node.js. Integrated Google Veo 3 API to generate cinematic videos from prompts, then trained it on VGGT neural network and Gaussian Splatting for AI-based camera inference and 3D scene construction, enabling real-time prompt-to-3D walkthroughs.",
-    keywords: ["live-it", "uc berkeley ai hackathon", "winner", "python", "vggt", "gemini api", "gaussian splatting", "react", "nodejs", "google veo 3", "3d", "video generation", "cinematic", "neural network", "real-time"]
+    content: "His frameworks and libraries expertise includes PyTorch, NumPy, TensorFlow, LangChain, Node.js, React, Angular, and .Net, spanning machine learning, web development, and enterprise technologies.",
+    keywords: ["frameworks", "libraries", "pytorch", "numpy", "tensorflow", "langchain", "nodejs", "react", "angular", "dotnet", ".net", "machine learning", "web development", "skills", "technologies"]
   },
+  
+  // Technical Skills - Tools & Databases
   {
-    content: "Memory Transfer MCP is built with Python, FastAPI, LangChain. Implemented a FastAPI-based Model Context Protocol (MCP) memory layer that unifies memory ingestion and retrieval across OpenAI and Anthropic Claude models enabling seamless multi-model integration for LLM-powered agents.",
-    keywords: ["memory transfer mcp", "python", "fastapi", "langchain", "model context protocol", "mcp", "openai", "anthropic", "claude", "llm agents", "multi-model", "memory ingestion"]
+    content: "He's experienced with tools, databases, and software including Docker, Kafka, Kubernetes, MongoDB, SQL, Linux, Git, AWS, and GCP for cloud computing, containerization, and distributed systems.",
+    keywords: ["tools", "databases", "docker", "kafka", "kubernetes", "mongodb", "sql", "linux", "git", "aws", "gcp", "cloud", "containerization", "distributed systems", "skills", "technologies"]
   },
+  
+  // Projects - Live-it
   {
-    content: "FocusTime AI is built with MediaPipe ML, TensorFlow, Flask, React, Python. An AI-powered web app built with React, Flask, and PostgreSQL. Integrated MediaPipe Holistic to extract 543 key points and used TensorFlow for real-time gesture analysis, detecting and addressing procrastination during study sessions.",
-    keywords: ["focustime ai", "mediapipe", "tensorflow", "flask", "react", "python", "postgresql", "543 key points", "gesture analysis", "procrastination", "study sessions", "ai-powered", "web app"]
+    content: "Live-it won the UC Berkeley AI Hackathon and uses Python, VGGT, Gemini API, Gaussian Splatting, React, and Node.js. It integrates Google Veo 3 API to generate cinematic videos from prompts, then trains on VGGT neural network and Gaussian Splatting for AI-based camera inference and 3D scene construction, enabling real-time prompt-to-3D walkthroughs.",
+    keywords: ["live-it", "uc berkeley ai hackathon", "winner", "python", "vggt", "gemini api", "gaussian splatting", "react", "nodejs", "google veo 3", "cinematic videos", "3d scene construction", "prompt-to-3d", "neural network", "projects", "hackathon"]
   },
+  
+  // Projects - Memory Transfer MCP
   {
-    content: "Operating System Kernel project built with C++, C, Linux, Ubuntu, Python, ASM (x86_64). Built an OS kernel with virtual memory management, ELF execution, and multicore support on x86_64, implementing paging, Round-Robin scheduler, and syscalls for user-space programs.",
-    keywords: ["operating system", "kernel", "cpp", "c", "linux", "ubuntu", "python", "assembly", "asm", "x86_64", "virtual memory", "elf", "multicore", "paging", "scheduler", "syscalls", "user-space"]
+    content: "Memory Transfer MCP is built with Python, FastAPI, and LangChain. It implements a FastAPI-based Model Context Protocol (MCP) memory layer that unifies memory ingestion and retrieval across OpenAI and Anthropic Claude models, enabling seamless multi-model integration for LLM-powered agents.",
+    keywords: ["memory transfer mcp", "python", "fastapi", "langchain", "model context protocol", "mcp", "memory layer", "openai", "anthropic", "claude", "multi-model", "llm agents", "projects"]
   },
+  
+  // Projects - FocusTime AI
   {
-    content: "Certifications and leadership include: Machine Learning Specialization from Stanford Online, Section Leader (Teaching Assistant) at Code in Place Stanford, Technical Lead at Google Developer Student Club ASU, USACO Gold from United States Computing Olympiad, and Claude Club Lead at Anthropic ASU.",
-    keywords: ["certificates", "achievements", "leadership", "stanford", "machine learning specialization", "code in place", "teaching assistant", "google developer student club", "technical lead", "usaco gold", "computing olympiad", "anthropic", "claude club lead", "competitive programming"]
+    content: "FocusTime AI uses MediaPipe ML, TensorFlow, Flask, React, and Python. It's an AI-powered web app built with React, Flask, and PostgreSQL that integrates MediaPipe Holistic to extract 543 key points and uses TensorFlow for real-time gesture analysis, detecting and addressing procrastination during study sessions.",
+    keywords: ["focustime ai", "mediapipe", "tensorflow", "flask", "react", "python", "postgresql", "ai-powered", "mediapipe holistic", "543 key points", "gesture analysis", "procrastination", "study sessions", "projects"]
   },
+  
+  // Projects - Operating System Kernel
   {
-    content: "Outside of technology, Ekagra enjoys soccer, playing guitar, hiking, rock climbing, and scuba diving. He's passionate about both outdoor adventures and creative pursuits, balancing his technical career with diverse hobbies. Contact: ekagragupta1609@gmail.com, LinkedIn, GitHub, Leetcode profiles available.",
-    keywords: ["interests", "hobbies", "soccer", "guitar", "hiking", "rock climbing", "scuba diving", "personal", "outside", "fun", "activities", "sports", "music", "contact", "email", "linkedin", "github", "leetcode", "outdoor", "adventures"]
+    content: "Built an Operating System Kernel using C++, C, Linux, Ubuntu, Python, and ASM (x86_64). The kernel features virtual memory management, ELF execution, and multicore support on x86_64, implementing paging, Round-Robin scheduler, and syscalls for user-space programs.",
+    keywords: ["operating system", "kernel", "os", "c++", "c", "linux", "ubuntu", "python", "assembly", "x86_64", "virtual memory", "elf execution", "multicore", "paging", "round-robin scheduler", "syscalls", "user-space", "projects"]
+  },
+  
+  // Certificates and Experience
+  {
+    content: "Ekagra has completed the Machine Learning Specialization from Stanford Online, served as a Section Leader (Teaching Assistant) for Code in Place at Stanford, is the Technical Lead for Google Developer Student Club at ASU, achieved USACO Gold in the United States Computing Olympiad, and leads the Claude Club for Anthropic at ASU.",
+    keywords: ["certificates", "machine learning specialization", "stanford", "section leader", "teaching assistant", "code in place", "technical lead", "google developer student club", "usaco gold", "computing olympiad", "claude club", "anthropic", "achievements", "leadership", "teaching"]
+  },
+  
+  // Contact & Location
+  {
+    content: "Ekagra is based in San Francisco, CA. You can reach him through his website EkagraGupta.com, email ekagragupta1609@gmail.com, or connect on LinkedIn, LeetCode, and GitHub.",
+    keywords: ["contact", "san francisco", "california", "website", "ekagragupta.com", "email", "linkedin", "leetcode", "github", "location", "reach", "connect"]
+  },
+  
+  // Personal Interests
+  {
+    content: "Outside of technology, Ekagra enjoys soccer, playing guitar, hiking, rock climbing, and scuba diving. He's passionate about both outdoor adventures and creative pursuits, balancing his technical career with diverse hobbies.",
+    keywords: ["interests", "hobbies", "soccer", "guitar", "hiking", "rock climbing", "scuba diving", "personal", "outside", "fun", "activities", "sports", "music", "outdoor", "adventures", "climbing", "scuba"]
   }
 ];
 
@@ -237,12 +280,16 @@ const ChatPopup = ({ isOpen, onClose, initialMessage = '' }) => {
         mainPageInput.value = '';
       }
       
-      // Focus the popup input after a short delay to ensure it's rendered
-      setTimeout(() => {
+      // Force focus multiple times to ensure it sticks
+      const forceFocus = () => {
         if (inputRef.current) {
           inputRef.current.focus();
+          inputRef.current.click();
+          // Set cursor to end of input
+          const length = inputRef.current.value.length;
+          inputRef.current.setSelectionRange(length, length);
         }
-      }, 300);
+      };
       
       if (initialMessage) {
         setMessages([]);
@@ -250,9 +297,17 @@ const ChatPopup = ({ isOpen, onClose, initialMessage = '' }) => {
         // Auto-send the initial message after a short delay
         setTimeout(() => {
           handleSendMessage(initialMessage);
+          // Focus the input after sending the message with multiple attempts
+          setTimeout(forceFocus, 100);
+          setTimeout(forceFocus, 300);
+          setTimeout(forceFocus, 600);
         }, 500);
       } else {
         setMessages([]);
+        // Focus the popup input after animation completes with multiple attempts
+        setTimeout(forceFocus, 450);
+        setTimeout(forceFocus, 600);
+        setTimeout(forceFocus, 800);
       }
     } else {
       // Reset initial message when closing
@@ -309,6 +364,13 @@ const ChatPopup = ({ isOpen, onClose, initialMessage = '' }) => {
     setInputMessage('');
     setIsLoading(true);
 
+    // Refocus input immediately after clearing
+    setTimeout(() => {
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
+    }, 10);
+
     try {
       // Generate smart response
       const response = await generateResponse(messageText);
@@ -331,6 +393,12 @@ const ChatPopup = ({ isOpen, onClose, initialMessage = '' }) => {
       setMessages(prev => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
+      // Refocus input after loading is complete
+      setTimeout(() => {
+        if (inputRef.current) {
+          inputRef.current.focus();
+        }
+      }, 10);
     }
   };
 
@@ -373,7 +441,21 @@ const ChatPopup = ({ isOpen, onClose, initialMessage = '' }) => {
             }}
           >
             {/* Glass morphism container */}
-            <div className="bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden h-full flex flex-col relative">
+            <div 
+              className="bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden h-full flex flex-col relative"
+              onClick={(e) => {
+                // Don't focus if clicking on close button or resize handle
+                if (e.target.closest('button') || e.target.closest('.resize-handle')) return;
+                
+                // Aggressive focus input when clicking anywhere in the popup
+                if (inputRef.current) {
+                  inputRef.current.focus();
+                  inputRef.current.click();
+                  const length = inputRef.current.value.length;
+                  inputRef.current.setSelectionRange(length, length);
+                }
+              }}
+            >
               {/* Header */}
               <motion.div 
                 className="flex items-center justify-between p-5 border-b border-white/10 bg-gradient-to-r from-black/20 to-transparent"
@@ -477,9 +559,36 @@ const ChatPopup = ({ isOpen, onClose, initialMessage = '' }) => {
                     value={inputMessage}
                     onChange={(e) => setInputMessage(e.target.value)}
                     onKeyPress={handleKeyPress}
+                    onClick={() => {
+                      if (inputRef.current) {
+                        inputRef.current.focus();
+                        const length = inputRef.current.value.length;
+                        inputRef.current.setSelectionRange(length, length);
+                      }
+                    }}
+                    onFocus={() => {
+                      if (inputRef.current) {
+                        const length = inputRef.current.value.length;
+                        inputRef.current.setSelectionRange(length, length);
+                      }
+                    }}
+                    onBlur={(e) => {
+                      // Don't allow blur unless clicking outside the popup
+                      if (!e.relatedTarget || !popupRef.current?.contains(e.relatedTarget)) {
+                        return;
+                      }
+                      // Refocus after a brief delay if still in popup
+                      setTimeout(() => {
+                        if (inputRef.current && popupRef.current?.contains(document.activeElement)) {
+                          inputRef.current.focus();
+                        }
+                      }, 10);
+                    }}
                     placeholder="Ask anything about me..."
                     className="w-full p-4 pr-14 bg-white/5 backdrop-blur-sm text-white rounded-xl border border-white/20 focus:border-[#915EFF]/50 focus:outline-none focus:ring-2 focus:ring-[#915EFF]/20 transition-all duration-200 placeholder-white/50"
                     disabled={isLoading}
+                    autoComplete="off"
+                    autoFocus
                   />
                   <motion.button
                     onClick={() => handleSendMessage()}
