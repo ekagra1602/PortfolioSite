@@ -63,7 +63,7 @@ const generateResponse = async (query) => {
     
     const API_KEY = import.meta.env.VITE_GROQ_API_KEY;
     
-    if (API_KEY && API_KEY.startsWith('gsk_')) {
+    if (API_KEY) {
       try {
         const systemPrompt = `You are Ekagra Gupta's helpful AI assistant. Answer questions about him using the following information: ${contextText}. 
 
@@ -88,7 +88,7 @@ Be conversational, friendly, and concise (1-2 sentences max).`;
                 content: query
               }
             ],
-            model: 'llama3-8b-8192', // Fast and free Llama 3 model
+                           model: 'llama-3.1-8b-instant', // Fast and free Llama 3.1 model
             max_tokens: 120,
             temperature: 0, // Deterministic for factual accuracy
             stream: false
