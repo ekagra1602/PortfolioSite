@@ -28,6 +28,7 @@ import {
   ramen,
   airbnbLogoPhoto,
   olympic,
+  neuravault,
 } from "../assets";
 
 export const navLinks = [
@@ -211,31 +212,31 @@ const projects = [
     source_code_link: "https://github.com/ekagra1602/live-it",
   },
   {
-    name: "ResQ",
+    name: "NeuraVault MCP",
     description:
-      "Developed a disaster management app for efficient collaboration among rescue agencies, \
-      utilizing Python and Node.js for backend, Flutter for frontend, and Google Maps API for \
-      real-time location tracking.",
+      "A FastAPI-based Model Context Protocol (MCP) memory layer that unifies memory ingestion and retrieval \
+      across OpenAI and Anthropic Claude models enabling seamless multi-model integration for LLM-powered\
+      agents.",
     tags: [
       {
-        name: "Golang",
+        name: "Pydantic",
         color: "blue-text-gradient",
       },
       {
-        name: "NodeJS",
+        name: "OpenAPI",
         color: "green-text-gradient",
       },
       {
-        name: "Flutter",
+        name: "LangChain",
         color: "pink-text-gradient",
       },
       {
-        name: "Google Maps API",
+        name: "FastAPI",
         color: "orange-text-gradient",
       },
     ],
-    image: resq,
-    source_code_link: "https://github.com/ekagra1602/ResQ",
+    image: neuravault,
+    source_code_link: "https://neuravault-mcp.onrender.com/",
   },
 ];
 

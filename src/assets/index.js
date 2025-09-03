@@ -34,8 +34,10 @@ import hack from "./hack.jpeg";
 import ramen from "./ramen.jpeg";
 import airbnbLogoPhoto from "./officelogo.jpeg";
 import olympic from "./olympic.jpeg";
+import neuravault from "./neuravault.png";
 
 export {
+  neuravault,
   carnegie,
   carrier,
   EduPoint,
