@@ -285,7 +285,7 @@ I worked on designing a new approach where WAL batches are stored in S3, with Ka
 It was a very challenging project, especially as an intern. I wrote over 5,000 lines of code and changed more than 20 \
 files, and I am proud that I was able to bring it together and make it work end to end. The result was a system that \
 traded a small increase in latency for much greater elasticity and significantly lower storage and network costs. \
-It also unlocked onger retention windows for traces, which are difficult to achieve with Kafka alone.
+It also unlocked longer retention windows for traces, which are difficult to achieve with Kafka alone.
 
 ⸻
 
