@@ -23,6 +23,8 @@ import EduPoint from "./company/EduPoint.png";
 import Fulton from "./company/Fulton.png";
 import carnegie from "./company/carnegie.png";
 import Airbnb from "./company/Airbnb.jpg";
+import Snowflake from "./company/Snowflake_2.png";
+import Qualcomm from "./company/qcom.png";
 
 import FocusAi from "./FocusAi.png";
 import resq from "./resq.jpeg";
@@ -71,4 +73,6 @@ export {
   ramen,
   airbnbLogoPhoto,
   olympic,
+  Snowflake,
+  Qualcomm,
 };

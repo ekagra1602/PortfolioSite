@@ -29,6 +29,8 @@ import {
   airbnbLogoPhoto,
   olympic,
   neuravault,
+  Snowflake,
+  Qualcomm,
 } from "../assets";
 
 export const navLinks = [
@@ -109,6 +111,26 @@ const technologies = [
 ];
 
 const experiences = [
+  {
+    title: "Machine Learning Intern",
+    company_name: "Snowflake",
+    icon: Snowflake,
+    iconBg: "#383E56",
+    date: "January 2026",
+    points: [
+      "AI Inference Team (Incoming Spring 2026)",
+    ],
+  },
+  {
+    title: "Software Engineer Intern (Capstone)",
+    company_name: "Qualcomm",
+    icon: Qualcomm,
+    iconBg: "#E6DEDD",
+    date: "August 2025 - Present",
+    points: [
+      "AI enabled financial insights engine",
+    ],
+  },
   {
     title: "Software Engineering Intern",
     company_name: "Airbnb",
