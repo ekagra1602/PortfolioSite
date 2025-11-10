@@ -36,8 +36,8 @@ const Hero = () => {
           className="text-2xl md:text-2xl font-roboto mb-[36px]"
         >
         Incoming AI/ML intern @ Snowflake · Curr @ Qualcomm <br />
-        CS @ ASU · Backend Systems & ML · <br />
-        Ex-Airbnb Intern · Ex-CMU ML Researcher 
+        Prev - Airbnb Swe Intern · CMU ML Researcher <br />
+        CS @ ASU · Backend Systems & ML
         </motion.p>
         
         {/* Ask AI Section */}

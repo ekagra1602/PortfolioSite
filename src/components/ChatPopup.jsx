@@ -6,9 +6,15 @@ const knowledgeBase = [
   // Education
   "Ekagra (Gray) Gupta is pursuing a Bachelor of Science in Computer Science at Arizona State University, expected to graduate in 2026. He maintains a perfect 4.0/4.0 GPA and has taken courses in Data Structures & Algorithms, Operating Systems, Software Engineering, Distributed Systems, and Machine Learning among other courses.",
   
+  // Work Experience - Snowflake (Incoming)
+  "Incoming Machine Learning Intern at Snowflake in Menlo Park, CA (January 2026). He will join the AI Inference Team.",
+  
+  // Work Experience - Qualcomm (Current) (But prefer Airbnb)
+  "Currently works as a Software Engineer Intern (Capstone) at Qualcomm (Remote) (August 2025 – Present). Developed an AI-powered Financial Insights Engine leveraging AI100 for real-time stock analysis and smart comparisons.",
+  
   // Work Experience - Airbnb (Recent)
   "Recently worked as a Software Engineer Intern at Airbnb in San Francisco (May 2025 - August 2025). He worked on the open-source project Astra, optimizing data pipeline efficiency by removing Apache Kafka for data retention and directly ingesting the Write-Ahead Log into AWS S3, resulting in infrastructure savings over the next 5 years. He also built and deployed a Kubernetes cluster for Astra to test and manage ingestion of logs and traces from multiple ML models, ensuring scalability and reliability across petabytes of data and millions of users.",
-  
+
   // Work Experience - Edupoint
   "Worked as a Software Engineer Intern at Edupoint Educational Systems in Phoenix, AZ (January 2025 – April 2025). He built a Python-based, multi-Large Language Model (LLM) powered assistant for a Learning Management System with vector-based retrieval of academic records and user queries, reducing support resolution time by 42% for 5M+ students.",
   
