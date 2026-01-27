@@ -112,13 +112,13 @@ const technologies = [
 
 const experiences = [
   {
-    title: "Machine Learning Intern",
+    title: "AI / ML Intern",
     company_name: "Snowflake",
     icon: Snowflake,
     iconBg: "#383E56",
-    date: "January 2026",
+    date: "January 2026 - Present",
     points: [
-      "AI Inference Team (Incoming Spring 2026)",
+      "Cortex Platform AI Inference Team ",
     ],
   },
   {
@@ -126,7 +126,7 @@ const experiences = [
     company_name: "Qualcomm",
     icon: Qualcomm,
     iconBg: "#E6DEDD",
-    date: "August 2025 - Present",
+    date: "August 2025 - December 2025",
     points: [
       "AI enabled financial insights engine",
     ],

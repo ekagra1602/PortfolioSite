@@ -35,8 +35,8 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
           className="text-2xl md:text-2xl font-roboto mb-[36px]"
         >
-        Incoming AI/ML intern @ Snowflake · Curr @ Qualcomm <br />
-        Prev - Airbnb Swe Intern · CMU ML Researcher <br />
+        AI/ML intern @ Snowflake · Prev Airbnb <br />
+        Qualcommm · CMU ML Researcher <br />
         CS @ ASU · Backend Systems & ML
         </motion.p>
         
