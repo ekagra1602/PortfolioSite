@@ -1,72 +1,125 @@
-import myimg from "../assets/myimg.jpeg";
-import { motion } from "framer-motion";
-import { useState, useRef, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
 import ChatPopup from "./ChatPopup";
+
+const roles = [
+  "AI/ML Intern @ Snowflake",
+  "Prev SWE Intern @ Airbnb",
+  "Stanford × ASU",
+  "8x Hackathon Winner - YC, Treehacks, UC Berkeley, etc.",
+];
 
 const Hero = () => {
   const [chatOpen, setChatOpen] = useState(false);
   const [initialMessage, setInitialMessage] = useState('');
-  const imgRef = useRef(null);
-  const [tilt, setTilt] = useState({ rotateX: 0, rotateY: 0 });
+  const [roleIndex, setRoleIndex] = useState(0);
 
-  const handleMouseMove = useCallback((e) => {
-    const el = imgRef.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    setTilt({ rotateY: x * 20, rotateX: -y * 20 });
-  }, []);
-
-  const handleMouseLeave = useCallback(() => {
-    setTilt({ rotateX: 0, rotateY: 0 });
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRoleIndex((prev) => (prev + 1) % roles.length);
+    }, 3000);
+    return () => clearInterval(interval);
   }, []);
 
   const handleAskAI = (message) => {
     setInitialMessage(message);
     setChatOpen(true);
-    
-    // Blur the input field to remove cursor
     const input = document.querySelector('input[placeholder*="Ask anything"]');
-    if (input) {
-      input.blur();
-    }
+    if (input) input.blur();
   };
 
   return (
-    <section className="relative md:h-dvh min-h-[600px] flex flex-col md:flex-row items-center justify-between pt-[60px] z-10 mx-[10%]">
-      <div className="content flex flex-col items-center md:items-start z-10 text-white md:w-[65%]">
-        <motion.h1 
-          initial={{ opacity: 0, y: 20 }}
+    <section className="relative md:h-dvh min-h-[600px] flex items-center justify-center pt-[60px] z-10 overflow-hidden">
+
+      {/* Ambient background orbs */}
+      <motion.div
+        className="absolute top-1/4 -left-32 w-[500px] h-[500px] rounded-full bg-blue-600/[0.07] blur-[100px]"
+        animate={{ x: [0, 40, 0], y: [0, -30, 0] }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="absolute bottom-1/4 -right-32 w-[400px] h-[400px] rounded-full bg-purple-600/[0.06] blur-[100px]"
+        animate={{ x: [0, -30, 0], y: [0, 40, 0] }}
+        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full bg-white/[0.03] blur-[80px]"
+        animate={{ scale: [1, 1.15, 1] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      />
+
+      <div className="content relative flex flex-col items-center z-10 text-white max-w-3xl text-center px-6">
+
+        {/* Top label */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="flex items-center gap-2 mb-6"
+        >
+          <span className="h-px w-8 bg-white/30" />
+          <span className="text-xs md:text-sm font-inter tracking-[0.25em] uppercase text-white/40">
+            Software &amp; AI/ML Engineer
+          </span>
+          <span className="h-px w-8 bg-white/30" />
+        </motion.div>
+
+        {/* Name */}
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="title text-5xl md:text-7xl font-extrabold mb-[33px] font-roboto bg-text-gradient bg-clip-text"
+          transition={{ duration: 1, delay: 0.15, ease: [0.25, 0.1, 0, 1] }}
+          className="text-5xl sm:text-6xl md:text-8xl font-extrabold mb-5 font-display tracking-tight"
+          style={{
+            background: "linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.6) 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+          }}
         >
           {"Hi, I'm Ekagra"}
         </motion.h1>
-        <motion.p 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          className="text-2xl md:text-2xl font-roboto mb-[36px]"
+
+        {/* Animated divider */}
+        <motion.div
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+          className="h-px w-24 bg-gradient-to-r from-transparent via-white/40 to-transparent mb-6 origin-center"
+        />
+
+        {/* Cycling roles */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="h-8 md:h-10 flex items-center justify-center mb-12 overflow-hidden"
         >
-        AI/ML intern @ Snowflake · Prev Airbnb <br />
-        Qualcommm · CMU ML Researcher <br />
-        CS @ ASU · Backend Systems & ML
-        </motion.p>
-        
+          <AnimatePresence mode="wait">
+            <motion.span
+              key={roleIndex}
+              initial={{ y: 16, opacity: 0, filter: "blur(4px)" }}
+              animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
+              exit={{ y: -16, opacity: 0, filter: "blur(4px)" }}
+              transition={{ duration: 0.35, ease: "easeOut" }}
+              className="text-base md:text-xl font-inter text-white/50 tracking-wide"
+            >
+              {roles[roleIndex]}
+            </motion.span>
+          </AnimatePresence>
+        </motion.div>
+
         {/* Ask AI Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+          transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }}
           className="w-full max-w-md mb-6"
         >
           <div className="relative">
             <input
               type="text"
               placeholder="Ask anything about me to my AI assistant..."
-              className="w-full px-5 pr-14 py-3 bg-white/10 border border-white/20 rounded-full text-white placeholder-white/60 focus:outline-none focus:border-[#576cbc] transition-colors text-sm md:text-base"
+              className="w-full px-5 pr-14 py-3 bg-white/[0.06] border border-white/[0.12] rounded-full text-white placeholder-white/40 focus:outline-none focus:border-white/30 transition-colors text-sm md:text-base backdrop-blur-sm"
               onKeyPress={(e) => {
                 if (e.key === 'Enter' && e.target.value.trim()) {
                   handleAskAI(e.target.value);
@@ -82,52 +135,24 @@ const Hero = () => {
                   input.value = '';
                 }
               }}
-              className="absolute right-2 group bg-gradient-to-r from-slate-700 via-gray-800 to-slate-900 text-white rounded-full w-10 h-10 flex items-center justify-center border border-white/20 shadow-lg shadow-black/30 overflow-hidden"
-              style={{
-                top: '50%',
-                y: '-50%'
-              }}
-              whileHover={{ 
-                scale: 1.1,
-                boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5)"
-              }}
+              className="absolute right-2 group bg-white/[0.08] text-white rounded-full w-10 h-10 flex items-center justify-center border border-white/[0.12] hover:bg-white/[0.15] transition-colors"
+              style={{ top: '50%', y: '-50%' }}
+              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
             >
-              {/* Animated background on hover */}
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-blue-600/30 via-purple-600/30 to-gray-600/30 opacity-0 group-hover:opacity-100"
-                transition={{ duration: 0.3 }}
-              />
-              
-              {/* Ripple effect */}
-              <motion.div
-                className="absolute inset-0 bg-white/10 rounded-full scale-0 group-active:scale-100"
-                transition={{ duration: 0.2 }}
-              />
-              
-              <motion.svg 
-                width="18" 
-                height="18" 
-                viewBox="0 0 24 24" 
-                fill="none"
-                className="relative z-10"
-                whileHover={{ rotate: 15 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                <path 
-                  d="M2 21L23 12L2 3V10L17 12L2 14V21Z" 
-                  fill="currentColor"
-                />
-              </motion.svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M2 21L23 12L2 3V10L17 12L2 14V21Z" fill="currentColor" />
+              </svg>
             </motion.button>
           </div>
         </motion.div>
 
+        {/* Contact button */}
         <motion.a
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
+          transition={{ duration: 0.8, delay: 1.0, ease: "easeOut" }}
           href="#contact"
           onClick={(e) => {
             e.preventDefault();
@@ -138,95 +163,29 @@ const Hero = () => {
               window.location.hash = "#contact";
             }
           }}
-          className="relative group overflow-hidden bg-gradient-to-r from-slate-800 via-gray-900 to-black text-white no-underline rounded-full font-semibold px-8 py-4 border border-white/20 backdrop-blur-sm shadow-2xl shadow-black/50 transition-all duration-300"
-          whileHover={{ 
-            scale: 1.05,
-            boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.8)"
-          }}
+          className="group relative px-8 py-3 rounded-full border border-white/[0.15] text-white/80 hover:text-white text-sm font-inter tracking-wide transition-all duration-300 hover:border-white/30 hover:shadow-[0_0_30px_rgba(255,255,255,0.06)]"
+          whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.98 }}
-          aria-label="Scroll to contact section"
         >
-          {/* Animated background gradient */}
-          <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-blue-600/20 via-purple-600/20 to-gray-600/20 opacity-0 group-hover:opacity-100"
-            initial={false}
-            animate={{ 
-              background: [
-                "linear-gradient(45deg, rgba(59, 130, 246, 0.2), rgba(147, 51, 234, 0.2), rgba(75, 85, 99, 0.2))",
-                "linear-gradient(45deg, rgba(147, 51, 234, 0.2), rgba(75, 85, 99, 0.2), rgba(59, 130, 246, 0.2))",
-                "linear-gradient(45deg, rgba(75, 85, 99, 0.2), rgba(59, 130, 246, 0.2), rgba(147, 51, 234, 0.2))"
-              ]
-            }}
-            transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-          />
-          
-          {/* Glass shine effect */}
-          <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%]"
-            transition={{ duration: 0.8, ease: "easeInOut" }}
-          />
-          
           <span className="relative z-10 flex items-center gap-2">
-            Contact Me
-            <motion.svg 
-              width="16" 
-              height="16" 
-              viewBox="0 0 24 24" 
-              fill="none"
-              className="group-hover:translate-x-1 transition-transform duration-200"
+            Get in touch
+            <svg
+              width="14" height="14" viewBox="0 0 24 24" fill="none"
+              className="group-hover:translate-x-0.5 transition-transform duration-200"
             >
-              <path 
-                d="M7 17L17 7M17 7H7M17 7V17" 
-                stroke="currentColor" 
-                strokeWidth="2" 
-                strokeLinecap="round" 
-                strokeLinejoin="round"
+              <path
+                d="M7 17L17 7M17 7H7M17 7V17"
+                stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
               />
-            </motion.svg>
+            </svg>
           </span>
-        </motion.a>   
-      </div>      
-      <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{
-          opacity: 1,
-          scale: 1,
-          y: [0, -10, 0],
-        }}
-        transition={{
-          opacity: { duration: 0.8, delay: 0.8 },
-          scale: { duration: 0.8, delay: 0.8 },
-          y: { duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1.6 },
-        }}
-        className="z-10 mb-4 ml-2"
-        style={{ perspective: 800 }}
-      >
-        <motion.div
-          ref={imgRef}
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
-          animate={{
-            rotateX: tilt.rotateX,
-            rotateY: tilt.rotateY,
-          }}
-          transition={{ type: "spring", stiffness: 150, damping: 15 }}
-          style={{ transformStyle: "preserve-3d" }}
-          className="relative cursor-pointer"
-        >
-          <img
-            src={myimg}
-            alt="Ekagra's Ghibli portrait"
-            className="h-[200px] md:h-[400px] w-auto object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.5)]"
-          />
-          {/* Glow effect behind image */}
-          <div className="absolute inset-0 -z-10 blur-2xl opacity-30 bg-gradient-to-b from-blue-500/40 via-purple-500/30 to-transparent scale-90 rounded-3xl" />
-        </motion.div>
-      </motion.div>
-      
+        </motion.a>
+      </div>
+
       {/* Chat Popup */}
-      <ChatPopup 
-        isOpen={chatOpen} 
-        onClose={() => setChatOpen(false)} 
+      <ChatPopup
+        isOpen={chatOpen}
+        onClose={() => setChatOpen(false)}
         initialMessage={initialMessage}
       />
     </section>
