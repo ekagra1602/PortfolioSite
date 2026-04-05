@@ -37,6 +37,7 @@ import ramen from "./ramen.jpeg";
 import airbnbLogoPhoto from "./officelogo.jpeg";
 import olympic from "./olympic.jpeg";
 import neuravault from "./neuravault.png";
+import Slipstream from "./Slipstream.png";
 
 export {
   neuravault,
@@ -75,4 +76,5 @@ export {
   olympic,
   Snowflake,
   Qualcomm,
+  Slipstream,
 };

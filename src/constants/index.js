@@ -31,6 +31,7 @@ import {
   neuravault,
   Snowflake,
   Qualcomm,
+  Slipstream,
 } from "../assets";
 
 export const navLinks = [
@@ -172,7 +173,7 @@ const experiences = [
   },
   {
     title: "Software Engineering Intern",
-    company_name: "Carrier Air Conditioning India",
+    company_name: "Carrier",
     icon: carrier,
     iconBg: "#E6DEDD",
     date: "May 2022 - August 2022",
@@ -184,29 +185,29 @@ const experiences = [
 
 const projects = [
   {
-    name: "FocusTime AI",
+    name: "SlipStream",
     description:
-      "A full-stack, AI-driven web app developed with Python and JavaScript, using React, Flask, and PostgreSQL. The app integrates MediaPipe Holistic for extracting 471 key points(face, hand, body),and leverages TensorFlow for real-time gesture analysis to detect and address procrastination during study sessions.",
+      "Y Combinator Hackathon Winner. A shared execution graph that captures web-agent task trajectories and guides future agents toward successful paths, reducing redundant exploration and LLM tool usage.",
     tags: [
       {
-        name: "MediaPipe ML",
+        name: "Python",
         color: "blue-text-gradient",
       },
       {
-        name: "TensorFlow",
+        name: "FastAPI",
         color: "green-text-gradient",
       },
       {
-        name: "Flask",
+        name: "OpenAI",
         color: "pink-text-gradient",
       },
       {
-        name: "Python",
+        name: "MongoDB",
         color: "orange-text-gradient",
       },
     ],
-    image: FocusAi,
-    source_code_link: "https://github.com/ekagra1602/FocusTime-AI",
+    image: Slipstream,
+    source_code_link: "https://slipstream-phi.vercel.app/",
   },
   {
     name: "Live-it",
