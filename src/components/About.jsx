@@ -12,7 +12,7 @@ const highlights = [
 
 const About = () => {
   return (
-    <>
+    <div className="pb-24">
       <motion.div variants={textVariant(0.3)} className="mt-4">
         <p className="text-xs sm:text-sm font-inter tracking-[0.25em] uppercase text-white/40">
           About
@@ -57,7 +57,7 @@ const About = () => {
           </div>
         ))}
       </motion.div>
-    </>
+    </div>
   );
 };
 
