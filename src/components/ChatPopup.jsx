@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 // Comprehensive knowledge base from resume
 const knowledgeBase = [
   // Education
-  "Ekagra (Gray) Gupta is pursuing a Bachelor of Science in Computer Science at Arizona State University, expected to graduate in 2026. He maintains a perfect 4.0/4.0 GPA and has taken courses in Data Structures & Algorithms, Operating Systems, Software Engineering, Distributed Systems, and Machine Learning among other courses.",
+  "Ekagra is pursuing a Bachelor of Science in Computer Science at Arizona State University, expected to graduate in 2026. He maintains a perfect 4.0/4.0 GPA and has taken courses in Data Structures & Algorithms, Operating Systems, Software Engineering, Distributed Systems, and Machine Learning among other courses.",
   
   // Work Experience - Snowflake (Incoming)
   "Incoming Machine Learning Intern at Snowflake in Menlo Park, CA (January 2026). He will join the AI Inference Team.",
@@ -71,7 +71,7 @@ const generateResponse = async (query) => {
     
     if (API_KEY) {
       try {
-        const systemPrompt = `You are Ekagra Gupta's helpful AI assistant. Answer questions about him using the following information: ${contextText}. 
+        const systemPrompt = `You are Ekagra's helpful AI assistant. Answer questions about him using the following information: ${contextText}. 
 
 IMPORTANT: For work, education, or resume-related questions, ONLY use the information provided. DO NOT invent or assume any companies, job titles, dates, or experiences not mentioned. Never mention "context" or "provided information" - speak as if you naturally know about Ekagra.
 
