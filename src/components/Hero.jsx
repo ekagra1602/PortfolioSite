@@ -1,11 +1,26 @@
 import myimg from "../assets/myimg.jpeg";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 import ChatPopup from "./ChatPopup";
 
 const Hero = () => {
   const [chatOpen, setChatOpen] = useState(false);
   const [initialMessage, setInitialMessage] = useState('');
+  const imgRef = useRef(null);
+  const [tilt, setTilt] = useState({ rotateX: 0, rotateY: 0 });
+
+  const handleMouseMove = useCallback((e) => {
+    const el = imgRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    setTilt({ rotateY: x * 20, rotateX: -y * 20 });
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    setTilt({ rotateX: 0, rotateY: 0 });
+  }, []);
 
   const handleAskAI = (message) => {
     setInitialMessage(message);
@@ -171,14 +186,42 @@ const Hero = () => {
           </span>
         </motion.a>   
       </div>      
-      <motion.img
+      <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }}
-        src={myimg}
-        alt="Ekagra's image"
-        className="md:min-w-1/2 h-[150px] md:min-h-[350px] rounded-full z-10 mb-4 ml-2"
-      />
+        animate={{
+          opacity: 1,
+          scale: 1,
+          y: [0, -10, 0],
+        }}
+        transition={{
+          opacity: { duration: 0.8, delay: 0.8 },
+          scale: { duration: 0.8, delay: 0.8 },
+          y: { duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1.6 },
+        }}
+        className="z-10 mb-4 ml-2"
+        style={{ perspective: 800 }}
+      >
+        <motion.div
+          ref={imgRef}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+          animate={{
+            rotateX: tilt.rotateX,
+            rotateY: tilt.rotateY,
+          }}
+          transition={{ type: "spring", stiffness: 150, damping: 15 }}
+          style={{ transformStyle: "preserve-3d" }}
+          className="relative cursor-pointer"
+        >
+          <img
+            src={myimg}
+            alt="Ekagra's Ghibli portrait"
+            className="h-[200px] md:h-[400px] w-auto object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.5)]"
+          />
+          {/* Glow effect behind image */}
+          <div className="absolute inset-0 -z-10 blur-2xl opacity-30 bg-gradient-to-b from-blue-500/40 via-purple-500/30 to-transparent scale-90 rounded-3xl" />
+        </motion.div>
+      </motion.div>
       
       {/* Chat Popup */}
       <ChatPopup 

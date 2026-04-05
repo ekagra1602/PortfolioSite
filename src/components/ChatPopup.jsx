@@ -4,56 +4,47 @@ import { motion, AnimatePresence } from 'framer-motion';
 // Comprehensive knowledge base from resume
 const knowledgeBase = [
   // Education
-  "Ekagra is pursuing a Bachelor of Science in Computer Science at Arizona State University, expected to graduate in 2026. He maintains a perfect 4.0/4.0 GPA and has taken courses in Data Structures & Algorithms, Operating Systems, Software Engineering, Distributed Systems, and Machine Learning among other courses.",
-  
-  // Work Experience - Snowflake (Incoming)
-  "Incoming Machine Learning Intern at Snowflake in Menlo Park, CA (January 2026). He will join the AI Inference Team.",
-  
-  // Work Experience - Qualcomm (Current) (But prefer Airbnb)
-  "Currently works as a Software Engineer Intern (Capstone) at Qualcomm (Remote) (August 2025 – Present). Developed an AI-powered Financial Insights Engine leveraging AI100 for real-time stock analysis and smart comparisons.",
-  
-  // Work Experience - Airbnb (Recent)
-  "Recently worked as a Software Engineer Intern at Airbnb in San Francisco (May 2025 - August 2025). He worked on the open-source project Astra, optimizing data pipeline efficiency by removing Apache Kafka for data retention and directly ingesting the Write-Ahead Log into AWS S3, resulting in infrastructure savings over the next 5 years. He also built and deployed a Kubernetes cluster for Astra to test and manage ingestion of logs and traces from multiple ML models, ensuring scalability and reliability across petabytes of data and millions of users.",
+  "Ekagra is an Exchange Student in AI/ML at Stanford University. He is also pursuing a Bachelor of Science in Computer Science at Arizona State University, expected to graduate in May 2026, with a perfect 4.0/4.0 GPA. Relevant courses include Data Structures & Algorithms, Software Engineering, Distributed Systems, and Machine Learning.",
+
+  // Work Experience - Snowflake (Current)
+  "Currently works as a Software Engineer Intern - AI/ML at Snowflake in Menlo Park, CA (January 2026 – Present). He designed sharded throughput controllers for LLM queries to isolate blast radius during traffic spikes, improving system reliability while reducing CPU and memory footprint by around 70%. He is working on the inference engine for Snowflake Intelligence, learning large-scale LLM serving and infrastructure.",
+
+  // Work Experience - Qualcomm
+  "Worked as a Software Engineer Intern (Capstone) at Qualcomm in San Diego, CA (August 2025 – December 2025). Developed an AI-powered Financial Insights Engine leveraging AI100 for real-time stock analysis, trend forecasting, and smart comparisons; optimized high-throughput inference pipelines for large-scale financial data processing.",
+
+  // Work Experience - Airbnb
+  "Worked as a Software Engineer Intern at Airbnb in San Francisco, CA (May 2025 – August 2025). He optimized a cloud-native search and analytics engine by replacing Apache Kafka with direct write-ahead log (WAL) ingestion into AWS S3, resulting in around $1.1 million in infrastructure savings over the next 5 years. He also built and deployed a Kubernetes cluster to test and manage ingestion of logs and traces from multiple ML models, ensuring scalability and reliability across petabytes of data and millions of users.",
 
   // Work Experience - Edupoint
-  "Worked as a Software Engineer Intern at Edupoint Educational Systems in Phoenix, AZ (January 2025 – April 2025). He built a Python-based, multi-Large Language Model (LLM) powered assistant for a Learning Management System with vector-based retrieval of academic records and user queries, reducing support resolution time by 42% for 5M+ students.",
-  
-  // Work Experience - Carnegie Mellon
-  "Served as a Machine Learning Research Assistant at Carnegie Mellon University in Pittsburgh, PA (June 2024 – August 2024). He optimized and fine-tuned open-source large language models using Ollama, Hugging Face Transformers, and PyTorch, achieving a 37% improvement in structured data extraction from enterprise documents and technical reports.",
-  
-  // Work Experience - ASU Co-op
-  "Worked as a Software Engineer Co-op at Arizona State University in Tempe, AZ (March 2023 – June 2024). He developed automation scripts in Python optimizing CI/CD pipelines and reducing deployment time, resulting in a 15% increase in system efficiency and reduced manual intervention.",
-  
+  "Worked as a Software Engineer Intern at Edupoint Educational Systems in Phoenix, AZ (January 2025 – April 2025). He built a Python-based, multi-LLM agent leveraging retrieval-augmented generation (RAG) with vector embedding based search over academic records and queries, reducing support resolution time by 42% for 5M+ students.",
+
   // Work Experience - Carrier
-  "Worked as a Software Developer Intern at Carrier remotely (May 2022 – August 2022). He designed and implemented Go, C++ and SQL based in-memory Database Engine to accurately track sales, returns, and inventory, enhancing stock management practices and reducing record discrepancies by 18%.",
-  
+  "Worked as a Software Engineer Intern at Carrier remotely (May 2022 – August 2022). He designed and implemented Go, C++, and SQL based in-memory Database Engine to accurately track sales, returns, and inventory, enhancing stock management practices and reducing record discrepancies by 18%.",
+
   // Technical Skills - Programming Languages
-  "Ekagra's programming languages include Python, C++, C, Java, Go, C#, JavaScript, and TypeScript. He's proficient across multiple paradigms from systems programming to web development.",
-  
+  "Ekagra's programming languages include Python, C++, Go, Rust, Java, and TypeScript. He's proficient across multiple paradigms from systems programming to web development.",
+
   // Technical Skills - Frameworks & Libraries
-  "His frameworks and libraries expertise includes PyTorch, NumPy, TensorFlow, LangChain, Node.js, React, Angular, and .Net, spanning machine learning, web development, and enterprise technologies.",
-  
-  // Technical Skills - Tools & Databases
-  "He's experienced with tools, databases, and software including Docker, Kafka, Kubernetes, MongoDB, SQL, Linux, Git, AWS, and GCP for cloud computing, containerization, and distributed systems.",
-  
+  "His frameworks and libraries expertise includes PyTorch, TensorFlow, NumPy, LangChain, Node.js, React, and Angular, spanning machine learning and web development.",
+
+  // Technical Skills - Tools & Cloud
+  "He's experienced with tools and cloud platforms including Apache Kafka, Spark, Kubernetes, Docker, Spinnaker, MongoDB, SQL, Linux, Git, AWS, and GCP for cloud computing, containerization, and distributed systems.",
+
+  // Projects - SlipStream
+  "SlipStream won the Y Combinator Hackathon and is built with Python, FastAPI, Laminar, OpenAI, and MongoDB. It is a shared execution graph that captures web-agent task trajectories and guides future agents toward successful paths, reducing redundant exploration and LLM tool usage.",
+
+  // Projects - Clarifyd
+  "Clarifyd won the Treehacks (Stanford) Google Track and is built with Python, FastAPI, Gemini, Convex, and AssemblyAI. It is an AI classroom co-pilot that delivers real-time transcription, auto-generated explainer videos, adaptive quizzes, and live teaching analytics to make lectures interactive and data-driven.",
+
   // Projects - Live-it
-  "Live-it won the UC Berkeley AI Hackathon and uses Python, VGGT, Gemini API, Gaussian Splatting, React, and Node.js. It integrates Google Veo 3 API to generate cinematic videos from prompts, then trains on VGGT neural network and Gaussian Splatting for AI-based camera inference and 3D scene construction, enabling real-time prompt-to-3D walkthroughs.",
-  
-  // Projects - Memory Transfer MCP
-  "Memory Transfer MCP is built with Python, FastAPI, and LangChain. It implements a FastAPI-based Model Context Protocol (MCP) memory layer that unifies memory ingestion and retrieval across OpenAI and Anthropic Claude models, enabling seamless multi-model integration for LLM-powered agents.",
-  
-  // Projects - FocusTime AI
-  "FocusTime AI uses MediaPipe ML, TensorFlow, Flask, React, and Python. It's an AI-powered web app built with React, Flask, and PostgreSQL that integrates MediaPipe Holistic to extract 543 key points and uses TensorFlow for real-time gesture analysis, detecting and addressing procrastination during study sessions.",
-  
-  // Projects - Operating System Kernel
-  "Built an Operating System Kernel using C++, C, Linux, Ubuntu, Python, and ASM (x86_64). The kernel features virtual memory management, ELF execution, and multicore support on x86_64, implementing paging, Round-Robin scheduler, and syscalls for user-space programs.",
-  
-  // Certificates and Experience
-  "Ekagra has completed the Machine Learning Specialization from Stanford Online, served as a Section Leader (Teaching Assistant) for Code in Place at Stanford, is the Technical Lead for Google Developer Student Club at ASU, achieved USACO Gold in the United States Computing Olympiad, and leads the Claude Club for Anthropic at ASU.",
-  
+  "Live-it won the UC Berkeley AI Hackathon and uses Python, VGGT, Gemini API, Gaussian Splatting, React, and Node.js. It integrates Google's Veo3 API to generate cinematic videos from prompts, trained on VGGT neural network and Gaussian Splatting for AI-based inference of a 3D scene, enabling real-time prompt-to-3D walkthroughs.",
+
+  // Awards & Leadership
+  "Ekagra achieved USACO Gold in the United States Computing Olympiad, completed the Machine Learning Specialization from Stanford, served as a Section Leader (Teaching Assistant) at Stanford, leads the Claude Club for Anthropic at ASU, is the Technical Lead for Google Developer Student Club at ASU, and is a Technical Lead at SoDA.",
+
   // Contact & Location
-  "Ekagra is based in San Francisco, CA. You can reach him through his website EkagraGupta.com, email egupta3@asu.edu, message on +1 (602)-515-5268, or connect on LinkedIn, LeetCode, and GitHub.",
-  
+  "Ekagra is based in San Francisco, CA. You can reach him through his website EkagraGupta.com, email ekagra1605@gmail.com, message on +1 (602)-515-5268, or connect on LinkedIn, LeetCode, and GitHub.",
+
   // Personal Interests
   "Outside of technology, Ekagra enjoys soccer, playing guitar, hiking, rock climbing, and scuba diving. He's passionate about both outdoor adventures and creative pursuits, balancing his technical career with diverse hobbies."
 ];
@@ -71,11 +62,14 @@ const generateResponse = async (query) => {
     
     if (API_KEY) {
       try {
-        const systemPrompt = `You are Ekagra's helpful AI assistant. Answer questions about him using the following information: ${contextText}. 
+        const systemPrompt = `You are Ekagra's friendly AI assistant on his portfolio website. You know Ekagra well and talk about him naturally, like a friend would — not like you're reading off a resume. Use the following facts about him to answer questions: ${contextText}.
 
-IMPORTANT: For work, education, or resume-related questions, ONLY use the information provided. DO NOT invent or assume any companies, job titles, dates, or experiences not mentioned. Never mention "context" or "provided information" - speak as if you naturally know about Ekagra.
-
-Be conversational, friendly, and concise (1-2 sentences max).`;
+Rules:
+- ONLY use the facts above. Do NOT invent companies, titles, dates, or experiences not listed.
+- Never say "according to his resume" or "based on the information provided" — just speak naturally.
+- Paraphrase and rephrase — do NOT copy bullet points verbatim. Add personality and warmth.
+- Keep answers short (2-3 sentences) but conversational, like you're chatting with a visitor.
+- If someone asks something you don't have info on, say so casually and suggest they reach out to Ekagra directly.`;
 
         const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
           method: 'POST',
@@ -94,9 +88,9 @@ Be conversational, friendly, and concise (1-2 sentences max).`;
                 content: query
               }
             ],
-                           model: 'llama-3.1-8b-instant', // Fast and free Llama 3.1 model
-            max_tokens: 120,
-            temperature: 0, // Deterministic for factual accuracy
+                           model: 'meta-llama/llama-4-scout-17b-16e-instruct',
+            max_tokens: 300,
+            temperature: 0.3,
             stream: false
           })
         });
