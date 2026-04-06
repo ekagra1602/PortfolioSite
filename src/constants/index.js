@@ -213,7 +213,7 @@ const projects = [
   {
     name: "Live-it",
     description:
-    "Won at the UC Berkeley AI Hackathon 2025. Integrated Google Veo 3 API to generate cinematic videos from prompts, then trained it on VGGT neural network and Gaussian Splatting for AI-based camera inference and 3D scene construction, enabling real-time prompt-to-3D walkthroughs.",
+    "UC Berkeley AI Hackathon Winner. Generates cinematic videos from prompts using Google Veo 3 API, then reconstructs 3D scenes via VGGT and Gaussian Splatting for real-time prompt-to-3D walkthroughs.",
     tags: [
       {
         name: "Python",
