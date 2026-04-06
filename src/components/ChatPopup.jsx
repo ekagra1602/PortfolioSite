@@ -49,17 +49,17 @@ const knowledgeBase = [
   "Outside of technology, Ekagra enjoys soccer, playing guitar, hiking, rock climbing, and scuba diving. He's passionate about both outdoor adventures and creative pursuits, balancing his technical career with diverse hobbies."
 ];
 
-const generateResponse = async (query) => {
+const generateResponse = async (query, recentMessages = []) => {
   const queryLower = query.toLowerCase();
   const queryWords = queryLower.split(' ').filter(word => word.length > 2);
-  
+
   // Try AI API for enhanced responses
   try {
     // Provide ALL context every time - let the AI figure out what's relevant
     const contextText = knowledgeBase.join('\n\n');
-    
+
     const API_KEY = import.meta.env.VITE_GROQ_API_KEY;
-    
+
     if (API_KEY) {
       try {
         const systemPrompt = `You are Ekagra's friendly AI assistant on his portfolio website. You know Ekagra well and talk about him naturally, like a friend would — not like you're reading off a resume. Use the following facts about him to answer questions: ${contextText}.
@@ -71,6 +71,12 @@ Rules:
 - Keep answers short (2-3 sentences) but conversational, like you're chatting with a visitor.
 - If someone asks something you don't have info on, say so casually and suggest they reach out to Ekagra directly.`;
 
+        // Build message history with last 2 exchanges for context
+        const historyMessages = recentMessages.slice(-4).map(msg => ({
+          role: msg.role === 'user' ? 'user' : 'assistant',
+          content: msg.text,
+        }));
+
         const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
           method: 'POST',
           headers: {
@@ -80,11 +86,12 @@ Rules:
           body: JSON.stringify({
             messages: [
               {
-                role: 'system', 
+                role: 'system',
                 content: systemPrompt
               },
+              ...historyMessages,
               {
-                role: 'user', 
+                role: 'user',
                 content: query
               }
             ],
@@ -273,7 +280,7 @@ const ChatPopup = ({ isOpen, onClose, initialMessage = '' }) => {
 
     try {
       // Generate smart response
-      const response = await generateResponse(messageText);
+      const response = await generateResponse(messageText, messages);
       
       const assistantMessage = {
         id: Date.now() + 1,
