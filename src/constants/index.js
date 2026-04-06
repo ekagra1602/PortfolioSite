@@ -207,7 +207,8 @@ const projects = [
       },
     ],
     image: Slipstream,
-    source_code_link: "https://slipstream-phi.vercel.app/",
+    source_code_link: "https://github.com/ekagra1602/Slipstream",
+    website_link: "https://slipstream-phi.vercel.app/",
   },
   {
     name: "Live-it",
@@ -259,7 +260,8 @@ const projects = [
       },
     ],
     image: neuravault,
-    source_code_link: "https://neuravault-mcp.onrender.com/",
+    source_code_link: "https://github.com/ekagra1602/NeuraVault-MCP",
+    website_link: "https://neuravault-mcp.onrender.com/",
   },
 ];
 
