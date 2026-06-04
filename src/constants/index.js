@@ -117,7 +117,7 @@ const experiences = [
     company_name: "Snowflake",
     icon: Snowflake,
     iconBg: "#383E56",
-    date: "January 2026 - Present",
+    date: "January 2026 - April 2026",
     points: [
       "Cortex Platform AI Inference Team ",
     ],

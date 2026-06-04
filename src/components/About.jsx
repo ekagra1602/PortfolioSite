@@ -27,7 +27,7 @@ const About = () => {
         className="mt-6 text-white/50 text-base md:text-lg max-w-2xl leading-relaxed font-inter"
       >
         I build backend systems, ML pipelines, and infrastructure at scale.
-        Currently at Snowflake working on LLM inference - previously at Airbnb,
+        Previously at Snowflake working on LLM inference - also at Airbnb,
         Qualcomm, and Edupoint. I like solving hard problems where systems
         engineering meets machine learning.
         <br /><br />

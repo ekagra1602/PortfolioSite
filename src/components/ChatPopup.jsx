@@ -6,8 +6,8 @@ const knowledgeBase = [
   // Education
   "Ekagra is an Exchange Student in AI/ML at Stanford University. He is also pursuing a Bachelor of Science in Computer Science at Arizona State University, expected to graduate in May 2026, with a perfect 4.0/4.0 GPA. Relevant courses include Data Structures & Algorithms, Software Engineering, Distributed Systems, and Machine Learning.",
 
-  // Work Experience - Snowflake (Current)
-  "Currently works as a Software Engineer Intern - AI/ML at Snowflake in Menlo Park, CA (January 2026 – Present). He designed sharded throughput controllers for LLM queries to isolate blast radius during traffic spikes, improving system reliability while reducing CPU and memory footprint by around 70%. He is working on the inference engine for Snowflake Intelligence, learning large-scale LLM serving and infrastructure.",
+  // Work Experience - Snowflake (Previous)
+  "Previously worked as a Software Engineer Intern - AI/ML at Snowflake in Menlo Park, CA (January 2026 – April 2026). He designed sharded throughput controllers for LLM queries to isolate blast radius during traffic spikes, improving system reliability while reducing CPU and memory footprint by around 70%. He worked on the inference engine for Snowflake Intelligence, learning large-scale LLM serving and infrastructure.",
 
   // Work Experience - Qualcomm
   "Worked as a Software Engineer Intern (Capstone) at Qualcomm in San Diego, CA (August 2025 – December 2025). Developed an AI-powered Financial Insights Engine leveraging AI100 for real-time stock analysis, trend forecasting, and smart comparisons; optimized high-throughput inference pipelines for large-scale financial data processing.",
