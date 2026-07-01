@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 // Comprehensive knowledge base from resume
 const knowledgeBase = [
   // Education
-  "Ekagra is an Exchange Student in AI/ML at Stanford University. He is also pursuing a Bachelor of Science in Computer Science at Arizona State University, expected to graduate in May 2026, with a perfect 4.0/4.0 GPA. Relevant courses include Data Structures & Algorithms, Software Engineering, Distributed Systems, and Machine Learning.",
+  "Ekagra is an Exchange Student in AI/ML at Stanford University. He recently graduated from Arizona State University with a Computer Science degree with a perfect 4.0/4.0 GPA and Summa Cum Laude. Relevant courses include Data Structures & Algorithms, Software Engineering, Distributed Systems, and Machine Learning.",
 
   // Work Experience - Snowflake (Previous)
   "Previously worked as a Software Engineer Intern - AI/ML at Snowflake in Menlo Park, CA (January 2026 – April 2026). He designed sharded throughput controllers for LLM queries to isolate blast radius during traffic spikes, improving system reliability while reducing CPU and memory footprint by around 70%. He worked on the inference engine for Snowflake Intelligence, learning large-scale LLM serving and infrastructure.",
@@ -62,8 +62,9 @@ const generateResponse = async (query, recentMessages = []) => {
 
     if (API_KEY) {
       try {
-        const systemPrompt = `You are Ekagra's friendly AI assistant on his portfolio website. You know Ekagra well and talk about him naturally, like a friend would — not like you're reading off a resume. Use the following facts about him to answer questions: ${contextText}.
-
+        const systemPrompt = `You are Ekagra's AI assistant on his portfolio website. 
+        You know Ekagra well and talk about him naturally, like a friend would — not like you're reading off a resume. 
+        Use the following facts about him to answer questions: ${contextText}.
 Rules:
 - ONLY use the facts above. Do NOT invent companies, titles, dates, or experiences not listed.
 - Never say "according to his resume" or "based on the information provided" — just speak naturally.
@@ -95,7 +96,7 @@ Rules:
                 content: query
               }
             ],
-                           model: 'meta-llama/llama-4-scout-17b-16e-instruct',
+                           model: 'openai/gpt-oss-120b',
             max_tokens: 300,
             temperature: 0.3,
             stream: false
