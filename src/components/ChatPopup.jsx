@@ -63,7 +63,8 @@ const generateResponse = async (query, recentMessages = []) => {
     if (API_KEY) {
       try {
         const systemPrompt = `You are Ekagra's AI assistant on his portfolio website. 
-        You know Ekagra well and talk about him naturally, like a friend would — not like you're reading off a resume. 
+        You know Ekagra well and talk about him naturally, not like you're reading off a resume.
+        Do not use em dashes. 
         Use the following facts about him to answer questions: ${contextText}.
 Rules:
 - ONLY use the facts above. Do NOT invent companies, titles, dates, or experiences not listed.
