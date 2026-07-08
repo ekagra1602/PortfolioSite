@@ -3,6 +3,7 @@ import { useState, useRef, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Points, PointMaterial, Preload } from "@react-three/drei";
 import * as random from "maath/random/dist/maath-random.esm";
+import WebGLGuard from "./WebGLGuard";
 
 const Stars = (props) => {
   const ref = useRef();
@@ -31,13 +32,15 @@ const Stars = (props) => {
 const BlogStarsCanvas = () => {
   return (
     <div className='w-full h-auto absolute inset-0 z-[-1]'>
-      <Canvas camera={{ position: [0, 0, 0.5] }}>
-        <Suspense fallback={null}>
-          <Stars />
-        </Suspense>
+      <WebGLGuard>
+        <Canvas camera={{ position: [0, 0, 0.5] }}>
+          <Suspense fallback={null}>
+            <Stars />
+          </Suspense>
 
-        <Preload all />
-      </Canvas>
+          <Preload all />
+        </Canvas>
+      </WebGLGuard>
     </div>
   );
 };

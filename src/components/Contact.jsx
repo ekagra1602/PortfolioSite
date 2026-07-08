@@ -53,10 +53,10 @@ const Contact = () => {
             <div>
               <p className="text-secondary text-lg">Send me an email</p>
               <div className="flex justify-start items-center mt-2 py-3">
-                <Link to="mailto:egupta3@asu.edu">
+                <Link to="mailto:ekagra1605@gmail.com">
                   <div className="flex hover:bg-black-200 rounded-lg px-4 transition-colors duration-200">
                     <MdOutlineMail className="text-3xl text-white" />
-                    <p className="ml-4 text-white font-medium text-xl">egupta3@asu.edu</p>
+                    <p className="ml-4 text-white font-medium text-xl">ekagra1605@gmail.com</p>
                   </div>
                 </Link>
               </div> 
