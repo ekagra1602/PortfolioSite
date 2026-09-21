@@ -391,7 +391,11 @@ const Blog = () => {
                               ) : isAutoH2 ? (
                                 <h3 className="font-display text-3xl md:text-4xl font-semibold text-white tracking-tight">{text}</h3>
                               ) : (
-                                <p className="font-inter text-base md:text-lg text-gray-200 leading-8 tracking-[0.01em] whitespace-pre-line">{text}</p>
+                                <p className="font-inter text-base md:text-lg text-gray-200 leading-8 tracking-[0.01em] whitespace-pre-line">{text.split(/(\*\*[^*]+\*\*)/g).map((part, index) =>
+                                  part.startsWith('**') && part.endsWith('**') ? (
+                                    <strong key={index} className="font-semibold text-white">{part.slice(2, -2)}</strong>
+                                  ) : part
+                                )}</p>
                               )}
 
                               {isPhotoMarker && (() => {
@@ -400,7 +404,7 @@ const Blog = () => {
                                   ? selectedPost.imageSets[setName]
                                   : (Array.isArray(selectedPost.images) ? selectedPost.images : []);
                                 return imagesFromSet.length > 0 ? (
-                                  <div className="my-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                                  <div className={`my-6 grid gap-8 ${imagesFromSet.length === 1 ? "grid-cols-1" : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"}`}>
                                   {imagesFromSet.map((img, i) => (
                                     <motion.figure
                                       key={i}
@@ -415,7 +419,7 @@ const Blog = () => {
                                         src={img.src}
                                         alt={img.alt || ''}
                                         loading="lazy"
-                                        className="w-full h-[28rem] md:h-[32rem] object-cover"
+                                        className={imagesFromSet.length === 1 ? "w-full max-h-[44rem] object-contain bg-black" : "w-full h-[28rem] md:h-[32rem] object-cover"}
                                         whileHover={{ scale: 1.05 }}
                                         transition={{ duration: 0.4, ease: 'easeOut' }}
                                       />

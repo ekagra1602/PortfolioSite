@@ -267,6 +267,59 @@ const projects = [
 
 const blogPosts = [
   {
+    "id": 2,
+    "title": "A Spring in the Bay Area: Snowflake, Stanford, and Building AI Systems",
+    "excerpt": "Reflections on spring 2026: production AI infrastructure at Snowflake, building at TreeHacks, and the hackathon I almost skipped.",
+    "date": "September 19, 2026",
+    "readTime": "2 min read",
+    "category": "AI Infrastructure & Hackathons",
+    "tags": [
+      "Snowflake Cortex",
+      "AI Infrastructure",
+      "Stanford & TreeHacks",
+      "Slipstream"
+    ],
+    "featured": true,
+    "content": "I spent spring 2026 in the Bay Area as an AI/ML Software Engineering Intern on Snowflake’s Cortex team in Menlo Park. Outside of work, I spent time at Stanford, built two hackathon projects, and explored San Francisco and Big Sur.\n\n### Snowflake and Cortex\n\nAt Snowflake, I worked on two model-serving infrastructure projects focused on making inference more resource-efficient across different workloads. One of those projects led to a significant reduction in resource overhead. The systems are internal, so I can’t share the implementation details.\n\nMy previous experience was in distributed systems, backend infrastructure, and applied machine learning. On Cortex, I worked with problems that connected those areas: resource utilization, traffic patterns, latency, throughput, and reliability.\n\nDesign discussions and code reviews pushed me to think about how a change would behave under load, how it could fail, and whether we could observe and maintain it in production. I left the internship wanting to work more on model serving and AI infrastructure.\n\n### Stanford and TreeHacks\n\nEarlier in the year, I was admitted as a visiting student at Stanford. I also competed at TreeHacks, where my team built **Clarifyd**, an AI classroom copilot.\n\nClarifyd followed lectures in real time, generated explanations for concepts students were struggling with, created adaptive quizzes, and surfaced feedback for instructors. We won the **Google sponsor track**.\n\n(Photos: treehacks)\n\n### The Hackathon I Almost Skipped\n\nA few weeks later, I attended the YC × Browser Use hackathon at Y Combinator’s headquarters in San Francisco. The teammates I had planned to attend with weren’t accepted, and I considered skipping it. I went without a team and met Nathaniel Lee and Eric Wong there.\n\nOver the next 24 hours, we built **Slipstream**.\n\nWhile working with web agents, we noticed that they repeatedly rediscovered how to navigate websites that other agents had already explored. Slipstream stored successful agent trajectories so future agents could reuse those paths instead of starting from scratch.\n\nWe placed **3rd overall** and won **Best Use of Real-Time Data**.\n\n(Photos: slipstream)\n\n### Outside of Work\n\nI also made time to explore, from the Palace of Fine Arts in San Francisco to the coastline of Big Sur.\n\n(Photos: sanFrancisco)\n\n(Photos: bigSur)\n\nFor our Snowflake team offsite, we decided to go painting. I painted the coastal scene below.\n\n(Photos: snowflakeOffsite)",
+    "imageSets": {
+      "treehacks": [
+        {
+          "src": "/images/blog/spring-2026/treehacks-awards.png",
+          "alt": "TreeHacks award recipients on stage holding Google Store bags",
+          "caption": "TreeHacks: celebrating the Google sponsor track win."
+        }
+      ],
+      "slipstream": [
+        {
+          "src": "/images/blog/spring-2026/slipstream-team.jpeg",
+          "alt": "Three hackathon teammates celebrating with their prizes",
+          "caption": "The Slipstream team after the YC × Browser Use hackathon."
+        }
+      ],
+      "sanFrancisco": [
+        {
+          "src": "/images/blog/spring-2026/palace-of-fine-arts.jpeg",
+          "alt": "The illuminated Palace of Fine Arts reflected in the water at dusk",
+          "caption": "Palace of Fine Arts, San Francisco."
+        }
+      ],
+      "bigSur": [
+        {
+          "src": "/images/blog/spring-2026/big-sur.png",
+          "alt": "Big Sur coastal cliffs and an arched bridge in golden evening light",
+          "caption": "An evening along the Big Sur coast."
+        }
+      ],
+      "snowflakeOffsite": [
+        {
+          "src": "/images/blog/spring-2026/snowflake-offsite-painting.jpeg",
+          "alt": "My coastal painting on an easel, with brushes and paint palettes at the Snowflake team offsite",
+          "caption": "The coastal scene I painted at our Snowflake team offsite."
+        }
+      ]
+    }
+  },
+  {
     id: 1,
     title: "My Internship Experience at Airbnb – Astra & Beyond",
     excerpt: "Reflections on a summer of technical challenges, learning, and memorable experiences in San Francisco.",
