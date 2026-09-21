@@ -271,7 +271,7 @@ const blogPosts = [
     "title": "A Spring in the Bay Area: Snowflake, Stanford, and Building AI Systems",
     "excerpt": "Reflections on spring 2026: production AI infrastructure at Snowflake, building at TreeHacks, and the hackathon I almost skipped.",
     "date": "September 19, 2026",
-    "readTime": "2 min read",
+    "readTime": "5 min read",
     "category": "AI Infrastructure & Hackathons",
     "tags": [
       "Snowflake Cortex",
