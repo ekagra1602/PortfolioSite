@@ -1,9 +1,8 @@
 /* eslint-disable react/prop-types */
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   motion,
-  AnimatePresence,
   useReducedMotion,
   useScroll,
   useMotionValueEvent,
@@ -16,7 +15,9 @@ import { textVariant } from "../utils/motion";
 
 const ACCENT = "#5CF2A6";
 // How much page scroll each role holds the screen for while the section is pinned.
-const SCROLL_PER_ROLE_VH = 60;
+const SCROLL_PER_ROLE_VH = 80;
+// On a fast scroll the panel steps through every role in between, each for at least this long.
+const STEP_MS = 180;
 
 const Logo = ({ experience, size }) => (
   <div
@@ -31,8 +32,9 @@ const Logo = ({ experience, size }) => (
   </div>
 );
 
-// Company name that rises in letter by letter whenever the active role changes.
-const RevealName = ({ text, reduce }) => (
+// Company name that rises in letter by letter whenever the active role changes
+// (drops in from above when scrolling back up).
+const RevealName = ({ text, reduce, dir }) => (
   <h3
     aria-label={text}
     className='text-white font-bold tracking-[-0.045em] leading-[0.95] text-5xl lg:text-7xl'
@@ -43,9 +45,8 @@ const RevealName = ({ text, reduce }) => (
           <motion.span
             key={i}
             className='inline-block'
-            initial={reduce ? { opacity: 0 } : { y: "110%", rotate: 6 }}
+            initial={reduce ? { opacity: 0 } : { y: dir > 0 ? "110%" : "-110%", rotate: 6 * dir }}
             animate={reduce ? { opacity: 1 } : { y: "0%", rotate: 0 }}
-            exit={reduce ? { opacity: 0, transition: { duration: 0.12 } } : { y: "-110%", rotate: -6, transition: { duration: 0.16 } }}
             transition={{ duration: 0.45, ease: [0.2, 0.8, 0.2, 1], delay: (w * 4 + i) * 0.02 }}
           >
             {ch}
@@ -56,22 +57,18 @@ const RevealName = ({ text, reduce }) => (
   </h3>
 );
 
-const StickyPanel = ({ active, reduce }) => {
+// Keyed on the active role and animated on enter only, so what's shown always
+// matches the scroll position (no exit animation can hold a stale role on screen).
+const StickyPanel = ({ active, reduce, dir }) => {
   const experience = experiences[active];
   const num = String(active + 1).padStart(2, "0");
 
   return (
     <div className='flex flex-col gap-8'>
-      <AnimatePresence mode='wait'>
-        <motion.div
-          key={active}
-          className='flex flex-col gap-6'
-          exit={{ opacity: 0, transition: { duration: 0.12 } }}
-        >
+      <div key={active} className='flex flex-col gap-6'>
           <motion.div
             initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.6, rotate: -12 }}
             animate={{ opacity: 1, scale: 1, rotate: 0 }}
-            exit={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.8, rotate: 8, transition: { duration: 0.12 } }}
             transition={{ type: "spring", stiffness: 300, damping: 22 }}
           >
             <Logo experience={experience} size={72} />
@@ -82,25 +79,22 @@ const StickyPanel = ({ active, reduce }) => {
             style={{ color: ACCENT }}
             initial={{ opacity: 0, x: -12 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 12, transition: { duration: 0.12 } }}
             transition={{ duration: 0.3 }}
           >
             {num} — {experience.date}
           </motion.span>
 
-          <RevealName text={experience.company_name} reduce={reduce} />
+          <RevealName text={experience.company_name} reduce={reduce} dir={dir} />
 
           <motion.p
             className='text-white/80 text-xl lg:text-2xl'
             initial={{ opacity: 0, filter: "blur(8px)", y: 8 }}
             animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-            exit={{ opacity: 0, filter: "blur(8px)", transition: { duration: 0.12 } }}
             transition={{ duration: 0.4, delay: 0.15 }}
           >
             {experience.title}
           </motion.p>
-        </motion.div>
-      </AnimatePresence>
+      </div>
 
       <div className='flex gap-1.5' aria-hidden='true'>
         {experiences.map((_, i) => (
@@ -145,15 +139,32 @@ const CardBody = ({ experience, index, showDate }) => (
 
 // Desktop: the section pins in place and each role holds the screen for a fixed stretch of scroll.
 const PinnedTimeline = () => {
-  const [active, setActive] = useState(0);
+  const [{ active, dir }, setView] = useState({ active: 0, dir: 1 });
   const trackRef = useRef(null);
+  const shown = useRef(0);
+  const target = useRef(0);
+  const timer = useRef(null);
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: trackRef, offset: ["start start", "end end"] });
 
+  // Move the shown role one step toward the scroll position, so no role is ever skipped.
+  const step = () => {
+    timer.current = null;
+    const cur = shown.current;
+    const goal = target.current;
+    if (cur === goal) return;
+    const d = goal > cur ? 1 : -1;
+    shown.current = cur + d;
+    setView({ active: cur + d, dir: d });
+    if (shown.current !== goal) timer.current = setTimeout(step, STEP_MS);
+  };
+
   useMotionValueEvent(scrollYProgress, "change", (p) => {
-    const next = Math.min(experiences.length - 1, Math.max(0, Math.floor(p * experiences.length)));
-    setActive((cur) => (cur === next ? cur : next));
+    target.current = Math.min(experiences.length - 1, Math.max(0, Math.floor(p * experiences.length)));
+    if (!timer.current) step();
   });
+
+  useEffect(() => () => clearTimeout(timer.current), []);
 
   const next = experiences[active + 1];
 
@@ -165,20 +176,17 @@ const PinnedTimeline = () => {
     >
       <div className='sticky top-0 h-screen flex items-center'>
         <div className='w-full grid grid-cols-[minmax(0,5fr)_minmax(0,6fr)] gap-16'>
-          <StickyPanel active={active} reduce={reduce} />
+          <StickyPanel active={active} reduce={reduce} dir={dir} />
 
           <div className='flex flex-col justify-center gap-6 border-l border-white/[0.08] pl-10'>
-            <AnimatePresence mode='wait'>
-              <motion.div
-                key={active}
-                initial={reduce ? { opacity: 0 } : { opacity: 0, y: 40, scale: 0.98 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={reduce ? { opacity: 0, transition: { duration: 0.12 } } : { opacity: 0, y: -40, scale: 0.98, transition: { duration: 0.16 } }}
-                transition={{ duration: 0.35, ease: [0.2, 0.8, 0.2, 1] }}
-              >
-                <CardBody experience={experiences[active]} index={active} />
-              </motion.div>
-            </AnimatePresence>
+            <motion.div
+              key={active}
+              initial={reduce ? { opacity: 0 } : { opacity: 0, y: 40 * dir, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.35, ease: [0.2, 0.8, 0.2, 1] }}
+            >
+              <CardBody experience={experiences[active]} index={active} />
+            </motion.div>
 
             <span className='exp-mono text-[12px] text-white/40 h-4'>
               {next ? `next ↓ ${next.company_name}` : "end of timeline"}
