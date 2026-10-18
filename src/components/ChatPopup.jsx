@@ -181,7 +181,7 @@ const ChatPopup = ({ isOpen, onClose, initialMessage = '' }) => {
   useEffect(() => {
     if (isOpen) {
       // Blur any active input on the main page
-      const mainPageInput = document.querySelector('input[placeholder*="Ask anything about me"]');
+      const mainPageInput = document.getElementById('hero-ask');
       if (mainPageInput) {
         mainPageInput.blur();
         mainPageInput.value = '';

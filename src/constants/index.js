@@ -113,20 +113,33 @@ const technologies = [
 
 const experiences = [
   {
-    title: "AI / ML Intern",
+    title: "Software Engineer",
+    company_name: "Airbnb",
+    icon: Airbnb,
+    iconFill: true,
+    iconBg: "#FF385C",
+    date: "July 2026 - Present",
+    points: [
+      "AI Observability team, GenAI tracing infrastructure",
+    ],
+  },
+  {
+    title: "Software Engineer Intern - AI/ML",
     company_name: "Snowflake",
     icon: Snowflake,
-    iconBg: "#383E56",
+    iconFill: true,
+    iconBg: "#29B5E8",
     date: "January 2026 - April 2026",
     points: [
-      "Cortex Platform AI Inference Team ",
+      "Cortex Platform AI Inference Team",
     ],
   },
   {
     title: "Software Engineer Intern (Capstone)",
     company_name: "Qualcomm",
     icon: Qualcomm,
-    iconBg: "#E6DEDD",
+    iconFill: true,
+    iconBg: "#3253DC",
     date: "August 2025 - December 2025",
     points: [
       "AI enabled financial insights engine",
@@ -136,7 +149,8 @@ const experiences = [
     title: "Software Engineering Intern",
     company_name: "Airbnb",
     icon: Airbnb,
-    iconBg: "#383E56",
+    iconFill: true,
+    iconBg: "#FF385C",
     date: "May 2025 - August 2025",
     points: [
       "Observability team within Infrastructure, focusing on large-scale systems",
@@ -146,7 +160,7 @@ const experiences = [
     title: "Software Engineering Intern",
     company_name: "Edupoint Educational Systems LLC",
     icon: EduPoint,
-    iconBg: "#383E56",
+    iconBg: "#FFFFFF",
     date: "January 2025 - April 2025",
     points: [
       "Attendance Tracking and Authorization group, supporting product development",
@@ -156,7 +170,8 @@ const experiences = [
     title: "Machine Learning Research Assistant",
     company_name: "Carnegie Mellon University",
     icon: carnegie,
-    iconBg: "#E6DEDD",
+    iconFill: true,
+    iconBg: "#BB0E2F",
     date: "June 2024 - August 2024",
     points: [
       "Research on deep learning models and open-source repositories",
@@ -166,7 +181,7 @@ const experiences = [
     title: "Software Engineer Co-op",
     company_name: "Arizona State University",
     icon: Fulton,
-    iconBg: "#383E56",
+    iconBg: "#FFFFFF",
     date: "March 2023 - June 2024",
     points: [
       "CI/CD, monitoring, and systems automation in infrastructure",]
@@ -175,7 +190,7 @@ const experiences = [
     title: "Software Engineering Intern",
     company_name: "Carrier",
     icon: carrier,
-    iconBg: "#E6DEDD",
+    iconBg: "#FFFFFF",
     date: "May 2022 - August 2022",
     points: [
       "Backend and database-focused work in product development.",
