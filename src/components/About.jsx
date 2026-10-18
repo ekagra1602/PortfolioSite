@@ -34,12 +34,12 @@ const About = () => {
       >
         <p className="font-serif">
           I&apos;m a software engineer at Airbnb on the observability team, working
-          on tracing and metrics infrastructure that helps engineers see how
+          on GenAI tracing and metrics infrastructure that helps engineers see how
           their systems behave in production. Before this I spent a spring on
-          Snowflake&apos;s inference team, after a handful of internships along the way.
+          Snowflake&apos;s AI inference team, after a handful of internships along the way.
         </p>
         <p className="font-serif">
-          I like problems where systems engineering meets machine learning.
+          I like problems where systems engineering meets AI and machine learning.
           Outside of work I do a bit of research, build side projects, show up
           to more hackathons than I probably should, and tinker with things that
           shouldn&apos;t work but somehow do.
