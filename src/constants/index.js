@@ -40,12 +40,12 @@ export const navLinks = [
     title: "About",
   },
   {
-    id: "work",
-    title: "Work",
-  },
-  {
     id: "blog",
     title: "Blog",
+  },
+  {
+    id: "work",
+    title: "Work",
   },
   {
     id: "contact",
@@ -295,6 +295,8 @@ const blogPosts = [
       "Slipstream"
     ],
     "featured": true,
+    "cover": "/images/blog/spring-2026/big-sur-cover.jpg",
+    "coverAlt": "Big Sur coastline at golden hour",
     "content": "I spent spring 2026 in the Bay Area as an AI/ML Software Engineering Intern on Snowflake’s Cortex team in Menlo Park. Outside of work, I spent time at Stanford, built two hackathon projects, and explored San Francisco and Big Sur.\n\n### Snowflake and Cortex\n\nAt Snowflake, I worked on two model-serving infrastructure projects focused on making inference more resource-efficient across different workloads. One of those projects led to a significant reduction in resource overhead. The systems are internal, so I can’t share the implementation details.\n\nMy previous experience was in distributed systems, backend infrastructure, and applied machine learning. On Cortex, I worked with problems that connected those areas: resource utilization, traffic patterns, latency, throughput, and reliability.\n\nDesign discussions and code reviews pushed me to think about how a change would behave under load, how it could fail, and whether we could observe and maintain it in production. I left the internship wanting to work more on model serving and AI infrastructure.\n\n### Stanford and TreeHacks\n\nEarlier in the year, I was admitted as a visiting student at Stanford. I also competed at TreeHacks, where my team built **Clarifyd**, an AI classroom copilot.\n\nClarifyd followed lectures in real time, generated explanations for concepts students were struggling with, created adaptive quizzes, and surfaced feedback for instructors. We won the **Google sponsor track**.\n\n(Photos: treehacks)\n\n### The Hackathon I Almost Skipped\n\nA few weeks later, I attended the YC × Browser Use hackathon at Y Combinator’s headquarters in San Francisco. The teammates I had planned to attend with weren’t accepted, and I considered skipping it. I went without a team and met Nathaniel Lee and Eric Wong there.\n\nOver the next 24 hours, we built **Slipstream**.\n\nWhile working with web agents, we noticed that they repeatedly rediscovered how to navigate websites that other agents had already explored. Slipstream stored successful agent trajectories so future agents could reuse those paths instead of starting from scratch.\n\nWe placed **3rd overall** and won **Best Use of Real-Time Data**.\n\n(Photos: slipstream)\n\n### Outside of Work\n\nI also made time to explore, from the Palace of Fine Arts in San Francisco to the coastline of Big Sur.\n\n(Photos: sanFrancisco)\n\n(Photos: bigSur)\n\nFor our Snowflake team offsite, we decided to go painting. I painted the coastal scene below.\n\n(Photos: snowflakeOffsite)",
     "imageSets": {
       "treehacks": [
@@ -343,6 +345,8 @@ const blogPosts = [
     category: "Distributed Systems & Observability",
     tags: ["Internship Experience", "Distributed Systems", "Airbnb HQ", "San Francisco"],
     featured: true,
+    cover: bridge,
+    coverAlt: "Golden Gate Bridge before sunset",
     content: `August 25, 2025 | Ekagra (Gray) Gupta | San Francisco, CA
 
 This summer I interned on Airbnb’s Infrastructure Observability team, contributing to Astra, an open-source \
@@ -467,4 +471,39 @@ learning, and exploring in equal measure.`,
   },
 ];
 
-export { services, technologies, experiences, projects, blogPosts };
+// Skills section groups; `size` sets each group's word size in the type wall.
+const skillGroups = [
+  {
+    id: "lang",
+    label: "languages",
+    size: "text-[40px] md:text-[76px]",
+    items: ["Python", "C++", "Go", "Rust", "Java", "TypeScript"],
+  },
+  {
+    id: "frameworks",
+    label: "frameworks",
+    size: "text-[30px] md:text-[54px]",
+    items: ["PyTorch", "TensorFlow", "NumPy", "LangChain", "Node.js", "React", "Angular"],
+  },
+  {
+    id: "infra",
+    label: "infra & cloud",
+    size: "text-[22px] md:text-[40px]",
+    items: ["Kafka", "Spark", "Kubernetes", "Docker", "Spinnaker", "MongoDB", "SQL", "Linux", "Git", "AWS", "GCP"],
+  },
+];
+
+// Swap `link` / `linkLabel` once the NeurIPS or arXiv version is public.
+const publications = [
+  {
+    title: "Behavior Beyond Text",
+    venue: "NeurIPS AIW 2026",
+    authorship: "First author",
+    description:
+      "AI safety paper showing that text-based refusals often fail to transfer to tool-calling agents, across 5 LLMs with a custom benchmark, analyzing refusal behavior through mechanistic interpretability.",
+    link: "https://openreview.net/forum?id=SnpnKJdaZ3",
+    linkLabel: "OpenReview",
+  },
+];
+
+export { services, technologies, experiences, projects, blogPosts, publications, skillGroups };

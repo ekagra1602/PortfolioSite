@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700;800&family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -35,11 +35,23 @@
 }
 
 .exp-sticky,
-.exp-sticky * {
+.exp-sticky *,
+.pub-block,
+.pub-block * {
   font-family: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
 }
 
-.exp-sticky .exp-mono {
+.skills-wall,
+.skills-wall * {
+  font-family: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+}
+
+.skills-wall .exp-mono,
+.skills-wall .exp-mono *,
+.exp-sticky .exp-mono,
+.exp-sticky .exp-mono *,
+.pub-block .exp-mono,
+.pub-block .exp-mono * {
   font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 

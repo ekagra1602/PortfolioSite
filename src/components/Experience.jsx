@@ -1,7 +1,13 @@
 /* eslint-disable react/prop-types */
 
-import { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { useRef, useState } from "react";
+import {
+  motion,
+  AnimatePresence,
+  useReducedMotion,
+  useScroll,
+  useMotionValueEvent,
+} from "framer-motion";
 
 import { styles } from "../styles";
 import { experiences } from "../constants";
@@ -9,6 +15,8 @@ import { SectionWrapper } from "../hoc";
 import { textVariant } from "../utils/motion";
 
 const ACCENT = "#5CF2A6";
+// How much page scroll each role holds the screen for while the section is pinned.
+const SCROLL_PER_ROLE_VH = 60;
 
 const Logo = ({ experience, size }) => (
   <div
@@ -37,8 +45,8 @@ const RevealName = ({ text, reduce }) => (
             className='inline-block'
             initial={reduce ? { opacity: 0 } : { y: "110%", rotate: 6 }}
             animate={reduce ? { opacity: 1 } : { y: "0%", rotate: 0 }}
-            exit={reduce ? { opacity: 0 } : { y: "-110%", rotate: -6 }}
-            transition={{ duration: 0.5, ease: [0.2, 0.8, 0.2, 1], delay: (w * 4 + i) * 0.025 }}
+            exit={reduce ? { opacity: 0, transition: { duration: 0.12 } } : { y: "-110%", rotate: -6, transition: { duration: 0.16 } }}
+            transition={{ duration: 0.45, ease: [0.2, 0.8, 0.2, 1], delay: (w * 4 + i) * 0.02 }}
           >
             {ch}
           </motion.span>
@@ -53,18 +61,18 @@ const StickyPanel = ({ active, reduce }) => {
   const num = String(active + 1).padStart(2, "0");
 
   return (
-    <div className='md:sticky md:top-32 flex flex-col gap-8'>
+    <div className='flex flex-col gap-8'>
       <AnimatePresence mode='wait'>
         <motion.div
           key={active}
           className='flex flex-col gap-6'
-          exit={{ opacity: 0, transition: { duration: 0.2, delay: 0.15 } }}
+          exit={{ opacity: 0, transition: { duration: 0.12 } }}
         >
           <motion.div
             initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.6, rotate: -12 }}
             animate={{ opacity: 1, scale: 1, rotate: 0 }}
-            exit={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.8, rotate: 8 }}
-            transition={{ type: "spring", stiffness: 260, damping: 20 }}
+            exit={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.8, rotate: 8, transition: { duration: 0.12 } }}
+            transition={{ type: "spring", stiffness: 300, damping: 22 }}
           >
             <Logo experience={experience} size={72} />
           </motion.div>
@@ -74,8 +82,8 @@ const StickyPanel = ({ active, reduce }) => {
             style={{ color: ACCENT }}
             initial={{ opacity: 0, x: -12 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 12 }}
-            transition={{ duration: 0.35 }}
+            exit={{ opacity: 0, x: 12, transition: { duration: 0.12 } }}
+            transition={{ duration: 0.3 }}
           >
             {num} — {experience.date}
           </motion.span>
@@ -86,8 +94,8 @@ const StickyPanel = ({ active, reduce }) => {
             className='text-white/80 text-xl lg:text-2xl'
             initial={{ opacity: 0, filter: "blur(8px)", y: 8 }}
             animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-            exit={{ opacity: 0, filter: "blur(8px)" }}
-            transition={{ duration: 0.45, delay: 0.2 }}
+            exit={{ opacity: 0, filter: "blur(8px)", transition: { duration: 0.12 } }}
+            transition={{ duration: 0.4, delay: 0.15 }}
           >
             {experience.title}
           </motion.p>
@@ -107,107 +115,110 @@ const StickyPanel = ({ active, reduce }) => {
   );
 };
 
-const ExperienceCard = ({ experience, index, isActive, cardRef }) => (
-  <motion.article
-    ref={cardRef}
-    initial={{ opacity: 0, y: 48 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, amount: 0.4 }}
-    transition={{ duration: 0.6, ease: [0.2, 0.8, 0.2, 1] }}
-    className='md:min-h-[46vh] flex flex-col justify-center'
-  >
-    <div
-      className={`rounded-2xl border p-6 md:p-8 flex flex-col gap-4 transition-all duration-500 ${
-        isActive
-          ? "bg-[#0b0b0b] border-white/20 md:scale-100"
-          : "bg-transparent border-white/[0.06] md:opacity-[0.35] md:scale-[0.97]"
-      }`}
-    >
-      <div className='flex items-center gap-3'>
-        <Logo experience={experience} size={32} />
-        <span className='exp-mono text-[13px] text-white/70 uppercase tracking-[0.08em]'>
-          {experience.company_name}
-        </span>
-        <span className='exp-mono text-[12px] text-white/40 ml-auto hidden sm:inline'>
-          {String(index + 1).padStart(2, "0")}
-        </span>
-      </div>
-
-      <h4 className='text-white text-2xl md:text-[32px] font-medium tracking-[-0.02em] leading-tight'>
-        {experience.title}
-      </h4>
-
-      <ul className='flex flex-col gap-2'>
-        {experience.points.map((point, i) => (
-          <li key={i} className='text-white/60 text-[16px] md:text-[18px] leading-relaxed'>
-            {point}
-          </li>
-        ))}
-      </ul>
-
-      <span className='exp-mono text-[12px] text-white/40 md:hidden'>{experience.date}</span>
+const CardBody = ({ experience, index, showDate }) => (
+  <div className='rounded-2xl border border-white/20 bg-[#0b0b0b] p-6 md:p-8 flex flex-col gap-4'>
+    <div className='flex items-center gap-3'>
+      <Logo experience={experience} size={32} />
+      <span className='exp-mono text-[13px] text-white/70 uppercase tracking-[0.08em]'>
+        {experience.company_name}
+      </span>
+      <span className='exp-mono text-[12px] text-white/40 ml-auto hidden sm:inline'>
+        {String(index + 1).padStart(2, "0")}
+      </span>
     </div>
-  </motion.article>
+
+    <h4 className='text-white text-2xl md:text-[32px] font-medium tracking-[-0.02em] leading-tight'>
+      {experience.title}
+    </h4>
+
+    <ul className='flex flex-col gap-2'>
+      {experience.points.map((point, i) => (
+        <li key={i} className='text-white/60 text-[16px] md:text-[18px] leading-relaxed'>
+          {point}
+        </li>
+      ))}
+    </ul>
+
+    {showDate && <span className='exp-mono text-[12px] text-white/40'>{experience.date}</span>}
+  </div>
 );
 
-const Experience = () => {
+// Desktop: the section pins in place and each role holds the screen for a fixed stretch of scroll.
+const PinnedTimeline = () => {
   const [active, setActive] = useState(0);
-  const cardRefs = useRef([]);
+  const trackRef = useRef(null);
   const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: trackRef, offset: ["start start", "end end"] });
 
-  // The active role is whichever card sits closest to the middle of the viewport.
-  useEffect(() => {
-    const handleScroll = () => {
-      const middle = window.innerHeight / 2;
-      let best = 0;
-      let bestDist = Infinity;
-      cardRefs.current.forEach((el, i) => {
-        if (!el) return;
-        const rect = el.getBoundingClientRect();
-        const dist = Math.abs(rect.top + rect.height / 2 - middle);
-        if (dist < bestDist) {
-          bestDist = dist;
-          best = i;
-        }
-      });
-      setActive(best);
-    };
+  useMotionValueEvent(scrollYProgress, "change", (p) => {
+    const next = Math.min(experiences.length - 1, Math.max(0, Math.floor(p * experiences.length)));
+    setActive((cur) => (cur === next ? cur : next));
+  });
 
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleScroll);
-    };
-  }, []);
+  const next = experiences[active + 1];
 
   return (
-    <div className='exp-sticky'>
-      <motion.div variants={textVariant()}>
-        <p className={styles.sectionSubText}>What I have done so far</p>
-        <h2 className={styles.sectionHeadText}>Work Experience.</h2>
-      </motion.div>
-
-      <div className='mt-14 md:mt-20 grid md:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] gap-10 md:gap-16'>
-        <div className='hidden md:block'>
+    <div
+      ref={trackRef}
+      className='relative hidden md:block'
+      style={{ height: `calc(${experiences.length * SCROLL_PER_ROLE_VH}vh + 100vh)` }}
+    >
+      <div className='sticky top-0 h-screen flex items-center'>
+        <div className='w-full grid grid-cols-[minmax(0,5fr)_minmax(0,6fr)] gap-16'>
           <StickyPanel active={active} reduce={reduce} />
-        </div>
 
-        <div className='flex flex-col gap-5 md:gap-0 md:border-l md:border-white/[0.08] md:pl-10 md:pb-[20vh]'>
-          {experiences.map((experience, index) => (
-            <ExperienceCard
-              key={`experience-${index}`}
-              experience={experience}
-              index={index}
-              isActive={index === active}
-              cardRef={(el) => (cardRefs.current[index] = el)}
-            />
-          ))}
+          <div className='flex flex-col justify-center gap-6 border-l border-white/[0.08] pl-10'>
+            <AnimatePresence mode='wait'>
+              <motion.div
+                key={active}
+                initial={reduce ? { opacity: 0 } : { opacity: 0, y: 40, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={reduce ? { opacity: 0, transition: { duration: 0.12 } } : { opacity: 0, y: -40, scale: 0.98, transition: { duration: 0.16 } }}
+                transition={{ duration: 0.35, ease: [0.2, 0.8, 0.2, 1] }}
+              >
+                <CardBody experience={experiences[active]} index={active} />
+              </motion.div>
+            </AnimatePresence>
+
+            <span className='exp-mono text-[12px] text-white/40 h-4'>
+              {next ? `next ↓ ${next.company_name}` : "end of timeline"}
+            </span>
+          </div>
         </div>
       </div>
     </div>
   );
 };
+
+// Phones: a plain stacked list, no pinning.
+const StackedList = () => (
+  <div className='flex flex-col gap-5 md:hidden'>
+    {experiences.map((experience, index) => (
+      <motion.article
+        key={`experience-${index}`}
+        initial={{ opacity: 0, y: 32 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.5, ease: [0.2, 0.8, 0.2, 1] }}
+      >
+        <CardBody experience={experience} index={index} showDate />
+      </motion.article>
+    ))}
+  </div>
+);
+
+const Experience = () => (
+  <div className='exp-sticky'>
+    <motion.div variants={textVariant()}>
+      <p className={styles.sectionSubText}>What I have done so far</p>
+      <h2 className={styles.sectionHeadText}>Work Experience.</h2>
+    </motion.div>
+
+    <div className='mt-14 md:mt-0'>
+      <PinnedTimeline />
+      <StackedList />
+    </div>
+  </div>
+);
 
 export default SectionWrapper(Experience, "work");

@@ -11,10 +11,10 @@ function App() {
           <Hero /> 
         </div>
         <About />
+        <Blog />
         <Experience />
         <Tech />
         <Works />
-        <Blog />
         <div className="relative z-0">
           <Contact />
           <StarsCanvas/>

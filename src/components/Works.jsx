@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { styles } from "../styles";
 import { github } from "../assets";
 import { SectionWrapper } from "../hoc";
-import { projects } from "../constants";
+import { projects, publications } from "../constants";
 import { fadeIn, textVariant } from "../utils/motion";
 
 const ProjectCard = ({
@@ -25,7 +25,7 @@ const ProjectCard = ({
           scale: 1,
           speed: 450,
         }}
-        className='bg-black-100 p-5 rounded-2xl sm:w-[340px] w-full shadow-lg shadow-black-200'
+        className='bg-[#0b0b0b] border border-white/[0.08] p-5 rounded-2xl sm:w-[340px] w-full'
       >
         <div className='relative w-full h-[230px]'>
           <img
@@ -75,18 +75,18 @@ const ProjectCard = ({
         </div>
 
         <div className='mt-5'>
-          <h3 className='text-white font-bold text-[24px]'>{name}</h3>
-          <p className='mt-2 text-secondary text-[14px]'>{description}</p>
+          <h3 className='font-serif text-white text-[28px] leading-tight tracking-[-0.01em]'>{name}</h3>
+          <p className='mt-2 text-white/55 text-[14px] leading-relaxed'>{description}</p>
         </div>
 
-        <div className='mt-4 flex flex-wrap gap-2'>
+        <div className='mt-5 pt-4 border-t border-white/[0.08] flex flex-wrap gap-x-3 gap-y-1'>
           {tags.map((tag) => (
-            <p
+            <span
               key={`${name}-${tag.name}`}
-              className={`text-[14px] ${tag.color}`}
+              className='font-mono text-[12px] uppercase tracking-[0.06em] text-white/45'
             >
-              #{tag.name}
-            </p>
+              {tag.name}
+            </span>
           ))}
         </div>
       </Tilt>
@@ -115,7 +115,39 @@ const Works = () => {
         </motion.p>
       </div>
 
-      <div className='mt-20 flex flex-wrap gap-7'>
+      <div className='pub-block mt-14 flex flex-col gap-4'>
+        <span className='exp-mono text-[13px] text-white/50 tracking-[0.08em] uppercase'>
+          Publications
+        </span>
+        {publications.map((pub) => (
+          <motion.a
+            key={pub.title}
+            href={pub.link}
+            target='_blank'
+            rel='noopener noreferrer'
+            variants={fadeIn("up", "spring", 0.1, 0.75)}
+            className='group block rounded-2xl border border-white/[0.1] bg-[#0b0b0b] p-6 md:p-8 hover:border-white/25 transition-colors'
+          >
+            <div className='flex flex-wrap items-center gap-x-3 gap-y-1 exp-mono text-[13px]'>
+              <span style={{ color: "#5CF2A6" }}>{pub.venue}</span>
+              <span className='text-white/30'>·</span>
+              <span className='text-white/50'>{pub.authorship}</span>
+            </div>
+            <h3 className='mt-3 text-white text-2xl md:text-[34px] font-bold tracking-[-0.03em] leading-tight'>
+              {pub.title}
+            </h3>
+            <p className='mt-3 text-white/60 text-[16px] md:text-[17px] leading-relaxed max-w-3xl'>
+              {pub.description}
+            </p>
+            <span className='mt-5 inline-flex items-center gap-2 exp-mono text-[14px] text-white/80 group-hover:text-white'>
+              Read on {pub.linkLabel}
+              <span className='group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform' aria-hidden='true'>↗</span>
+            </span>
+          </motion.a>
+        ))}
+      </div>
+
+      <div className='mt-16 flex flex-wrap gap-7'>
         {projects.map((project, index) => (
           <ProjectCard key={`project-${index}`} index={index} {...project} />
         ))}

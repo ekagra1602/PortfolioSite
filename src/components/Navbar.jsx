@@ -17,9 +17,14 @@ const Navbar = () => {
     const handleScroll = () => {
       const line = window.innerHeight / 3;
       let current = "home";
+      let closest = -Infinity;
       navLinks.forEach(({ id }) => {
         const el = document.getElementById(id);
-        if (el && el.getBoundingClientRect().top <= line) current = id;
+        const top = el ? el.getBoundingClientRect().top : Infinity;
+        if (top <= line && top > closest) {
+          closest = top;
+          current = id;
+        }
       });
       setActive(current);
     };

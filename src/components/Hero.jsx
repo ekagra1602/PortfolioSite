@@ -36,7 +36,7 @@ const useTerminalTyping = () => {
     const type = async (setter, text, speed) => {
       for (let i = 1; i <= text.length && alive; i++) {
         setter(text.slice(0, i));
-        await sleep(speed + Math.random() * 45);
+        await sleep(speed + Math.random() * 25);
       }
     };
     const erase = async (setter, text, speed) => {
@@ -47,21 +47,21 @@ const useTerminalTyping = () => {
     };
 
     (async () => {
-      await sleep(600);
-      await type(setCmd, COMMAND, 80);
-      await sleep(450);
+      await sleep(300);
+      await type(setCmd, COMMAND, 50);
+      await sleep(250);
       if (!alive) return;
       setCursor("name");
-      await type(setName, NAME, 60);
-      await sleep(600);
+      await type(setName, NAME, 38);
+      await sleep(350);
       if (!alive) return;
       setCursor("role");
       for (let i = 0; alive; i++) {
         const current = roles[i % roles.length];
-        await type(setRole, current, 32);
-        await sleep(1900);
-        await erase(setRole, current, 18);
-        await sleep(250);
+        await type(setRole, current, 20);
+        await sleep(1600);
+        await erase(setRole, current, 10);
+        await sleep(150);
       }
     })();
 

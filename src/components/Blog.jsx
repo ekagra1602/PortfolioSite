@@ -151,99 +151,72 @@ const Blog = () => {
   return (
     <section id="blog" className={`${styles.padding} max-w-7xl mx-auto relative z-0`}>
       <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="text-center mb-16"
-      >
-        <h2 className={styles.sectionHeadText}>Blog</h2>
-        <p className={styles.sectionSubText}>Thoughts, insights, and discoveries</p>
-      </motion.div>
-
-
-
-      {/* Featured Posts */}
-      <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-        className="mb-16"
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-10"
       >
-        <h3 className="text-2xl font-bold text-white mb-8 flex items-center gap-3">
-          <span className="w-2 h-8 bg-gradient-to-b from-blue-500 to-purple-600 rounded-full"></span>
-          Featured Posts
-        </h3>
-        <div className="grid lg:grid-cols-2 gap-8">
-          {featuredPosts.length > 0 ? (
-            featuredPosts.map((post, index) => (
-              <motion.div
-                key={post.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
-                className="group cursor-pointer"
-                onClick={() => openBlogPost(post)}
-              >
-                <div className="bg-tertiary rounded-2xl p-6 hover:bg-gray-800 transition-all duration-300 border border-gray-700 hover:border-blue-500/50">
-                  <div className="flex items-center gap-3 mb-4">
-                    <span className="px-3 py-1 bg-blue-600/20 text-blue-400 text-xs font-medium rounded-full border border-blue-500/30">
-                      {post.category}
-                    </span>
-                    <span className="text-gray-400 text-sm">{post.readTime}</span>
-                  </div>
-                  <h4 className="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors duration-300">
-                    {post.title}
-                  </h4>
-                  <p className="text-gray-300 mb-4 leading-relaxed">
-                    {post.excerpt}
-                  </p>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {post.tags.slice(0, 3).map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-2 py-1 bg-gray-700 text-gray-300 text-xs rounded-md"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                                  <div className="flex items-center justify-between">
-                  <span className="text-gray-400 text-sm">{post.date}</span>
-                  <div className="flex items-center gap-4">
-                    {/* Share link */}
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        const shareUrl = `${window.location.origin}${window.location.pathname}#blog${post.id}`;
-                        navigator.clipboard.writeText(shareUrl);
-                        // You could add a toast notification here
-                      }}
-                      className="p-2 hover:bg-gray-700 rounded-lg transition-colors duration-200"
-                      title="Copy share link"
+        <h2 className="font-serif italic font-light text-white text-6xl md:text-[72px] leading-none tracking-[-0.02em]">
+          The Blog
+        </h2>
+        <p className="font-mono text-[13px] text-white/50">
+          {featuredPosts.length} posts · thoughts, insights, and discoveries
+        </p>
+      </motion.div>
+
+      {featuredPosts.length > 0 ? (
+        <div className="grid lg:grid-cols-[minmax(0,1.65fr)_minmax(0,1fr)] gap-5 lg:h-[560px]">
+          {[featuredPosts.slice(0, 1), featuredPosts.slice(1)].map((column, col) =>
+            column.length > 0 && (
+              <div key={col} className="flex flex-col gap-5 min-h-0">
+                {column.map((post, index) => {
+                  const lead = col === 0;
+                  return (
+                    <motion.button
+                      key={post.id}
+                      type="button"
+                      onClick={() => openBlogPost(post)}
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.6, delay: 0.1 + (col + index) * 0.1, ease: [0.2, 0.8, 0.2, 1] }}
+                      className={`group relative block w-full overflow-hidden rounded-[18px] text-left bg-[#111] flex-1 ${
+                        lead ? "aspect-[4/5] sm:aspect-[16/11] lg:aspect-auto" : "aspect-[16/11] lg:aspect-auto"
+                      }`}
                     >
-                      <svg className="w-4 h-4 text-gray-400 hover:text-white transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
-                      </svg>
-                    </button>
-                    {/* Read More */}
-                    <div className="flex items-center gap-2 text-blue-400 group-hover:text-blue-300 transition-colors duration-300">
-                      <span className="text-sm font-medium">Read More</span>
-                      <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-                </div>
-              </motion.div>
-            ))
-          ) : (
-            <div className="col-span-2 text-center py-12">
-              <p className="text-gray-400 text-lg">No featured blog posts available.</p>
-            </div>
+                      {post.cover && (
+                        <img
+                          src={post.cover}
+                          alt={post.coverAlt || ""}
+                          loading="lazy"
+                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-[800ms] ease-[cubic-bezier(0.2,0.8,0.2,1)] group-hover:scale-[1.04]"
+                        />
+                      )}
+                      <span className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/85" />
+                      <span className={`absolute flex flex-col ${lead ? "left-6 right-6 bottom-6 md:left-9 md:right-9 md:bottom-8 gap-3" : "left-6 right-6 bottom-6 gap-2"}`}>
+                        <span className="font-mono text-[11px] md:text-[12px] tracking-[0.06em] uppercase text-white/90">
+                          {lead ? "Latest · " : ""}{post.date} · {post.readTime.replace(" read", "")}
+                        </span>
+                        <span className={`font-serif text-white leading-[1.08] tracking-[-0.015em] ${lead ? "text-3xl md:text-[46px]" : "text-2xl md:text-[28px]"}`}>
+                          {post.title}
+                        </span>
+                        {lead && (
+                          <span className="hidden sm:block text-[16px] text-white/80 max-w-xl leading-relaxed">
+                            {post.excerpt}
+                          </span>
+                        )}
+                      </span>
+                    </motion.button>
+                  );
+                })}
+              </div>
+            )
           )}
         </div>
-      </motion.div>
+      ) : (
+        <p className="text-gray-400 text-lg text-center py-12">No featured blog posts available.</p>
+      )}
 
       {/* Blog Post Modal */}
       {selectedPost && createPortal(
