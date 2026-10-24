@@ -4,22 +4,28 @@ import { motion, AnimatePresence } from 'framer-motion';
 // Comprehensive knowledge base from resume
 const knowledgeBase = [
   // Education
-  "Ekagra is an Exchange Student in AI/ML at Stanford University. He recently graduated from Arizona State University with a Computer Science degree with a perfect 4.0/4.0 GPA and Summa Cum Laude. Relevant courses include Data Structures & Algorithms, Software Engineering, Distributed Systems, and Machine Learning.",
+  "Ekagra (who also goes by Gray) graduated from Arizona State University in May 2026 with a Bachelor of Science in Computer Science, a perfect 4.0/4.0 GPA, and Summa Cum Laude. He was also an Exchange Student in Artificial Intelligence and Machine Learning at Stanford University (June 2026). Relevant courses include Data Structures & Algorithms, Software Engineering, Distributed Systems, and Machine Learning.",
 
-  // Work Experience - Snowflake (Previous)
-  "Previously worked as a Software Engineer Intern - AI/ML at Snowflake in Menlo Park, CA (January 2026 – April 2026). He designed sharded throughput controllers for LLM queries to isolate blast radius during traffic spikes, improving system reliability while reducing CPU and memory footprint by around 70%. He worked on the inference engine for Snowflake Intelligence, learning large-scale LLM serving and infrastructure.",
+  // Work Experience - Airbnb (Current)
+  "Ekagra currently works full time as a Software Engineer at Airbnb in San Francisco, CA (July 2026 to present). He is optimizing GenAI tracing infrastructure by contributing upstream improvements to the open-source Jaeger project, including performance and reliability fixes and query-path improvements. He also built and productionized an OpenSearch ISM (Index State Management) metrics exporter for AI observability infrastructure, which collects index-management states across clusters and exports metrics for monitoring and alerting.",
+
+  // Work Experience - Snowflake
+  "Previously worked as a Software Engineer Intern - AI/ML at Snowflake in Menlo Park, CA (January 2026 to April 2026). He designed sharded throughput controllers for LLM queries to isolate blast radius during traffic spikes, improving system reliability while reducing memory footprint by around 70%. He also built a tokenizer and an estimation layer for all incoming queries, enabling adaptive pacing and scheduling to improve stability and resource utilization in the inference pipeline for Snowflake's Cortex-Code AI platform.",
 
   // Work Experience - Qualcomm
-  "Worked as a Software Engineer Intern (Capstone) at Qualcomm in San Diego, CA (August 2025 – December 2025). Developed an AI-powered Financial Insights Engine leveraging AI100 for real-time stock analysis, trend forecasting, and smart comparisons; optimized high-throughput inference pipelines for large-scale financial data processing.",
+  "Worked as a Software Engineer Intern (Capstone) at Qualcomm in San Diego, CA (August 2025 to December 2025). Developed an AI-powered Financial Insights Engine leveraging AI100 for real-time stock analysis, trend forecasting, and smart comparisons; optimized high-throughput inference pipelines for large-scale financial data processing.",
 
-  // Work Experience - Airbnb
-  "Worked as a Software Engineer Intern at Airbnb in San Francisco, CA (May 2025 – August 2025). He optimized a cloud-native search and analytics engine by replacing Apache Kafka with direct write-ahead log (WAL) ingestion into AWS S3, resulting in around $1.1 million in infrastructure savings over the next 5 years. He also built and deployed a Kubernetes cluster to test and manage ingestion of logs and traces from multiple ML models, ensuring scalability and reliability across petabytes of data and millions of users.",
+  // Work Experience - Airbnb (Internship)
+  "Before joining full time, he worked as a Software Engineer Intern at Airbnb in San Francisco, CA (May 2025 to August 2025). He optimized a cloud-native search and analytics engine by replacing Apache Kafka with direct write-ahead log (WAL) ingestion into AWS S3, resulting in around $1.1 million in infrastructure savings over the next 5 years. He also built and deployed a Kubernetes cluster to test and manage ingestion of logs and traces from multiple ML models, ensuring scalability and reliability across petabytes of data and millions of users.",
 
   // Work Experience - Edupoint
-  "Worked as a Software Engineer Intern at Edupoint Educational Systems in Phoenix, AZ (January 2025 – April 2025). He built a Python-based, multi-LLM agent leveraging retrieval-augmented generation (RAG) with vector embedding based search over academic records and queries, reducing support resolution time by 42% for 5M+ students.",
+  "Worked as a Software Engineer Intern at Edupoint Educational Systems in Phoenix, AZ (January 2025 to April 2025). He built a Python-based, multi-LLM agent leveraging retrieval-augmented generation (RAG) with vector embedding based search over academic records and queries, reducing support resolution time by 42% for 5M+ students.",
+
+  // Work Experience - Carnegie Mellon
+  "Worked as a Machine Learning Researcher at Carnegie Mellon University in Pittsburgh, PA (June 2024 to August 2024). He optimized and fine-tuned open-source large language models using Ollama, Hugging Face Transformers, and PyTorch, achieving a 35% improvement in data extraction from enterprise documents and technical reports.",
 
   // Work Experience - Carrier
-  "Worked as a Software Engineer Intern at Carrier remotely (May 2022 – August 2022). He designed and implemented Go, C++, and SQL based in-memory Database Engine to accurately track sales, returns, and inventory, enhancing stock management practices and reducing record discrepancies by 18%.",
+  "Worked as a Software Engineer Intern at Carrier remotely (May 2022 to August 2022). He designed and implemented Go, C++, and SQL based in-memory Database Engine to accurately track sales, returns, and inventory, enhancing stock management practices and reducing record discrepancies by 18%.",
 
   // Technical Skills - Programming Languages
   "Ekagra's programming languages include Python, C++, Go, Rust, Java, and TypeScript. He's proficient across multiple paradigms from systems programming to web development.",
@@ -29,6 +35,9 @@ const knowledgeBase = [
 
   // Technical Skills - Tools & Cloud
   "He's experienced with tools and cloud platforms including Apache Kafka, Spark, Kubernetes, Docker, Spinnaker, MongoDB, SQL, Linux, Git, AWS, and GCP for cloud computing, containerization, and distributed systems.",
+
+  // Publications - Behavior Beyond Text
+  "Ekagra is the first author of \"Behavior Beyond Text\", an AI safety paper at the NeurIPS AIW 2026 workshop. It shows that text-based refusals often fail to transfer to tool-calling agents, tested across 5 LLMs with a custom benchmark, and analyzes refusal behavior through mechanistic interpretability.",
 
   // Projects - SlipStream
   "SlipStream won the Y Combinator Hackathon and is built with Python, FastAPI, Laminar, OpenAI, and MongoDB. It is a shared execution graph that captures web-agent task trajectories and guides future agents toward successful paths, reducing redundant exploration and LLM tool usage.",
@@ -40,7 +49,7 @@ const knowledgeBase = [
   "Live-it won the UC Berkeley AI Hackathon and uses Python, VGGT, Gemini API, Gaussian Splatting, React, and Node.js. It integrates Google's Veo3 API to generate cinematic videos from prompts, trained on VGGT neural network and Gaussian Splatting for AI-based inference of a 3D scene, enabling real-time prompt-to-3D walkthroughs.",
 
   // Awards & Leadership
-  "Ekagra achieved USACO Gold in the United States Computing Olympiad, completed the Machine Learning Specialization from Stanford, served as a Section Leader (Teaching Assistant) at Stanford, leads the Claude Club for Anthropic at ASU, is the Technical Lead for Google Developer Student Club at ASU, and is a Technical Lead at SoDA.",
+  "Ekagra achieved USACO Gold in the United States Computing Olympiad, completed the Machine Learning Specialization from Stanford, served as a Section Leader (Teaching Assistant) at Stanford, won Stanford TreeHacks and the UC Berkeley AI Hackathon, leads the Anthropic Claude Developer Club at ASU, is the Technical Lead for Google Developer Student Club at ASU, and is a Technical Lead at SoDA.",
 
   // Contact & Location
   "Ekagra is based in San Francisco, CA. You can reach him through his website EkagraGupta.com, email ekagra1605@gmail.com, message on +1 (602)-515-5268, or connect on LinkedIn, LeetCode, and GitHub.",
@@ -48,6 +57,13 @@ const knowledgeBase = [
   // Personal Interests
   "Outside of technology, Ekagra enjoys soccer, playing guitar, hiking, rock climbing, and scuba diving. He's passionate about both outdoor adventures and creative pursuits, balancing his technical career with diverse hobbies."
 ];
+
+// The model doesn't always follow the prompt, so strip em/en dashes from its replies
+const removeDashes = (text) => text
+  .replace(/(\d)\s*[–—]\s*(\d|(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\b)/g, '$1 to $2')
+  .replace(/\s*[—–―]\s*/g, ', ')
+  .replace(/,\s*([,.!?;:])/g, '$1')
+  .replace(/^,\s*/, '');
 
 const generateResponse = async (query, recentMessages = []) => {
   const queryLower = query.toLowerCase();
@@ -64,12 +80,12 @@ const generateResponse = async (query, recentMessages = []) => {
       try {
         const systemPrompt = `You are Ekagra's AI assistant on his portfolio website. 
         You know Ekagra well and talk about him naturally, not like you're reading off a resume.
-        Do not use em dashes. 
         Use the following facts about him to answer questions: ${contextText}.
 Rules:
 - ONLY use the facts above. Do NOT invent companies, titles, dates, or experiences not listed.
-- Never say "according to his resume" or "based on the information provided" — just speak naturally.
-- Paraphrase and rephrase — do NOT copy bullet points verbatim. Add personality and warmth.
+- Never say "according to his resume" or "based on the information provided". Just speak naturally.
+- Paraphrase and rephrase. Do NOT copy bullet points verbatim. Add personality and warmth.
+- NEVER use em dashes or en dashes. Use commas, periods, or the word "to" for ranges instead.
 - Keep answers short (2-3 sentences) but conversational, like you're chatting with a visitor.
 - If someone asks something you don't have info on, say so casually and suggest they reach out to Ekagra directly.`;
 
@@ -111,7 +127,7 @@ Rules:
           console.log('📋 Groq Result:', result);
           
           if (result.choices?.[0]?.message?.content) {
-            const aiResponse = result.choices[0].message.content.trim();
+            const aiResponse = removeDashes(result.choices[0].message.content.trim());
             console.log('✅ Using Groq AI response:', aiResponse);
             return aiResponse;
           }
