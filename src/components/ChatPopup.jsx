@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // Comprehensive knowledge base from resume
@@ -52,7 +52,7 @@ const knowledgeBase = [
   "Ekagra achieved USACO Gold in the United States Computing Olympiad, completed the Machine Learning Specialization from Stanford, served as a Section Leader (Teaching Assistant) at Stanford, won Stanford TreeHacks and the UC Berkeley AI Hackathon, leads the Anthropic Claude Developer Club at ASU, is the Technical Lead for Google Developer Student Club at ASU, and is a Technical Lead at SoDA.",
 
   // Contact & Location
-  "Ekagra is based in San Francisco, CA. You can reach him through his website EkagraGupta.com, email ekagra1605@gmail.com, message on +1 (602)-515-5268, or connect on LinkedIn, LeetCode, and GitHub.",
+  "Ekagra is based in San Francisco, CA. You can reach him through his website EkagraGupta.com, email ekagra1605@gmail.com, message on +1 (602)-515-5268, or connect on LinkedIn (linkedin.com/in/ekagra16), LeetCode, and GitHub (github.com/ekagra1602).",
 
   // Personal Interests
   "Outside of technology, Ekagra enjoys soccer, playing guitar, hiking, rock climbing, and scuba diving. He's passionate about both outdoor adventures and creative pursuits, balancing his technical career with diverse hobbies."
@@ -91,8 +91,8 @@ Rules:
 
         // Build message history with last 2 exchanges for context
         const historyMessages = recentMessages.slice(-4).map(msg => ({
-          role: msg.role === 'user' ? 'user' : 'assistant',
-          content: msg.text,
+          role: msg.type === 'user' ? 'user' : 'assistant',
+          content: msg.content,
         }));
 
         const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
@@ -166,13 +166,48 @@ Rules:
   return getSmartResponse();
 };
 
+const SUGGESTIONS = [
+  { label: 'Airbnb', question: 'What does he do at Airbnb?' },
+  { label: 'NeurIPS paper', question: 'Tell me about his NeurIPS paper' },
+  { label: 'Hackathon wins', question: 'Which hackathons did he win?' },
+  { label: 'Snowflake', question: 'What did he do at Snowflake?' },
+  { label: 'Get in touch', question: 'How do I reach him?' },
+];
+
+// Reveals a reply word by word with a soft blur-in
+const StreamText = ({ text, onTick }) => {
+  const words = text.split(' ');
+  const [count, setCount] = useState(() =>
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches ? words.length : 0
+  );
+
+  useEffect(() => {
+    if (count >= words.length) return;
+    const id = setTimeout(() => setCount((c) => c + 1), 35);
+    return () => clearTimeout(id);
+  }, [count, words.length]);
+
+  useEffect(() => {
+    onTick?.();
+  }, [count, onTick]);
+
+  return (
+    <>
+      {words.slice(0, count).map((word, i) => (
+        <span key={i} className="chat-word">{word} </span>
+      ))}
+      {count < words.length && <span className="chat-cursor" />}
+    </>
+  );
+};
+
 const ChatPopup = ({ isOpen, onClose, initialMessage = '' }) => {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [size, setSize] = useState({ width: 450, height: 600 });
   const [isResizing, setIsResizing] = useState(false);
-  const messagesEndRef = useRef(null);
+  const threadRef = useRef(null);
   const popupRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -240,9 +275,13 @@ const ChatPopup = ({ isOpen, onClose, initialMessage = '' }) => {
     }
   }, [isOpen, initialMessage, initialMessageProcessed]);
 
+  const scrollToBottom = useCallback(() => {
+    if (threadRef.current) threadRef.current.scrollTop = threadRef.current.scrollHeight;
+  }, []);
+
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+    scrollToBottom();
+  }, [messages, isLoading, scrollToBottom]);
 
   // Resize functionality
   useEffect(() => {
@@ -331,11 +370,25 @@ const ChatPopup = ({ isOpen, onClose, initialMessage = '' }) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSendMessage();
+    } else if (e.key === 'Escape') {
+      onClose();
     }
   };
 
+  const asked = new Set(messages.filter((m) => m.type === 'user').map((m) => m.content));
+  const chips = SUGGESTIONS.filter((s) => !asked.has(s.question)).slice(0, 4);
+
+  // Desktop grows out of a pill like the island concept; mobile slides up
+  const panelMotion = isMobile
+    ? { initial: { opacity: 0, y: 24 }, animate: { opacity: 1, y: 0 }, exit: { opacity: 0, y: 24 } }
+    : {
+        initial: { opacity: 0, width: 340, height: 56 },
+        animate: { opacity: 1, width: size.width, height: size.height },
+        exit: { opacity: 0, width: 340, height: 56 },
+      };
+
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence>
       {isOpen && (
         <>
           {/* Backdrop */}
@@ -343,158 +396,120 @@ const ChatPopup = ({ isOpen, onClose, initialMessage = '' }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40"
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
             onClick={onClose}
           />
-          
-          {/* Chat Popup */}
+
+          {/* Chat island, docked bottom left */}
           <motion.div
             ref={popupRef}
-            initial={{ opacity: 0, y: 50, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 50, scale: 0.9 }}
-            transition={{ 
-              type: "spring", 
-              damping: 25, 
-              stiffness: 300,
-              duration: 0.3 
-            }}
-            className={`fixed z-50 flex flex-col ${
-              isMobile 
-                ? 'bottom-4 left-4 right-4' 
-                : 'bottom-6 left-6'
+            role="dialog"
+            aria-label="Ask about Ekagra"
+            {...panelMotion}
+            transition={isResizing ? { duration: 0 } : { type: 'spring', damping: 30, stiffness: 260 }}
+            className={`chat-island fixed z-50 flex flex-col overflow-hidden rounded-[26px] border border-white/[0.12] bg-[#0d0d0e] text-[#f4f4f5] shadow-[0_30px_80px_-20px_rgba(0,0,0,0.95),inset_0_1px_0_rgba(255,255,255,0.07)] ${
+              isMobile ? 'bottom-4 left-4 right-4' : 'bottom-6 left-6'
             }`}
-            style={{ 
-              width: isMobile ? 'auto' : `${size.width}px`, 
-              height: isMobile ? '70vh' : `${size.height}px`,
-              maxHeight: isMobile ? '70vh' : 'none'
+            style={isMobile ? { height: '75vh' } : undefined}
+            onClick={(e) => {
+              // Clicking anywhere but a control keeps the input focused
+              if (e.target.closest('button') || e.target.closest('.resize-handle')) return;
+              if (inputRef.current) {
+                inputRef.current.focus();
+                const length = inputRef.current.value.length;
+                inputRef.current.setSelectionRange(length, length);
+              }
             }}
           >
-            {/* Glass morphism container */}
-            <div 
-              className="bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden h-full flex flex-col relative"
-              onClick={(e) => {
-                // Don't focus if clicking on close button or resize handle
-                if (e.target.closest('button') || e.target.closest('.resize-handle')) return;
-                
-                // Focus input when clicking anywhere in the popup
-                if (inputRef.current) {
-                  inputRef.current.focus();
-                  const length = inputRef.current.value.length;
-                  inputRef.current.setSelectionRange(length, length);
-                }
-              }}
+            <motion.div
+              className="flex h-full min-h-0 flex-col"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.15 }}
             >
               {/* Header */}
-              <motion.div 
-                className="flex items-center justify-between p-5 border-b border-white/10 bg-gradient-to-r from-black/20 to-transparent"
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 }}
-              >
-                <div className="flex items-center space-x-3">
-                  <motion.div 
-                    className="w-3 h-3 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full"
-                    animate={{ scale: [1, 1.2, 1] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  />
-                  <div>
-                    <h3 className="text-white font-semibold text-sm">AI Assistant</h3>
-                    <p className="text-white/60 text-xs">Ask about Ekagra</p>
-                  </div>
-                </div>
-                <motion.button
+              <div className="flex items-center gap-3 px-5 pt-4 pb-3">
+                <span className="chat-ping" aria-hidden="true" />
+                <span className="text-[15px] font-semibold">Ask Ekagra</span>
+                <span className="chat-mono hidden xs:inline text-[12px] text-[#a1a1aa]">answers from his resume</span>
+                <button
+                  type="button"
                   onClick={onClose}
-                  className="text-white/60 hover:text-white transition-all duration-200 p-1 rounded-lg hover:bg-white/10"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
+                  aria-label="Close chat"
+                  className="ml-auto grid h-9 w-9 place-items-center rounded-[10px] bg-white/5 text-[#d4d4d8] transition-colors hover:bg-white/10 hover:text-white"
                 >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                    <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true">
+                    <path d="M6 6l12 12M18 6L6 18" />
                   </svg>
-                </motion.button>
-              </motion.div>
-
-              {/* Messages */}
-              <div className="flex-1 overflow-y-auto p-5 space-y-4 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
-                <AnimatePresence>
-                  {messages.map((message, index) => (
-                    <motion.div
-                      key={message.id}
-                      initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      transition={{ delay: index * 0.1 }}
-                      className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
-                    >
-                      <motion.div
-                        className={`max-w-[85%] p-4 rounded-2xl text-sm backdrop-blur-sm ${
-                          message.type === 'user'
-                            ? 'bg-gradient-to-r from-slate-600 via-gray-700 to-slate-800 text-white shadow-lg shadow-black/30 border border-white/10'
-                            : 'bg-white/10 text-white border border-white/20'
-                        }`}
-                        whileHover={{ scale: 1.02 }}
-                        transition={{ type: "spring", stiffness: 400 }}
-                      >
-                        <p className="leading-relaxed">{message.content}</p>
-                        <p className="text-xs opacity-60 mt-2">
-                          {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                        </p>
-                      </motion.div>
-                    </motion.div>
-                  ))}
-                </AnimatePresence>
-                
-                {isLoading && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="flex justify-start"
-                  >
-                    <div className="bg-white/10 backdrop-blur-sm text-white p-4 rounded-2xl border border-white/20">
-                      <div className="flex space-x-2 items-center">
-                        <motion.div 
-                          className="w-2 h-2 bg-gradient-to-r from-[#915EFF] to-[#7c3aed] rounded-full"
-                          animate={{ scale: [1, 1.5, 1] }}
-                          transition={{ duration: 0.6, repeat: Infinity, delay: 0 }}
-                        />
-                        <motion.div 
-                          className="w-2 h-2 bg-gradient-to-r from-[#915EFF] to-[#7c3aed] rounded-full"
-                          animate={{ scale: [1, 1.5, 1] }}
-                          transition={{ duration: 0.6, repeat: Infinity, delay: 0.2 }}
-                        />
-                        <motion.div 
-                          className="w-2 h-2 bg-gradient-to-r from-[#915EFF] to-[#7c3aed] rounded-full"
-                          animate={{ scale: [1, 1.5, 1] }}
-                          transition={{ duration: 0.6, repeat: Infinity, delay: 0.4 }}
-                        />
-                        <span className="text-xs text-white/60 ml-2">AI is thinking...</span>
-                      </div>
-                    </div>
-                  </motion.div>
-                )}
-                <div ref={messagesEndRef} />
+                </button>
               </div>
 
-              {/* Input */}
-              <motion.div 
-                className="p-5 border-t border-white/10 bg-gradient-to-r from-transparent to-black/20"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
+              {/* Thread */}
+              <div
+                ref={threadRef}
+                className="min-h-0 flex-1 overflow-y-auto px-6 pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                aria-live="polite"
               >
-                <div className="relative">
+                {messages.length === 0 && !isLoading && (
+                  <p className="pt-1 text-[15px] leading-relaxed text-[#a1a1aa]">
+                    Ask about his work at Airbnb, his NeurIPS paper, his hackathon wins, or anything else on his resume.
+                  </p>
+                )}
+                {messages.map((message, i) =>
+                  message.type === 'user' ? (
+                    <p
+                      key={message.id}
+                      className={`chat-mono text-[12px] tracking-[0.02em] text-[#a1a1aa] ${
+                        i > 0 ? 'mt-5 border-t border-white/[0.07] pt-5' : 'pt-1'
+                      }`}
+                    >
+                      <span className="text-[#5CF2A6]">you asked</span> · {message.content}
+                    </p>
+                  ) : (
+                    <p key={message.id} className="mt-3 text-[16px] leading-[1.65] tracking-[-0.005em] text-[#f4f4f5]">
+                      <StreamText text={message.content} onTick={scrollToBottom} />
+                    </p>
+                  )
+                )}
+                {isLoading && (
+                  <p className="chat-mono mt-3 text-[13px] text-[#a1a1aa]">
+                    thinking<span className="chat-cursor" />
+                  </p>
+                )}
+              </div>
+
+              {/* Follow-up suggestions */}
+              {chips.length > 0 && (
+                <div className="border-t border-white/[0.07] px-5 pt-3">
+                  <p className="chat-mono text-[11px] uppercase tracking-[0.08em] text-[#a1a1aa]">
+                    {messages.length ? 'Ask next' : 'Try one of these'}
+                  </p>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {chips.map((chip) => (
+                      <button
+                        key={chip.label}
+                        type="button"
+                        disabled={isLoading}
+                        onClick={() => handleSendMessage(chip.question)}
+                        className="h-9 rounded-full border border-white/10 bg-white/[0.04] px-3.5 text-[13px] font-medium text-[#d4d4d8] transition-colors hover:border-[#5CF2A6]/40 hover:bg-[#5CF2A6]/[0.08] hover:text-white disabled:opacity-50"
+                      >
+                        {chip.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Input */}
+              <div className="p-4">
+                <div className="flex h-[54px] items-center gap-2.5 rounded-2xl border border-white/10 bg-[#151517] pl-[18px] pr-2 transition-colors focus-within:border-[#5CF2A6]/50">
+                  <label htmlFor="chat-input" className="sr-only">Your question</label>
                   <input
+                    id="chat-input"
                     ref={inputRef}
                     value={inputMessage}
                     onChange={(e) => setInputMessage(e.target.value)}
-                    onKeyPress={handleKeyPress}
-                    onClick={() => {
-                      if (inputRef.current) {
-                        inputRef.current.focus();
-                        const length = inputRef.current.value.length;
-                        inputRef.current.setSelectionRange(length, length);
-                      }
-                    }}
+                    onKeyDown={handleKeyPress}
                     onFocus={() => {
                       if (inputRef.current) {
                         const length = inputRef.current.value.length;
@@ -513,92 +528,42 @@ const ChatPopup = ({ isOpen, onClose, initialMessage = '' }) => {
                         }
                       }, 10);
                     }}
-                    placeholder="Ask anything about me..."
-                    className="w-full p-4 pr-14 bg-white/5 backdrop-blur-sm text-white rounded-xl border border-white/20 focus:border-[#915EFF]/50 focus:outline-none focus:ring-2 focus:ring-[#915EFF]/20 transition-all duration-200 placeholder-white/50"
+                    placeholder="Ask about his work, research, projects…"
+                    className="min-w-0 flex-1 bg-transparent text-[16px] text-white outline-none placeholder:text-[#8a8a93]"
                     disabled={isLoading}
                     autoComplete="off"
                     autoFocus
                   />
-                  <motion.button
+                  <button
+                    type="button"
                     onClick={() => handleSendMessage()}
                     disabled={!inputMessage.trim() || isLoading}
-                    className="absolute right-2 group p-2.5 bg-gradient-to-r from-slate-700 via-gray-800 to-slate-900 text-white rounded-xl border border-white/20 shadow-xl shadow-black/40 disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
-                    style={{
-                      top: '50%',
-                      y: '-50%'
-                    }}
-                    whileHover={{ 
-                      scale: 1.1,
-                      boxShadow: "0 15px 35px -10px rgba(0, 0, 0, 0.6)"
-                    }}
-                    whileTap={{ scale: 0.9 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                    aria-label="Send"
+                    className="grid h-10 w-10 flex-none place-items-center rounded-xl bg-[#5CF2A6] text-[#04140c] transition-[opacity,transform] hover:scale-105 disabled:opacity-40 disabled:hover:scale-100"
                   >
-                    {/* Animated background glow */}
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-blue-600/20 via-purple-600/20 to-indigo-600/20 opacity-0 group-hover:opacity-100"
-                      animate={{ 
-                        background: [
-                          "linear-gradient(45deg, rgba(59, 130, 246, 0.2), rgba(147, 51, 234, 0.2), rgba(99, 102, 241, 0.2))",
-                          "linear-gradient(45deg, rgba(147, 51, 234, 0.2), rgba(99, 102, 241, 0.2), rgba(59, 130, 246, 0.2))",
-                          "linear-gradient(45deg, rgba(99, 102, 241, 0.2), rgba(59, 130, 246, 0.2), rgba(147, 51, 234, 0.2))"
-                        ]
-                      }}
-                      transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                    />
-                    
-                    {/* Ripple effect */}
-                    <motion.div
-                      className="absolute inset-0 bg-white/10 rounded-xl scale-0 group-active:scale-100"
-                      transition={{ duration: 0.2 }}
-                    />
-                    
-                    {/* Icon with rotation */}
-                    <motion.svg 
-                      width="18" 
-                      height="18" 
-                      viewBox="0 0 24 24" 
-                      fill="none"
-                      className="relative z-10"
-                      whileHover={{ rotate: 20 }}
-                      transition={{ type: "spring", stiffness: 300 }}
-                    >
-                      <path 
-                        d="M2 21L23 12L2 3V10L17 12L2 14V21Z" 
-                        fill="currentColor"
-                      />
-                    </motion.svg>
-                  </motion.button>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </button>
                 </div>
-              </motion.div>
-              
-              {/* Resize Handle - Desktop Only */}
-              {!isMobile && (
-                <motion.div
-                  className="absolute top-0 right-0 w-4 h-4 cursor-ne-resize opacity-60 hover:opacity-100 transition-opacity"
-                  onMouseDown={(e) => {
-                    e.preventDefault();
-                    setIsResizing(true);
-                  }}
-                  whileHover={{ scale: 1.1 }}
-                >
-                  <svg 
-                    width="16" 
-                    height="16" 
-                    viewBox="0 0 24 24" 
-                    fill="none" 
-                    className="text-white/60"
-                  >
-                    <path 
-                      d="M8 8H16V16M8 16L16 8" 
-                      stroke="currentColor" 
-                      strokeWidth="2" 
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                </motion.div>
-              )}
-            </div>
+              </div>
+            </motion.div>
+
+            {/* Resize handle, desktop only */}
+            {!isMobile && (
+              <div
+                className="resize-handle absolute right-0 top-0 h-4 w-4 cursor-ne-resize opacity-40 transition-opacity hover:opacity-100"
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  setIsResizing(true);
+                }}
+                aria-hidden="true"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="text-white/70">
+                  <path d="M8 8H16V16M8 16L16 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                </svg>
+              </div>
+            )}
           </motion.div>
         </>
       )}
